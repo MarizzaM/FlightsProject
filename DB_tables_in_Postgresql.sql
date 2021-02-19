@@ -12,7 +12,7 @@ CREATE TABLE Users (
     	Id BIGSERIAL PRIMARY KEY,
 	Username TEXT UNIQUE,
 	Password  TEXT,
-	Email  BIGINT UNIQUE,
+	Email  TEXT UNIQUE,
 	User_Role INT references User_Roles(Id)
 	);
 	
