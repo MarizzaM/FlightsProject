@@ -28,7 +28,7 @@ CREATE TABLE Administrators (
 	First_Name TEXT,
 	Last_Name TEXT,
 	Level int,
-	User_id BIGINT UNIQUE references User_Roles(Id)
+	User_id BIGINT UNIQUE references Users(Id)
 	);
 	
 CREATE TABLE Customers(
@@ -38,7 +38,7 @@ CREATE TABLE Customers(
 	Address TEXT,
 	Phone_No TEXT UNIQUE,
 	Credit_Card_No TEXT UNIQUE,
-	User_Id BIGINT UNIQUE references User_Roles(Id)
+	User_Id BIGINT UNIQUE references Users(Id)
 	);
 	
 CREATE TABLE Flights(
