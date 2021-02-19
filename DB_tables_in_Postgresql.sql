@@ -20,7 +20,7 @@ CREATE TABLE Airline_Companies(
 	Id BIGSERIAL PRIMARY KEY,
 	Name TEXT UNIQUE ,
 	CountryId INT references Countries(Id),
-	User_Id BIGINT UNIQUE references User_Roles(Id)
+	User_Id BIGINT UNIQUE references Users(Id)
 	);
 
 CREATE TABLE Administrators (
