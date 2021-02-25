@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FlightsProject
 {
-    class Admin : IPoco, IUser
+    public class Admin : IPoco, IUser
     {
         public int Id { get; set; }
         public string First_Name { get; set; }

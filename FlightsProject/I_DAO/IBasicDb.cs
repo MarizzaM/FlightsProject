@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FlightsProject
 {
-    interface IBasicDb<T> where T : IPoco
+    public interface IBasicDb<T> where T : IPoco
     {
         T Get(int id);
         IList<T> GetAll();

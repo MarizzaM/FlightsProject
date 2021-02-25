@@ -1,6 +1,7 @@
 ﻿using FlightsProject;
 using Npgsql;
 using System;
+using System.Collections.Generic;
 
 namespace Runner
 {
@@ -26,8 +27,44 @@ namespace Runner
         }
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
             TestDbConnection();
+            CountryDAOPGSQL countryDAOPGSQL = new CountryDAOPGSQL();
+
+            Country countryDominicana = new Country
+            {
+                Name = "Dominicana"
+            };
+
+            //countryDAOPGSQL.Add(countryDominicana);
+
+
+
+            //var countries = countryDAOPGSQL.GetAll();
+
+            //foreach (var c in countries)
+            //{
+            //    var id = ((dynamic)c).Id;
+            //    var name = ((dynamic)c).Name;
+
+            //    Console.WriteLine($"{id} {name}");
+            //}
+
+            //Console.WriteLine(countryDAOPGSQL.Get(1));
+
+            countryDAOPGSQL.Remove(countryDominicana);
+
+            //countryDAOPGSQL.Update(countryDominicana);
+
+            var countries = countryDAOPGSQL.GetAll();
+
+            foreach (var c in countries)
+            {
+                var id = ((dynamic)c).Id;
+                var name = ((dynamic)c).Name;
+
+                Console.WriteLine($"{id} {name}");
+            }
+
         }
     }
 }
