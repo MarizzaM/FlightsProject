@@ -1,34 +1,32 @@
-﻿using Npgsql;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace FlightsProject
 {
-    class CountryDAOPGSQL : ICountryDAO
+    class AdminDAOPGAQL : IAdminDAO
     {
-
-        public void Add(Country t)
+        public void Add(Admin t)
         {
             throw new NotImplementedException();
         }
 
-        public Country Get(int id)
+        public Admin Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IList<Country> GetAll()
+        public IList<Admin> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public void Remove(Country t)
+        public void Remove(Admin t)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Country t)
+        public void Update(Admin t)
         {
             throw new NotImplementedException();
         }
