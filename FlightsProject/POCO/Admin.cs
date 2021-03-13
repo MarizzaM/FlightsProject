@@ -43,11 +43,11 @@ namespace FlightsProject
             if (obj == null)
                 return false;
 
-            Admin c = obj as Admin;
-            if (c == null)
+            Admin a = obj as Admin;
+            if (a == null)
                 return false;
 
-            return this.Id == c.Id;
+            return this.Id == a.Id;
         }
 
         public override int GetHashCode()
