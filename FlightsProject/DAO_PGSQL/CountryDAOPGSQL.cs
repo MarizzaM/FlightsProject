@@ -100,7 +100,7 @@ namespace FlightsProject
                 using var cmd = new NpgsqlCommand();
                 cmd.Connection = my_conn;
 
-                cmd.CommandText = $"UPDATE  countries SET countries.id = {c.Id}, countries.name = '{c.Name}'  WHERE countries.name = '{c.Name}'";
+                cmd.CommandText = $"UPDATE  countries SET countries.id = {c.Id}, countries.name = '{c.Name}'  WHERE countries.name = '{c.Id}'";
                 Console.WriteLine($"{c.Name} has been updeted successfully in table 'Country'");
             }
         }

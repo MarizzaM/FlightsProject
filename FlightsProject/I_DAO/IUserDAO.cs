@@ -8,6 +8,5 @@ namespace FlightsProject.I_DAO
     public interface IUserDAO : IBasicDb<User>
     {
         public User GetByUserName(string username);
-
     }
 }

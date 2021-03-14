@@ -13,6 +13,8 @@ namespace FlightsProject.POCO
         public DateTime Departure_Time { get; set; }
         public DateTime Landing_Time { get; set; }
         public int Tickets_Remaining { get; set; }
+        public string NameOfCountry { get; internal set; }
+        public string NameOfOriginCountry { get; internal set; }
 
         public Flight()
         {

@@ -1,5 +1,6 @@
 ﻿using FlightsProject.I_DAO;
 using FlightsProject.POCO;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,19 +10,78 @@ namespace FlightsProject.DAO_PGSQL
     class CustomerDAOPGSQL : ICustomerDAO
     {
         static string conn_string = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDB";
-        public void Add(Customer t)
+        public void Add(Customer c)
         {
-            throw new NotImplementedException();
+            using (var my_conn = new NpgsqlConnection(conn_string))
+            {
+                my_conn.Open();
+
+                using var cmd = new NpgsqlCommand();
+                cmd.Connection = my_conn;
+
+                cmd.CommandText = $"INSERT INTO Customers (First_Name , Last_Name , Address, Phone_No, Credit_Card_No, User_Id) " +
+                    $"VALUES ('{c.First_Name}', '{c.Last_Name}', '{c.Address}', '{c.Phone_No}', '{c.Credit_Card_No}', {c.User_Id})";
+                cmd.ExecuteNonQuery();
+                Console.WriteLine($"{c.First_Name} {c.Last_Name} inserted successfully to table 'Customers'");
+            }
         }
 
         public Customer Get(int id)
         {
-            throw new NotImplementedException();
-        }
+            using (var my_conn = new NpgsqlConnection(conn_string))
+            {
+                my_conn.Open();
+                string query = $"SELECT * FROM Customers WHERE Customers.Id = {id}";
 
+                NpgsqlCommand command = new NpgsqlCommand(query, my_conn);
+                command.CommandType = System.Data.CommandType.Text;
+
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Customer customer = new Customer
+                    {
+                        Id = (int)reader["Id"],
+                        First_Name = (string)reader["First_Name"],
+                        Last_Name = (string)reader["Last_Name"],
+                        Address = (string)reader["Address"],
+                        Phone_No = (string)reader["Phone_No"],
+                        Credit_Card_No = (string)reader["Credit_Card_No"],
+                        User_Id = (int)reader["User_Id"]
+                };
+                    return customer;
+                }
+            }
+            return null;
+        }
+        IList<Customer> customers = new List<Customer>();
         public IList<Customer> GetAll()
         {
-            throw new NotImplementedException();
+            using (var my_conn = new NpgsqlConnection(conn_string))
+            {
+                my_conn.Open();
+                string query = "SELECT * FROM Customers";
+
+                NpgsqlCommand command = new NpgsqlCommand(query, my_conn);
+                command.CommandType = System.Data.CommandType.Text;
+
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Customer customer = new Customer
+                    {
+                        Id = (int)reader["Id"],
+                        First_Name = (string)reader["First_Name"],
+                        Last_Name = (string)reader["Last_Name"],
+                        Address = (string)reader["Address"],
+                        Phone_No = (string)reader["Phone_No"],
+                        Credit_Card_No = (string)reader["Credit_Card_No"],
+                        User_Id = (int)reader["User_Id"]
+                    };
+                    customers.Add(customer);
+                }
+            }
+            return customers;
         }
 
         public Customer GetGetCustomerByUserName(string username)
@@ -29,14 +89,40 @@ namespace FlightsProject.DAO_PGSQL
             throw new NotImplementedException();
         }
 
-        public void Remove(Customer t)
+        public void Remove(Customer c)
         {
-            throw new NotImplementedException();
+            using (var my_conn = new NpgsqlConnection(conn_string))
+            {
+                my_conn.Open();
+
+                using var cmd = new NpgsqlCommand();
+                cmd.Connection = my_conn;
+
+                cmd.CommandText = $"DELETE FROM Customers WHERE Customers.id = {c.Id}";
+                cmd.ExecuteNonQuery();
+                Console.WriteLine($"{c.First_Name} {c.Last_Name} has been deleted successfully from table 'Customers'");
+            }
         }
 
-        public void Update(Customer t)
+        public void Update(Customer c)
         {
-            throw new NotImplementedException();
+            using (NpgsqlConnection my_conn = new NpgsqlConnection(conn_string))
+            {
+                my_conn.Open();
+
+                using var cmd = new NpgsqlCommand();
+                cmd.Connection = my_conn;
+
+                cmd.CommandText = $"UPDATE Customers SET Customers.Id = {c.Id}, " +
+                    $"Customers.First_Name  = {c.First_Name}, " +
+                    $"Customers.Last_Name = {c.Last_Name}, " +
+                    $"Customers.Address = {c.Address},  " +
+                    $"Customers.Phone_No = {c.Phone_No}, " +
+                    $"Customers.Credit_Card_No = {c.Credit_Card_No},  " +
+                    $"Customers.User_Id = {c.User_Id} " +
+                    $"WHERE Customers.id = {c.Id}";
+                Console.WriteLine($"{c.First_Name} {c.Last_Name} has been updeted successfully in table 'Customers'");
+            }
         }
     }
 }

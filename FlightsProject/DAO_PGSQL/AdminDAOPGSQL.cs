@@ -92,7 +92,7 @@ namespace FlightsProject
 
                 cmd.CommandText = $"DELETE FROM administrators WHERE administrators.id = {a.Id}";
                 cmd.ExecuteNonQuery();
-                Console.WriteLine($"{a.First_Name} {a.Last_Name} has been deleted successfully from table 'Admin'");
+                Console.WriteLine($"{a.First_Name} {a.Last_Name} has been deleted successfully from table 'Admins'");
             }
         }
         public void Update(Admin a)

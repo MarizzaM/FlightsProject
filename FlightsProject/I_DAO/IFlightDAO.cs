@@ -7,12 +7,12 @@ namespace FlightsProject.I_DAO
 {
     public interface IFlightDAO : IBasicDb<Flight>
     {
-        public IList<Flight> GetAllFlightsVacancy();
+        public Dictionary<Flight, int> GetAllFlightsVacancy();
+        public IList<Flight> GetFlightsByOriginCountry(int countryCode);
+        public IList<Flight> GetFlightsByDestinationCountry(int countryCode);
+        public IList<Flight> GetFlightsByDepatrureDate(DateTime departureDate);
+        public IList<Flight> GetFlightsByLandingDate(DateTime landingDate);
+        public IList<Flight> GetFlightsByCustomer(Customer customer);
         public Flight GetFlightsById(int id);
-        public Flight GetFlightsByCustomer(string customer);
-        public Flight GetFlightsByDepartureDate(DateTime dt);
-        public Flight GetFlightsByDestinationCountry(string country);
-        public Flight GetFlightsByLandingDate(DateTime dt);
-        public Flight GetFlightsByOriginCountry(string country);
     }
 }
