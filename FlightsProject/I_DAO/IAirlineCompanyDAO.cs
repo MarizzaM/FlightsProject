@@ -8,7 +8,7 @@ namespace FlightsProject.I_DAO
 {
     public interface IAirlineCompanyDAO : IBasicDb<AirlineCompany>
     {
-        public AirlineCompany GetAirlineByUsename(string username);
-        public AirlineCompany GetAirlineByCountry(string country);
+        public object GetAirlineByUsename(string username);
+        public object GetAirlineByCountry(string country);
     }
 }
