@@ -13,6 +13,8 @@ namespace FlightsProject.POCO
         public string NameOfAirline { get; internal set; }
         public string Username { get; internal set; }
         public string NameOfCountry { get; internal set; }
+        public string Password { get; set; }
+        public string UserName { get; set; }
 
         public AirlineCompany()
         {

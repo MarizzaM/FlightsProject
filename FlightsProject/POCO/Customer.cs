@@ -13,6 +13,8 @@ namespace FlightsProject.POCO
         public string Phone_No { get; set; }
         public string Credit_Card_No { get; set; }
         public int User_Id { get; set; }
+        public string Password { get; set; }
+        public string UserName { get; set; }
 
         public Customer()
         {
