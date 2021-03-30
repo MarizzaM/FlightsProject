@@ -15,6 +15,8 @@ namespace FlightsProject.Login
         public LoginService()
         {
             _airlineCompanyDAO = new AirlineCompanyDAOPGSQL();
+            _customerDAO = new CustomerDAOPGSQL();
+            _adminDAO = new AdminDAOPGSQL();
         }
         public bool TryAdminLogin(string username, string password, out LoginToken<Admin> token)
         {

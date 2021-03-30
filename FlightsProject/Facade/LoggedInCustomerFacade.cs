@@ -11,17 +11,35 @@ namespace FlightsProject.Facade
     {
         public void CancelTicket(LoginToken<Customer> token, Ticket ticket)
         {
-            throw new NotImplementedException();
+            Flight flight = new Flight();
+            if (token != null && ticket.Id_Customer == token.User.Id) {
+                _customerDAO.Remove(token.User);
+                
+                if (ticket.Id_Flight == flight.Id) {
+                    flight.Tickets_Remaining++;
+                }
+            }
         }
 
         public IList<Flight> GetAllMyFlights(LoginToken<Customer> token)
         {
-            throw new NotImplementedException();
+            if (token != null) {
+                return _flightDAO.GetFlightsByCustomer(token.User);
+            }
+            else
+                throw new Exception("Provided username or password is incorrect");
         }
 
         public Ticket PurchaseTicket(LoginToken<Customer> token, Flight flight)
         {
-            throw new NotImplementedException();
+            
+            if (token != null) {
+                Ticket ticket = new Ticket(flight.Id, token.User.Id);
+                _ticketDAO.Add(ticket);
+                return ticket;
+            }
+            else
+                throw new Exception("Provided username or password is incorrect");
         }
     }
 }

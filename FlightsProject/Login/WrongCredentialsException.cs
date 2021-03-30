@@ -4,7 +4,11 @@ using System.Text;
 
 namespace FlightsProject.Login
 {
-    public class WrongCredentialsException
+    public class WrongCredentialsException : Exception
     {
+        public WrongCredentialsException()
+        {
+            Console.WriteLine("Provided username or password is incorrect");
+        }
     }
 }
