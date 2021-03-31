@@ -11,6 +11,8 @@ namespace FlightsProject
         public string Last_Name { get; set; }
         public int Level { get; set; }
         public int User_id { get; set; }
+        public string Password { get; set; }
+        public string UserName { get; set; }
 
         public Admin()
         {

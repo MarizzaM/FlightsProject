@@ -26,20 +26,17 @@ namespace FlightsProject.Facade
             if (token != null) {
                 return _flightDAO.GetFlightsByCustomer(token.User);
             }
-            else
-                throw new Exception("Provided username or password is incorrect");
+            return null;
         }
 
         public Ticket PurchaseTicket(LoginToken<Customer> token, Flight flight)
         {
-            
             if (token != null) {
                 Ticket ticket = new Ticket(flight.Id, token.User.Id);
                 _ticketDAO.Add(ticket);
                 return ticket;
             }
-            else
-                throw new Exception("Provided username or password is incorrect");
+            return null;
         }
     }
 }

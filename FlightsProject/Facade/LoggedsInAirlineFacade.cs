@@ -11,37 +11,55 @@ namespace FlightsProject.Facade
     {
         public void CancelFlight(LoginToken<AirlineCompany> token, Flight flight)
         {
-            throw new NotImplementedException();
+            if (token != null && token.User.Id == flight.Airline_Company_Id) {
+                _flightDAO.Remove(flight);
+            }
         }
 
         public void ChangeMyPassword(LoginToken<AirlineCompany> token, string oldPassword, string newPassword)
         {
-            throw new NotImplementedException();
+            if (token != null && token.User.Password == oldPassword ) {
+                token.User.Password = newPassword;
+            }
         }
 
         public void CreateFlight(LoginToken<AirlineCompany> token, Flight flight)
         {
-            throw new NotImplementedException();
+            if (token != null && flight.Equals(null)) {
+                _flightDAO.Add(flight);
+            }
         }
 
-        public IList<Ticket> GetAllFlights(LoginToken<AirlineCompany> token)
+        public IList<Flight> GetAllFlights(LoginToken<AirlineCompany> token)
         {
-            throw new NotImplementedException();
+            if (token != null) {
+                return _flightDAO.GetAll();
+            }
+            return null;
         }
 
         public IList<Ticket> GetAllTickets(LoginToken<AirlineCompany> token)
         {
-            throw new NotImplementedException();
+            if (token != null)
+            {
+                return _ticketDAO.GetAll();
+            }
+            return null;
         }
 
         public void MofidyAirlineDetails(LoginToken<AirlineCompany> token, AirlineCompany airline)
         {
-            throw new NotImplementedException();
+            if (token != null && token.User.Id == airline.Id) {
+                _airlineDAO.Update(airline);
+            }
         }
 
         public void UpdateFlight(LoginToken<AirlineCompany> token, Flight flight)
         {
-            throw new NotImplementedException();
+            if (token != null && token.User.Id == flight.Airline_Company_Id)
+            {
+                _flightDAO.Update(flight);
+            }
         }
     }
 }

@@ -20,11 +20,24 @@ namespace FlightsProject.Login
         }
         public bool TryAdminLogin(string username, string password, out LoginToken<Admin> token)
         {
-            if (username.ToUpper() == FlightCenterConfig.ADMIN_NAME && password == FlightCenterConfig.ADMIN_PASSWORD)
+            if (username == FlightCenterConfig.ADMIN_NAME && password == FlightCenterConfig.ADMIN_PASSWORD)
             {
                 token = new LoginToken<Admin>();
                 token.User = new Admin();
                 return true;
+            }
+
+            Admin admin = new Admin();
+            if (admin != null)
+            {
+                if (admin.Password == password)
+                {
+                    token = new LoginToken<Admin>() { User = admin };
+                    return true;
+                }
+                throw new WrongCredentialsException();
+                // wrong passowrd exception
+                // catch
             }
 
             token = null;
@@ -41,7 +54,7 @@ namespace FlightsProject.Login
                     token = new LoginToken<AirlineCompany>() { User = company };
                     return true;
                 }
-    
+                throw new WrongCredentialsException();
                 // wrong passowrd exception
                 // catch
             }
@@ -59,7 +72,7 @@ namespace FlightsProject.Login
                     token = new LoginToken<Customer>() { User = customer };
                     return true;
                 }
-
+                throw new WrongCredentialsException();
                 // wrong passowrd exception
                 // catch
             }

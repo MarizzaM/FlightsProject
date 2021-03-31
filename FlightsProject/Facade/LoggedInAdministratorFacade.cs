@@ -11,52 +11,92 @@ namespace FlightsProject.Facade
     {
         public void CreateAdmin(LoginToken<Admin> token, Admin admin)
         {
-            throw new NotImplementedException();
+            if (token != null && token.User.UserName == FlightCenterConfig.ADMIN_NAME && token.User.Password == FlightCenterConfig.ADMIN_PASSWORD) {
+                if (_adminDAO.Get(admin.Id) == null) {
+                    _adminDAO.Add(admin);
+                }
+            }
         }
 
         public void CreateNewAirline(LoginToken<Admin> token, AirlineCompany airline)
         {
-            throw new NotImplementedException();
+            if (token != null && token.User.UserName == FlightCenterConfig.ADMIN_NAME && token.User.Password == FlightCenterConfig.ADMIN_PASSWORD)
+            {
+                if (_airlineDAO.Get(airline.Id) == null)
+                {
+                    _airlineDAO.Add(airline);
+                }
+            }
         }
 
         public void CreateNewCustomer(LoginToken<Admin> token, Customer customer)
         {
-            throw new NotImplementedException();
+            if (token != null && token.User.UserName == FlightCenterConfig.ADMIN_NAME && token.User.Password == FlightCenterConfig.ADMIN_PASSWORD)
+            {
+                if (_customerDAO.Get(customer.Id) == null)
+                {
+                    _customerDAO.Add(customer);
+                }
+            }
         }
 
         public IList<Customer> GetAllCustomers(LoginToken<Admin> token)
         {
-            throw new NotImplementedException();
+            if (token != null) {
+                return _customerDAO.GetAll();
+            }
+            return null;
         }
 
         public void RemoveAdmin(LoginToken<Admin> token, Admin admin)
         {
-            throw new NotImplementedException();
+            if (token != null && token.User.Level > admin.Level && token.User.Level == 3 ||
+                token != null && token.User.UserName == FlightCenterConfig.ADMIN_NAME && token.User.Password == FlightCenterConfig.ADMIN_PASSWORD) {
+                _adminDAO.Remove(admin);
+            }
         }
 
         public void RemoveAirline(LoginToken<Admin> token, AirlineCompany airline)
         {
-            throw new NotImplementedException();
+            if (token != null && token.User.Level >= 2 ||
+                token != null && token.User.UserName == FlightCenterConfig.ADMIN_NAME && token.User.Password == FlightCenterConfig.ADMIN_PASSWORD)
+            {
+                _airlineDAO.Remove(airline);
+            }
         }
 
         public void RemoveCustomer(LoginToken<Admin> token, Customer customer)
         {
-            throw new NotImplementedException();
+            if (token != null && token.User.Level >= 2 ||
+                token != null && token.User.UserName == FlightCenterConfig.ADMIN_NAME && token.User.Password == FlightCenterConfig.ADMIN_PASSWORD)
+            {
+                _customerDAO.Remove(customer);
+            }
         }
 
         public void UpdateAdmin(LoginToken<Admin> token, Admin admin)
         {
-            throw new NotImplementedException();
+            if (token != null && token.User.Level > admin.Level && token.User.Level == 3 ||
+                token != null && token.User.UserName == FlightCenterConfig.ADMIN_NAME && token.User.Password == FlightCenterConfig.ADMIN_PASSWORD)
+            {
+                _adminDAO.Update(admin);
+            }
         }
 
         public void UpdateAirlineDetails(LoginToken<Admin> token, AirlineCompany customer)
         {
-            throw new NotImplementedException();
+            if (token != null)
+            {
+                _airlineDAO.Update(customer);
+            }
         }
 
         public void UpdateCustomerDetails(LoginToken<Admin> token, Customer customer)
         {
-            throw new NotImplementedException();
+            if (token != null)
+            {
+                 _customerDAO.Update(customer);
+            }
         }
     }
 }
