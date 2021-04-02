@@ -21,8 +21,8 @@ namespace FlightsProject
             Task.Run(() => {
                 while (true)
                 {
-                    oldTickets.copyToTicketHistory();
-                    oldFlights.copyToFlighsHistory();
+                    oldTickets.transferToTicketHistory();
+                    oldFlights.transferToFlighsHistory();
 
                     Thread.Sleep(86_400_000); //24 hours
                 }

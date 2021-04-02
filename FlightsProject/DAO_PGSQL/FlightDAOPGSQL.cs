@@ -322,7 +322,7 @@ namespace FlightsProject.DAO_PGSQL
             return null;
         }
 
-        public void copyToFlighsHistory()
+        public void transferToFlighsHistory()
         {
             using (var my_conn = new NpgsqlConnection(conn_string))
             {

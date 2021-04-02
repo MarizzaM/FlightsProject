@@ -105,7 +105,7 @@ namespace FlightsProject.DAO_PGSQL
                 Console.WriteLine($"ticket #{t.Id} has been updeted successfully in table 'Tickets'");
             }
         }
-        public void copyToTicketHistory()
+        public void transferToTicketHistory()
         {
             using (var my_conn = new NpgsqlConnection(conn_string))
             {
