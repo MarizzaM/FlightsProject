@@ -321,5 +321,22 @@ namespace FlightsProject.DAO_PGSQL
             }
             return null;
         }
+
+        public void copyToFlighsHistory()
+        {
+            using (var my_conn = new NpgsqlConnection(conn_string))
+            {
+                my_conn.Open();
+
+                using var cmd = new NpgsqlCommand();
+                cmd.Connection = my_conn;
+
+                cmd.CommandText = $"INSERT INTO flighs_history(Airline_Company_Id, Origin_Country_Id, Destination_Country_Id, Departure_Time, Landing_Time, Tickets_Remaining) " +
+                    $"SELECT* from flights where flights.landing_time < (NOW() + interval '3 hour'); " +
+                    $"DELETE from flights where flights.landing_time < (NOW() + interval '3 hour');";
+                cmd.ExecuteNonQuery();
+                Console.WriteLine($"Flights inserted successfully to table 'Flights'");
+            }
+        }
     }
 }
