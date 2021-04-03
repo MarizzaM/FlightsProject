@@ -1,14 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿  using System;
+using System.Runtime.Serialization;
 
 namespace FlightsProject.Login
 {
-    public class WrongCredentialsException : Exception
+    [Serializable]
+    internal class WrongCredentialsException : Exception
     {
         public WrongCredentialsException()
         {
-            Console.WriteLine("Provided username or password is incorrect");
+        }
+
+        public WrongCredentialsException(string message) : base(message)
+        {
+        }
+
+        public WrongCredentialsException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected WrongCredentialsException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
         }
     }
 }
