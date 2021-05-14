@@ -7,9 +7,9 @@ using System.Text;
 
 namespace FlightsProject.DAO_PGSQL
 {
-    class AirlineCompanyDAOPGSQL : IAirlineCompanyDAO
+    public class AirlineCompanyDAOPGSQL : IAirlineCompanyDAO
     {
-        static string conn_string = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDB";
+        static string conn_string = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDBTest";
         public void Add(AirlineCompany ac)
         {
             using (var my_conn = new NpgsqlConnection(conn_string))
@@ -19,7 +19,7 @@ namespace FlightsProject.DAO_PGSQL
                 using var cmd = new NpgsqlCommand();
                 cmd.Connection = my_conn;
 
-                cmd.CommandText = $"INSERT INTO Airline_Companies (Name, CountryId, User_Id) VALUES ('{ac.Name}', {ac.Country_Id}, {ac.User_Id})";
+                cmd.CommandText = $"INSERT INTO Airline_Companies (Name, countryid, User_Id) VALUES ('{ac.Name}', {ac.Country_Id}, {ac.User_Id})";
                 cmd.ExecuteNonQuery();
                 Console.WriteLine($"{ac.Name} inserted successfully to table 'Airline_Companies'");
             }
@@ -115,7 +115,7 @@ namespace FlightsProject.DAO_PGSQL
             {
                 my_conn.Open();
                 string query = $"SELECT Airline_Companies.id, Airline_Companies.name, Airline_Companies.countryid, Airline_Companies.user_id, Users.username " +
-                    $"FROM Airline_Companies JOIN Users ON Airline_Companies.Users_id = Users.id WHERE Users.username = {name} ";
+                    $"FROM Airline_Companies JOIN Users ON Airline_Companies.User_id = Users.id WHERE Users.username = '{name}' ";
 
                 NpgsqlCommand command = new NpgsqlCommand(query, my_conn);
                 command.CommandType = System.Data.CommandType.Text;
@@ -125,10 +125,10 @@ namespace FlightsProject.DAO_PGSQL
                 {
                     AirlineCompany airline = new AirlineCompany
                     {
-                        Id = (int)reader["Id"],
-                        NameOfAirline = (string)reader["name_of_airline_company"],
-                        Country_Id = (int)reader["Country_Id"],
-                        User_Id = (int)reader["User_Id"],
+                        Id = (long)reader["Id"],
+                        NameOfAirline = (string)reader["name"],
+                        Country_Id = (int)reader["CountryId"],
+                        User_Id = (long)reader["User_Id"],
                         Username = (string)reader["Username"]
                     };
                     return airline;
@@ -164,5 +164,6 @@ namespace FlightsProject.DAO_PGSQL
             }
             return airlines;
         }
+
     }
 }

@@ -10,7 +10,7 @@ namespace FlightsProject
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
         public int Level { get; set; }
-        public int User_id { get; set; }
+        public long User_id { get; set; }
         public string Password { get; set; }
         public string UserName { get; set; }
 
@@ -18,7 +18,7 @@ namespace FlightsProject
         {
         }
 
-        public Admin(string first_Name, string last_Name, int level, int user_id)
+        public Admin(string first_Name, string last_Name, int level, long user_id)
         {
             First_Name = first_Name;
             Last_Name = last_Name;

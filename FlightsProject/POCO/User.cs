@@ -6,7 +6,7 @@ namespace FlightsProject.POCO
 {
     public class User : IPoco
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
@@ -51,12 +51,15 @@ namespace FlightsProject.POCO
 
         public override int GetHashCode()
         {
-            return this.Id;
+            return HashCode.Combine(Id);
         }
+
 
         public override string ToString()
         {
             return $"{Id} {Username} {Password} {Email} {User_Role}";
         }
+
+
     }
 }

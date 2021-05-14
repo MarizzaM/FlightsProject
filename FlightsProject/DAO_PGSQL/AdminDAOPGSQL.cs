@@ -7,7 +7,7 @@ namespace FlightsProject
 {
     public class AdminDAOPGSQL : IAdminDAO
     {
-        static string conn_string = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDB";
+        static string conn_string = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDBTest";
 
 
         public void Add(Admin a)
@@ -19,7 +19,7 @@ namespace FlightsProject
                 using var cmd = new NpgsqlCommand();
                 cmd.Connection = my_conn;
 
-                cmd.CommandText = $"INSERT INTO Administrators (First_Name , Last_Name , Level, User_id ) VALUES ('{a.First_Name}', '{a.Last_Name}', {a.Level}, {a.User_id})";
+                cmd.CommandText = $"INSERT INTO administrators (first_name, last_name, level, user_id ) VALUES ('{a.First_Name}', '{a.Last_Name}', {a.Level}, {a.User_id})";
                 cmd.ExecuteNonQuery();
                 Console.WriteLine($"{a.First_Name} {a.Last_Name} inserted successfully to table 'Admin'");
             }
@@ -44,7 +44,7 @@ namespace FlightsProject
                         First_Name  = (string)reader["First_Name"],
                         Last_Name = (string)reader["Last_Name"],
                         Level  = (int)reader["Level"],
-                        User_id = (int)reader["User_id"],
+                        User_id = (long)reader["User_id"],
                     };
 
                     return admin;
@@ -72,7 +72,7 @@ namespace FlightsProject
                         First_Name = (string)reader["First_Name"],
                         Last_Name = (string)reader["Last_Name"],
                         Level = (int)reader["Level"],
-                        User_id = (int)reader["User_id"],
+                        User_id = (long)reader["User_id"],
                     };
 
                     admins.Add(admin);

@@ -6,8 +6,8 @@ namespace FlightsProject.POCO
 {
     public class Flight : IPoco
     {
-        public int Id { get; set; }
-        public int Airline_Company_Id { get; set; }
+        public long Id { get; set; }
+        public long Airline_Company_Id { get; set; }
         public int Origin_Country_Id { get; set; }
         public int Destination_Country_Id { get; set; }
         public DateTime Departure_Time { get; set; }
@@ -20,7 +20,7 @@ namespace FlightsProject.POCO
         {
         }
 
-        public Flight(int airline_Company_Id, int origin_Country_Id, int destination_Country_Id, DateTime departure_Time, DateTime landing_Time, int tickets_Remaining)
+        public Flight(long airline_Company_Id, int origin_Country_Id, int destination_Country_Id, DateTime departure_Time, DateTime landing_Time, int tickets_Remaining)
         {
             Airline_Company_Id = airline_Company_Id;
             Origin_Country_Id = origin_Country_Id;
@@ -58,7 +58,7 @@ namespace FlightsProject.POCO
 
         public override int GetHashCode()
         {
-            return this.Id;
+            return HashCode.Combine(Id);
         }
 
         public override string ToString()
@@ -66,6 +66,7 @@ namespace FlightsProject.POCO
             return $"{Id} {Airline_Company_Id} {Origin_Country_Id} {Destination_Country_Id} {Departure_Time}" +
                 $"{Landing_Time} {Tickets_Remaining}";
         }
+
 
     }
 }

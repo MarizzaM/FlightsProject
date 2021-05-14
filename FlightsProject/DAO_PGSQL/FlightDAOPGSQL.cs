@@ -9,7 +9,7 @@ namespace FlightsProject.DAO_PGSQL
 {
     public class FlightDAOPGSQL : IFlightDAO
     {
-        static string conn_string = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDB";
+        static string conn_string = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDBTest";
         public void Add(Flight f)
         {
             using (var my_conn = new NpgsqlConnection(conn_string))
@@ -20,7 +20,7 @@ namespace FlightsProject.DAO_PGSQL
                 cmd.Connection = my_conn;
 
                 cmd.CommandText = $"INSERT INTO flights (airline_company_id, origin_country_id, destination_country_id, departure_time, landing_time, tickets_remaining) " +
-                    $"VALUES ('{f.Airline_Company_Id}', '{f.Origin_Country_Id}', '{f.Destination_Country_Id}', {f.Departure_Time}, {f.Landing_Time}, {f.Tickets_Remaining})";
+                    $"VALUES ({f.Airline_Company_Id}, {f.Origin_Country_Id}, {f.Destination_Country_Id}, '{f.Departure_Time}', '{f.Landing_Time}', {f.Tickets_Remaining})";
                 cmd.ExecuteNonQuery();
                 Console.WriteLine($"Flight inserted successfully to table 'Flights'");
             }
@@ -71,8 +71,8 @@ namespace FlightsProject.DAO_PGSQL
                 {
                     Flight flight = new Flight
                     {
-                        Id = (int)reader["Id"],
-                        Airline_Company_Id = (int)reader["Airline_Company_Id"],
+                        Id = (long)reader["Id"],
+                        Airline_Company_Id = (long)reader["Airline_Company_Id"],
                         Origin_Country_Id = (int)reader["Origin_Country_Id"],
                         Destination_Country_Id = (int)reader["Destination_Country_Id"],
                         Departure_Time = (DateTime)reader["Departure_Time"],
@@ -308,8 +308,8 @@ namespace FlightsProject.DAO_PGSQL
                 {
                     Flight flight = new Flight
                     {
-                        Id = (int)reader["Id"],
-                        Airline_Company_Id = (int)reader["Airline_Company_Id"],
+                        Id = (long)reader["Id"],
+                        Airline_Company_Id = (long)reader["Airline_Company_Id"],
                         Origin_Country_Id = (int)reader["Origin_Country_Id"],
                         Destination_Country_Id = (int)reader["Destination_Country_Id"],
                         Departure_Time = (DateTime)reader["Departure_Time"],

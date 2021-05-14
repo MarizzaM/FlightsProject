@@ -9,7 +9,7 @@ namespace FlightsProject.DAO_PGSQL
 {
     public class UserDAOPGSQL : IUserDAO
     {
-        static string conn_string = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDB";
+        static string conn_string = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDBTest";
         public void Add(User u)
         {
             using (var my_conn = new NpgsqlConnection(conn_string))
@@ -19,10 +19,10 @@ namespace FlightsProject.DAO_PGSQL
                 using var cmd = new NpgsqlCommand();
                 cmd.Connection = my_conn;
 
-                cmd.CommandText = $"INSERT INTO Users (Username, Password, Email, User_Role ) " +
+                cmd.CommandText = $"INSERT INTO Users (Username, Password, Email, User_Role) " +
                     $"VALUES ('{u.Username}', '{u.Password}', '{u.Email}', {u.User_Role})";
                 cmd.ExecuteNonQuery();
-                Console.WriteLine($"'{u.Username} inserted successfully to table 'Admin'");
+                Console.WriteLine($"'{u.Username} inserted successfully to table 'Users'");
             }
         }
 
@@ -41,7 +41,7 @@ namespace FlightsProject.DAO_PGSQL
                 {
                     User user = new User
                     {
-                        Id = (int)reader["Id"],
+                        Id = (long)reader["Id"],
                         Username = (string)reader["Username"],
                         Password = (string)reader["Password"],
                         Email = (string)reader["Email"],
@@ -58,7 +58,7 @@ namespace FlightsProject.DAO_PGSQL
             using (var my_conn = new NpgsqlConnection(conn_string))
             {
                 my_conn.Open();
-                string query = "SELECT * FROM Users";
+                string query = "SELECT * FROM users";
 
                 NpgsqlCommand command = new NpgsqlCommand(query, my_conn);
                 command.CommandType = System.Data.CommandType.Text;
@@ -68,7 +68,7 @@ namespace FlightsProject.DAO_PGSQL
                 {
                     User user = new User
                     {
-                        Id = (int)reader["Id"],
+                        Id = (long)reader["Id"],
                         Username = (string)reader["Username"],
                         Password = (string)reader["Password"],
                         Email = (string)reader["Email"],
@@ -85,7 +85,7 @@ namespace FlightsProject.DAO_PGSQL
             using (var my_conn = new NpgsqlConnection(conn_string))
             {
                 my_conn.Open();
-                string query = $"SELECT * FROM Users WHERE Users.Username = {username}";
+                string query = $"SELECT * FROM users WHERE users.username = '{username}'";
 
                 NpgsqlCommand command = new NpgsqlCommand(query, my_conn);
                 command.CommandType = System.Data.CommandType.Text;
@@ -95,7 +95,7 @@ namespace FlightsProject.DAO_PGSQL
                 {
                     User user = new User
                     {
-                        Id = (int)reader["Id"],
+                        Id = (long)reader["Id"],
                         Username = (string)reader["Username"],
                         Password = (string)reader["Password"],
                         Email = (string)reader["Email"],

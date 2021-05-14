@@ -32,7 +32,7 @@ namespace FlightsProject.Facade
         public Ticket PurchaseTicket(LoginToken<Customer> token, Flight flight)
         {
             if (token != null) {
-                Ticket ticket = new Ticket(flight.Id, token.User.Id);
+                Ticket ticket = new Ticket((int)flight.Id, token.User.Id);
                 _ticketDAO.Add(ticket);
                 return ticket;
             }

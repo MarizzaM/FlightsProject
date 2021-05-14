@@ -6,10 +6,10 @@ namespace FlightsProject.POCO
 {
     public class AirlineCompany : IPoco, IUser
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public int Country_Id { get; set; }
-        public int User_Id { get; set; }
+        public long User_Id { get; set; }
         public string NameOfAirline { get; internal set; }
         public string Username { get; internal set; }
         public string NameOfCountry { get; internal set; }
@@ -20,7 +20,7 @@ namespace FlightsProject.POCO
         {
         }
 
-        public AirlineCompany(string name, int country_Id, int user_Id)
+        public AirlineCompany(string name, int country_Id, long user_Id)
         {
             Name = name;
             Country_Id = country_Id;
@@ -56,12 +56,14 @@ namespace FlightsProject.POCO
 
         public override int GetHashCode()
         {
-            return this.Id;
+            return HashCode.Combine(Id);
         }
 
         public override string ToString()
         {
             return $"{Id} {Name} {Country_Id} {User_Id}";
         }
+
+
     }
 }

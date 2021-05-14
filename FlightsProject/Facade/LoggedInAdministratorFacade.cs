@@ -22,7 +22,7 @@ namespace FlightsProject.Facade
         {
             if (token != null && token.User.UserName == FlightCenterConfig.ADMIN_NAME && token.User.Password == FlightCenterConfig.ADMIN_PASSWORD)
             {
-                if (_airlineDAO.Get(airline.Id) == null)
+                if (_airlineDAO.Get((int)airline.Id) == null)
                 {
                     _airlineDAO.Add(airline);
                 }
