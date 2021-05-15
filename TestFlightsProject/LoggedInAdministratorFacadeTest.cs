@@ -38,27 +38,27 @@ namespace TestFlightsProject
         {
 
 
-            UserDAOPGSQL user = new UserDAOPGSQL();
-            AdminDAOPGSQL admin = new AdminDAOPGSQL();
+            //UserDAOPGSQL user = new UserDAOPGSQL();
+            //AdminDAOPGSQL admin = new AdminDAOPGSQL();
 
-            DeleteAllData();
+            //DeleteAllData();
 
-            User manager1 = new User(TestData.CreateAdminTest_username,
-                TestData.CreateAdminTest_password,
-                TestData.CreateAdminTest_email,
-                TestData.CreateAdminTest_user_role);
-            user.Add(manager1);
+            //User manager1 = new User(TestData.CreateAdminTest_username,
+            //    TestData.CreateAdminTest_password,
+            //    TestData.CreateAdminTest_email,
+            //    TestData.CreateAdminTest_user_role);
+            //user.Add(manager1);
 
-            User u = user.GetByUserName(TestData.CreateAdminTest_username);
+            //User u = user.GetByUserName(TestData.CreateAdminTest_username);
 
-            Admin admin1 = new Admin(TestData.CreateAdminTest_firstName,
-                TestData.CreateAdminTest_lastName,
-                TestData.CreateAdminTest_level,
-                (long)u.Id);
+            //Admin admin1 = new Admin(TestData.CreateAdminTest_firstName,
+            //    TestData.CreateAdminTest_lastName,
+            //    TestData.CreateAdminTest_level,
+            //    (long)u.Id);
 
-            admin.Add(admin1);
+            //admin.Add(admin1);
 
-            Assert.AreNotEqual(admin, 0);
+            //Assert.AreNotEqual(admin, 0);
 
         }
         [TestMethod]
