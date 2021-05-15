@@ -41,8 +41,8 @@ namespace FlightsProject.DAO_PGSQL
                 {
                     Flight flight = new Flight
                     {
-                        Id = (int)reader["Id"],
-                        Airline_Company_Id = (int)reader["Airline_Company_Id"],
+                        Id = (long)reader["Id"],
+                        Airline_Company_Id = (long)reader["Airline_Company_Id"],
                         Origin_Country_Id = (int)reader["Origin_Country_Id"],
                         Destination_Country_Id = (int)reader["Destination_Country_Id"],
                         Departure_Time = (DateTime)reader["Departure_Time"],
@@ -137,8 +137,8 @@ namespace FlightsProject.DAO_PGSQL
                 {
                     Flight flight = new Flight
                     {
-                        Id = (int)reader["Id"],
-                        Airline_Company_Id = (int)reader["Airline_Company_Id"],
+                        Id = (long)reader["Id"],
+                        Airline_Company_Id = (long)reader["Airline_Company_Id"],
                         Origin_Country_Id = (int)reader["Origin_Country_Id"],
                         Destination_Country_Id = (int)reader["Destination_Country_Id"],
                         Departure_Time = (DateTime)reader["Departure_Time"],
@@ -169,8 +169,8 @@ namespace FlightsProject.DAO_PGSQL
                 {
                     Flight flight = new Flight
                     {
-                        Id = (int)reader["Id"],
-                        Airline_Company_Id = (int)reader["Airline_Company_Id"],
+                        Id = (long)reader["Id"],
+                        Airline_Company_Id = (long)reader["Airline_Company_Id"],
                         Origin_Country_Id = (int)reader["Origin_Country_Id"],
                         NameOfOriginCountry = (string)reader["name_of_origin_country"],
                         Destination_Country_Id = (int)reader["Destination_Country_Id"],
@@ -202,11 +202,11 @@ namespace FlightsProject.DAO_PGSQL
                 {
                     Flight flight = new Flight
                     {
-                        Id = (int)reader["Id"],
-                        Airline_Company_Id = (int)reader["Airline_Company_Id"],
+                        Id = (long)reader["Id"],
+                        Airline_Company_Id = (long)reader["Airline_Company_Id"],
                         Origin_Country_Id = (int)reader["Origin_Country_Id"],
-                        NameOfOriginCountry = (string)reader["name_of_origin_country"],
                         Destination_Country_Id = (int)reader["Destination_Country_Id"],
+                        NameOfOriginCountry = (string)reader["name_of_destination_country"],
                         Departure_Time = (DateTime)reader["Departure_Time"],
                         Landing_Time = (DateTime)reader["Landing_Time"],
                         Tickets_Remaining = (int)reader["Tickets_Remaining"]
@@ -224,7 +224,7 @@ namespace FlightsProject.DAO_PGSQL
             using (var my_conn = new NpgsqlConnection(conn_string))
             {
                 my_conn.Open();
-                string query = $"SELECT * FROM flights WHERE flights.Departure_Time = {departureDate}";
+                string query = $"SELECT * FROM flights WHERE flights.Departure_Time = '{departureDate}'";
 
                 NpgsqlCommand command = new NpgsqlCommand(query, my_conn);
                 command.CommandType = System.Data.CommandType.Text;
@@ -234,8 +234,8 @@ namespace FlightsProject.DAO_PGSQL
                 {
                     Flight flight = new Flight
                     {
-                        Id = (int)reader["Id"],
-                        Airline_Company_Id = (int)reader["Airline_Company_Id"],
+                        Id = (long)reader["Id"],
+                        Airline_Company_Id = (long)reader["Airline_Company_Id"],
                         Origin_Country_Id = (int)reader["Origin_Country_Id"],
                         Destination_Country_Id = (int)reader["Destination_Country_Id"],
                         Departure_Time = (DateTime)reader["Departure_Time"],
@@ -254,7 +254,7 @@ namespace FlightsProject.DAO_PGSQL
             using (var my_conn = new NpgsqlConnection(conn_string))
             {
                 my_conn.Open();
-                string query = $"SELECT * FROM flights WHERE flights.Landing_Time = {landingDate}";
+                string query = $"SELECT * FROM flights WHERE flights.Landing_Time = '{landingDate}'";
 
                 NpgsqlCommand command = new NpgsqlCommand(query, my_conn);
                 command.CommandType = System.Data.CommandType.Text;
@@ -264,8 +264,8 @@ namespace FlightsProject.DAO_PGSQL
                 {
                     Flight flight = new Flight
                     {
-                        Id = (int)reader["Id"],
-                        Airline_Company_Id = (int)reader["Airline_Company_Id"],
+                        Id = (long)reader["Id"],
+                        Airline_Company_Id = (long)reader["Airline_Company_Id"],
                         Origin_Country_Id = (int)reader["Origin_Country_Id"],
                         Destination_Country_Id = (int)reader["Destination_Country_Id"],
                         Departure_Time = (DateTime)reader["Departure_Time"],

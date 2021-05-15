@@ -67,10 +67,10 @@ namespace FlightsProject.DAO_PGSQL
                 {
                     AirlineCompany airline = new AirlineCompany
                     {
-                        Id = (int)reader["Id"],
+                        Id = (long)reader["Id"],
                         Name = (string)reader["Name"],
-                        Country_Id = (int)reader["Country_Id"],
-                        User_Id = (int)reader["User_Id"]
+                        Country_Id = (int)reader["CountryId"],
+                        User_Id = (long)reader["User_Id"]
                     };
                     airlines.Add(airline);
                 }

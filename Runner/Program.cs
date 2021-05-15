@@ -152,25 +152,19 @@ namespace Runner
                 Airline_Company_Id = (long)a_id,
                 Origin_Country_Id = 1,
                 Destination_Country_Id = 2,
-                Departure_Time = DateTime.ParseExact("2019-07-08 18:00:00", "yyyy-MM-dd HH:mm:ss", null),
-                Landing_Time = DateTime.ParseExact("2019-07-08 18:00:00", "yyyy-MM-dd HH:mm:ss", null),
+                Departure_Time = new DateTime(2021, 05, 09, 12, 00, 00),
+                Landing_Time = new DateTime(2021, 05, 09, 18, 00, 00),
                 Tickets_Remaining = 100
             };
             flightDAOPGSQL.Add(flight);
 
             var f_list = flightDAOPGSQL.GetAll();
+            var f = facade.GetFlightsByDestinationCountry(2);
 
-            //Console.WriteLine("bla-bla-bla"+ f[0].Id);
+            Console.WriteLine(f[0].Id);
+            Console.WriteLine(f[0].Landing_Time);
+            Console.WriteLine(f[0].NameOfOriginCountry);
 
-
-
-           
-            Flight f = facade.GetFlightById((int)f_list[0].Id);
-
-            Console.WriteLine(f.Id);
-            Console.WriteLine(f.Landing_Time);
-            Console.WriteLine(f.NameOfOriginCountry);
-            //Console.WriteLine("bla bla bla" +f);
         }
     }
 }
