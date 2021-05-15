@@ -24,7 +24,7 @@ namespace TestFlightsProject
 
                 cmd.Connection = my_conn;
                 cmd.CommandText = $"DELETE FROM administrators; DELETE FROM flights; DELETE FROM airline_companies; DELETE FROM users;";
-                cmd.ExecuteNonQuery(); 
+                cmd.ExecuteNonQuery();  
             }
         }
 
