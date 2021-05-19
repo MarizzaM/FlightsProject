@@ -173,7 +173,7 @@ namespace TestFlightsProject
             loginService.TryAdminLogin(FlightCenterConfig.ADMIN_NAME, FlightCenterConfig.ADMIN_PASSWORD, out LoginToken<Admin> token);
             LoggedInAdministratorFacade facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade<Admin>(token) as LoggedInAdministratorFacade;
 
-            
+            facadeAdmin.CreateNewCustomer(token, CreateCustomerForTest());
             var list = customerDAOPGSQL.GetAll();
 
             Assert.AreNotEqual(0, list.Count);
@@ -200,19 +200,21 @@ namespace TestFlightsProject
         [TestMethod]
         public void RemoveAdminTest()
         {
-            //DeleteAllData();
-            //ILoginService loginService = new LoginService();
-            //loginService.TryAdminLogin(FlightCenterConfig.ADMIN_NAME, FlightCenterConfig.ADMIN_PASSWORD, out LoginToken<Admin> token);
-            //LoggedInAdministratorFacade facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade<Admin>(token) as LoggedInAdministratorFacade;
+            DeleteAllData();
+            ILoginService loginService = new LoginService();
+            loginService.TryAdminLogin(FlightCenterConfig.ADMIN_NAME, FlightCenterConfig.ADMIN_PASSWORD, out LoginToken<Admin> token);
+            LoggedInAdministratorFacade facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade<Admin>(token) as LoggedInAdministratorFacade;
 
 
-            //facadeAdmin.CreateAdmin(token, CreateAdminForTest());
+            adminDAOPGSQL.Add(CreateAdminForTest());
 
-            //var list = adminDAOPGSQL.GetAll();
+            var list = adminDAOPGSQL.GetAll();
 
-            //facadeAdmin.RemoveAdmin(token, list[0]);
+            facadeAdmin.RemoveAdmin(token, list[0]);
+            list = adminDAOPGSQL.GetAll();
 
-            //Assert.AreEqual(2, list.Count);
+            Assert.AreNotEqual(1, list.Count);
+            Assert.AreEqual(0, list.Count);
 
         }
         [TestMethod]
@@ -241,10 +243,10 @@ namespace TestFlightsProject
             loginService.TryAdminLogin(FlightCenterConfig.ADMIN_NAME, FlightCenterConfig.ADMIN_PASSWORD, out LoginToken<Admin> token);
             LoggedInAdministratorFacade facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade<Admin>(token) as LoggedInAdministratorFacade;
 
-            facadeAdmin.CreateNewCustomer(token, CreateCustomerForTest());
+            customerDAOPGSQL.Add(CreateCustomerForTest());
             var list = facadeAdmin.GetAllCustomers(token);
 
-            list.RemoveAt(0);
+            facadeAdmin.RemoveCustomer(token, list[0]);
 
             Assert.AreNotEqual(1, list.Count);
             Assert.AreEqual(0, list.Count);

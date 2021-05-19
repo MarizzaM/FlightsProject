@@ -12,9 +12,9 @@ namespace FlightsProject.Facade
         public void CreateAdmin(LoginToken<Admin> token, Admin admin)
         {
             if (token != null && token.User.UserName == FlightCenterConfig.ADMIN_NAME && token.User.Password == FlightCenterConfig.ADMIN_PASSWORD) {
-                if (_adminDAO.Get(admin.Id) == null) {
+
                     _adminDAO.Add(admin);
-                }
+
             }
         }
 
@@ -22,10 +22,7 @@ namespace FlightsProject.Facade
         {
             if (token != null && token.User.UserName == FlightCenterConfig.ADMIN_NAME && token.User.Password == FlightCenterConfig.ADMIN_PASSWORD)
             {
-                if (_airlineDAO.Get((int)airline.Id) == null)
-                {
                     _airlineDAO.Add(airline);
-                }
             }
         }
 
@@ -33,10 +30,9 @@ namespace FlightsProject.Facade
         {
             if (token != null && token.User.UserName == FlightCenterConfig.ADMIN_NAME && token.User.Password == FlightCenterConfig.ADMIN_PASSWORD)
             {
-                if (_customerDAO.Get((int)customer.Id) == null)
-                {
+
                     _customerDAO.Add(customer);
-                }
+
             }
         }
 

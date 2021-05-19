@@ -56,7 +56,7 @@ namespace TestFlightsProject
         public static int AdminFacade_CreateAdmin_Id;
         public static readonly string AdminFacade_CreateAdmin_FirstName = "fName";
         public static readonly string AdminFacade_CreateAdmin_LastName = "lName";
-        public static readonly int AdminFacade_CreateAdmin_Level = 3;
+        public static readonly int AdminFacade_CreateAdmin_Level = 2;
 
         //CreateCustomerUserForTest
         public static int AdminFacade_CreateCustomerUser_Id;
