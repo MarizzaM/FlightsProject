@@ -77,6 +77,7 @@ namespace TestFlightsProject
             return flight;
         }
 
+
         [TestMethod]
         public void GetAllAirlineCompaniesTest()
         {

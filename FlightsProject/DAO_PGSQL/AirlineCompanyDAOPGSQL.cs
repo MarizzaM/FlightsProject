@@ -87,7 +87,7 @@ namespace FlightsProject.DAO_PGSQL
                 using var cmd = new NpgsqlCommand();
                 cmd.Connection = my_conn;
 
-                cmd.CommandText = $"DELETE FROM Airline_Companies WHERE Airline_Companies.id = {ac.Id}";
+                cmd.CommandText = $"DELETE FROM airline_companies WHERE id = {ac.Id}";
                 cmd.ExecuteNonQuery();
                 Console.WriteLine($"{ac.Name} has been deleted successfully from table 'Airline_Companies'");
             }

@@ -46,8 +46,8 @@ namespace FlightsProject.Facade
 
         public void RemoveAdmin(LoginToken<Admin> token, Admin admin)
         {
-            if (token != null && token.User.Level > admin.Level && token.User.Level == 3 ||
-                token != null && token.User.UserName == FlightCenterConfig.ADMIN_NAME && token.User.Password == FlightCenterConfig.ADMIN_PASSWORD) {
+            if (token.User.Level > admin.Level && token.User.Level == 3 ||
+                token.User.UserName == FlightCenterConfig.ADMIN_NAME && token.User.Password == FlightCenterConfig.ADMIN_PASSWORD) {
                 _adminDAO.Remove(admin);
             }
         }

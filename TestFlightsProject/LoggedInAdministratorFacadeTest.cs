@@ -13,16 +13,15 @@ namespace TestFlightsProject
     public class LoggedInAdministratorFacadeTest
     {
 
-        public void foo() {
+        public void getTokenAndGetFacade (out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin) {
             ILoginService loginService = new LoginService();
-            loginService.TryAdminLogin(FlightCenterConfig.ADMIN_NAME, FlightCenterConfig.ADMIN_PASSWORD, out LoginToken<Admin> token);
-            LoggedInAdministratorFacade facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade<Admin>(token) as LoggedInAdministratorFacade;
+            loginService.TryAdminLogin(FlightCenterConfig.ADMIN_NAME, FlightCenterConfig.ADMIN_PASSWORD, out token);
+            facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade<Admin>(token) as LoggedInAdministratorFacade;
         }
 
         static string conn_string_test = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDBTest";
         static ILoginService loginService = new LoginService();
 
-        
         public void DeleteAllData()
         {
             using (var my_conn = new NpgsqlConnection(conn_string_test))
@@ -47,8 +46,6 @@ namespace TestFlightsProject
         AirlineCompanyDAOPGSQL airlineCompanyDAOPGSQL = new AirlineCompanyDAOPGSQL();
         AdminDAOPGSQL adminDAOPGSQL = new AdminDAOPGSQL();
 
-
-
         public User CreateAirlineUserForTest()
         {
             User airlineUser = new User
@@ -60,9 +57,6 @@ namespace TestFlightsProject
             };
             return airlineUser;
         }
-
-
-
 
         public AirlineCompany CreateAirlineCompanyForTest()
         {
@@ -106,7 +100,6 @@ namespace TestFlightsProject
             };
             return admin;
         }
-
         public User CreateCustomerUserForTest()
         {
             User airlineUser = new User
@@ -134,16 +127,13 @@ namespace TestFlightsProject
                 User_Id = TestData.AdminFacade_CreateCustomerUser_Id
             };
             return customer;
-
         }
 
         [TestMethod]
         public void CreateAdminTest()
         {
             DeleteAllData();
-            ILoginService loginService = new LoginService();
-            loginService.TryAdminLogin(FlightCenterConfig.ADMIN_NAME, FlightCenterConfig.ADMIN_PASSWORD, out LoginToken<Admin> token);
-            LoggedInAdministratorFacade facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade<Admin>(token) as LoggedInAdministratorFacade;
+            getTokenAndGetFacade(out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin);
 
             facadeAdmin.CreateAdmin(token, CreateAdminForTest());
             var list = adminDAOPGSQL.GetAll();
@@ -151,27 +141,24 @@ namespace TestFlightsProject
             Assert.AreNotEqual(0, list.Count);
             Assert.AreEqual(1, list.Count);
         }
+
         [TestMethod]
         public void CreateNewAirlineTest()
         {
             DeleteAllData();
-            ILoginService loginService = new LoginService();
-            loginService.TryAdminLogin(FlightCenterConfig.ADMIN_NAME, FlightCenterConfig.ADMIN_PASSWORD, out LoginToken<Admin> token);
-            LoggedInAdministratorFacade facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade<Admin>(token) as LoggedInAdministratorFacade;
+            getTokenAndGetFacade(out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin);
 
             facadeAdmin.CreateNewAirline(token, CreateAirlineCompanyForTest());
             var list = airlineCompanyDAOPGSQL.GetAll();
 
             Assert.AreNotEqual(0, list.Count);
-
         }
+
         [TestMethod]
         public void CreateNewCustomerTest()
         {
             DeleteAllData();
-            ILoginService loginService = new LoginService();
-            loginService.TryAdminLogin(FlightCenterConfig.ADMIN_NAME, FlightCenterConfig.ADMIN_PASSWORD, out LoginToken<Admin> token);
-            LoggedInAdministratorFacade facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade<Admin>(token) as LoggedInAdministratorFacade;
+            getTokenAndGetFacade(out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin);
 
             facadeAdmin.CreateNewCustomer(token, CreateCustomerForTest());
             var list = customerDAOPGSQL.GetAll();
@@ -182,9 +169,7 @@ namespace TestFlightsProject
         public void GetAllCustomersTest()
         {
             DeleteAllData();
-            ILoginService loginService = new LoginService();
-            loginService.TryAdminLogin(FlightCenterConfig.ADMIN_NAME, FlightCenterConfig.ADMIN_PASSWORD, out LoginToken<Admin> token);
-            LoggedInAdministratorFacade facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade<Admin>(token) as LoggedInAdministratorFacade;
+            getTokenAndGetFacade(out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin);
 
             facadeAdmin.CreateNewCustomer(token, CreateCustomerForTest());
 
@@ -197,56 +182,48 @@ namespace TestFlightsProject
             Assert.AreEqual(TestData.AdminFacade_CreateCustomer_PhoneNo, list[0].Phone_No);
             Assert.AreEqual(TestData.AdminFacade_CreateCustomer_CreditCardNo, list[0].Credit_Card_No);
         }
+
         [TestMethod]
         public void RemoveAdminTest()
         {
             DeleteAllData();
-            ILoginService loginService = new LoginService();
-            loginService.TryAdminLogin(FlightCenterConfig.ADMIN_NAME, FlightCenterConfig.ADMIN_PASSWORD, out LoginToken<Admin> token);
-            LoggedInAdministratorFacade facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade<Admin>(token) as LoggedInAdministratorFacade;
-
+            getTokenAndGetFacade(out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin);
 
             adminDAOPGSQL.Add(CreateAdminForTest());
-
             var list = adminDAOPGSQL.GetAll();
-
             facadeAdmin.RemoveAdmin(token, list[0]);
-            list = adminDAOPGSQL.GetAll();
+            Admin a = adminDAOPGSQL.Get(list[0].Id);
 
-            Assert.AreNotEqual(1, list.Count);
-            Assert.AreEqual(0, list.Count);
-
+            Assert.AreEqual(null, a);
         }
+
         [TestMethod]
         public void RemoveAirlineTest()
         {
             DeleteAllData();
-            ILoginService loginService = new LoginService();
-            loginService.TryAdminLogin(FlightCenterConfig.ADMIN_NAME, FlightCenterConfig.ADMIN_PASSWORD, out LoginToken<Admin> token);
-            LoggedInAdministratorFacade facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade<Admin>(token) as LoggedInAdministratorFacade;
+            getTokenAndGetFacade(out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin); 
+            AnonymousUserFacade facade = FlightsCenterSystem.GetInstance().GetFacade<Anonymous>(null) as AnonymousUserFacade;
 
-            facadeAdmin.CreateNewAirline(token, CreateAirlineCompanyForTest());
-            var list = facadeAdmin.GetAllAirlineCompanies();
+            airlineCompanyDAOPGSQL.Add(CreateAirlineCompanyForTest());
+            var list = airlineCompanyDAOPGSQL.GetAll();
             facadeAdmin.RemoveAirline(token, list[0]);
+            list = facade.GetAllAirlineCompanies();
 
             Assert.AreNotEqual(1, list.Count);
             Assert.AreEqual(0, list.Count);
-
-
         }
 
         [TestMethod]
         public void RemoveCustomerTest()
         {
             DeleteAllData();
-            ILoginService loginService = new LoginService();
-            loginService.TryAdminLogin(FlightCenterConfig.ADMIN_NAME, FlightCenterConfig.ADMIN_PASSWORD, out LoginToken<Admin> token);
-            LoggedInAdministratorFacade facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade<Admin>(token) as LoggedInAdministratorFacade;
+            getTokenAndGetFacade(out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin);
 
             customerDAOPGSQL.Add(CreateCustomerForTest());
-            var list = facadeAdmin.GetAllCustomers(token);
+            var list = customerDAOPGSQL.GetAll();
 
             facadeAdmin.RemoveCustomer(token, list[0]);
+            list = facadeAdmin.GetAllCustomers(token);
 
             Assert.AreNotEqual(1, list.Count);
             Assert.AreEqual(0, list.Count);
