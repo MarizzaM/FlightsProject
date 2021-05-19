@@ -4,8 +4,7 @@ using System.Text;
 
 namespace FlightsProject.Login
 {
-    public class LoginToken<T>: ILoginToken where T : IUser
+    public interface ILoginToken
     {
-            public T User { get; set; }
     }
 }

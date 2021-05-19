@@ -90,7 +90,7 @@ namespace FlightsProject
                 using var cmd = new NpgsqlCommand();
                 cmd.Connection = my_conn;
 
-                cmd.CommandText = $"DELETE FROM administrators WHERE administrators.id = {a.Id}";
+                cmd.CommandText = $"DELETE FROM administrators WHERE id = {a.Id}";
                 cmd.ExecuteNonQuery();
                 Console.WriteLine($"{a.First_Name} {a.Last_Name} has been deleted successfully from table 'Admins'");
             }

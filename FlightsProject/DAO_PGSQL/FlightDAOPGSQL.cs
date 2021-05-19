@@ -113,8 +113,8 @@ namespace FlightsProject.DAO_PGSQL
                     $"flights.Airline_Company_Id  = {f.Airline_Company_Id}, " +
                     $"flights.Origin_Country_Id = {f.Origin_Country_Id}, " +
                     $"flights.Destination_Country_Id = {f.Destination_Country_Id},  " +
-                    $"flights.Departure_Time = {f.Departure_Time}, " +
-                    $"flights.Landing_Time = {f.Landing_Time},  " +
+                    $"flights.Departure_Time = '{f.Departure_Time}', " +
+                    $"flights.Landing_Time = '{f.Landing_Time}',  " +
                     $"flights.Tickets_Remaining = {f.Tickets_Remaining} " +
                     $"WHERE administrators.id = {f.Id}";
                 Console.WriteLine($"flight #{f.Id} has been updeted successfully in table 'Flight'");
@@ -322,21 +322,21 @@ namespace FlightsProject.DAO_PGSQL
             return null;
         }
 
-        public void transferToFlighsHistory()
-        {
-            using (var my_conn = new NpgsqlConnection(conn_string))
-            {
-                my_conn.Open();
+        //public void transferToFlighsHistory()
+        //{
+        //    using (var my_conn = new NpgsqlConnection(conn_string))
+        //    {
+        //        my_conn.Open();
 
-                using var cmd = new NpgsqlCommand();
-                cmd.Connection = my_conn;
+        //        using var cmd = new NpgsqlCommand();
+        //        cmd.Connection = my_conn;
 
-                cmd.CommandText = $"INSERT INTO flighs_history(Airline_Company_Id, Origin_Country_Id, Destination_Country_Id, Departure_Time, Landing_Time, Tickets_Remaining) " +
-                    $"SELECT* from flights where flights.landing_time < (NOW() + interval '3 hour'); " +
-                    $"DELETE from flights where flights.landing_time < (NOW() + interval '3 hour');";
-                cmd.ExecuteNonQuery();
-                Console.WriteLine($"Flights inserted successfully to table 'Flights'");
-            }
-        }
+        //        cmd.CommandText = $"INSERT INTO flighs_history(Airline_Company_Id, Origin_Country_Id, Destination_Country_Id, Departure_Time, Landing_Time, Tickets_Remaining) " +
+        //            $"SELECT* from flights where flights.landing_time < (NOW() + interval '3 hour'); " +
+        //            $"DELETE from flights where flights.landing_time < (NOW() + interval '3 hour');";
+        //        cmd.ExecuteNonQuery();
+        //        Console.WriteLine($"Flights inserted successfully to table 'Flights'");
+        //    }
+        //}
     }
 }

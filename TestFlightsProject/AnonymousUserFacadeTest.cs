@@ -23,11 +23,11 @@ namespace TestFlightsProject
                 using var cmd = new NpgsqlCommand();
 
                 cmd.Connection = my_conn;
-                cmd.CommandText = $"DELETE FROM administrators; DELETE FROM flights; DELETE FROM airline_companies; DELETE FROM users;";
+                cmd.CommandText = $"DELETE FROM flights; DELETE FROM airline_companies; DELETE FROM administrators;  DELETE FROM users;";
                 cmd.ExecuteNonQuery();
             }
         }
-
+       
         UserDAOPGSQL userDAOPGSQL = new UserDAOPGSQL();
         FlightDAOPGSQL flightDAOPGSQL = new FlightDAOPGSQL();
         AirlineCompanyDAOPGSQL airlineCompanyDAOPGSQL = new AirlineCompanyDAOPGSQL();

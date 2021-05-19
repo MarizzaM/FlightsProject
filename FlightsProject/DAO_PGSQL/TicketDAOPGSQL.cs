@@ -105,21 +105,21 @@ namespace FlightsProject.DAO_PGSQL
                 Console.WriteLine($"ticket #{t.Id} has been updeted successfully in table 'Tickets'");
             }
         }
-        public void transferToTicketHistory()
-        {
-            using (var my_conn = new NpgsqlConnection(conn_string))
-            {
-                my_conn.Open();
+        //public void transferToTicketHistory()
+        //{
+        //    using (var my_conn = new NpgsqlConnection(conn_string))
+        //    {
+        //        my_conn.Open();
 
-                using var cmd = new NpgsqlCommand();
-                cmd.Connection = my_conn;
+        //        using var cmd = new NpgsqlCommand();
+        //        cmd.Connection = my_conn;
 
-                cmd.CommandText = $"Insert into tickets_history(id_flight, id_customer) " +
-                    $"SELECT* from tickets join flights on tickets.id_flight = flights.id where flights.landing_time < (NOW() + interval '3 hour'); " +
-                    $"DELETE FROM Tickets using flights where flights.landing_time < (NOW() + interval '3 hour')";
-                cmd.ExecuteNonQuery();
-                Console.WriteLine($"Tickets inserted successfully to table 'TicketHistory'");
-            }
-        }
+        //        cmd.CommandText = $"Insert into tickets_history(id_flight, id_customer) " +
+        //            $"SELECT* from tickets join flights on tickets.id_flight = flights.id where flights.landing_time < (NOW() + interval '3 hour'); " +
+        //            $"DELETE FROM Tickets using flights where flights.landing_time < (NOW() + interval '3 hour')";
+        //        cmd.ExecuteNonQuery();
+        //        Console.WriteLine($"Tickets inserted successfully to table 'TicketHistory'");
+        //    }
+        //}
     }
 }

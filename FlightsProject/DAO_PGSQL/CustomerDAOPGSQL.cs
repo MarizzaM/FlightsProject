@@ -7,9 +7,9 @@ using System.Text;
 
 namespace FlightsProject.DAO_PGSQL
 {
-    class CustomerDAOPGSQL : ICustomerDAO
+    public class CustomerDAOPGSQL : ICustomerDAO
     {
-        static string conn_string = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDB";
+        static string conn_string = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDBTest";
         public void Add(Customer c)
         {
             using (var my_conn = new NpgsqlConnection(conn_string))
@@ -70,13 +70,13 @@ namespace FlightsProject.DAO_PGSQL
                 {
                     Customer customer = new Customer
                     {
-                        Id = (int)reader["Id"],
+                        Id = (long)reader["Id"],
                         First_Name = (string)reader["First_Name"],
                         Last_Name = (string)reader["Last_Name"],
                         Address = (string)reader["Address"],
                         Phone_No = (string)reader["Phone_No"],
                         Credit_Card_No = (string)reader["Credit_Card_No"],
-                        User_Id = (int)reader["User_Id"]
+                        User_Id = (long)reader["User_Id"]
                     };
                     customers.Add(customer);
                 }
@@ -98,7 +98,7 @@ namespace FlightsProject.DAO_PGSQL
                 using var cmd = new NpgsqlCommand();
                 cmd.Connection = my_conn;
 
-                cmd.CommandText = $"DELETE FROM Customers WHERE Customers.id = {c.Id}";
+                cmd.CommandText = $"DELETE FROM customers WHERE customers.id = {c.Id}";
                 cmd.ExecuteNonQuery();
                 Console.WriteLine($"{c.First_Name} {c.Last_Name} has been deleted successfully from table 'Customers'");
             }
@@ -114,11 +114,11 @@ namespace FlightsProject.DAO_PGSQL
                 cmd.Connection = my_conn;
 
                 cmd.CommandText = $"UPDATE Customers SET Customers.Id = {c.Id}, " +
-                    $"Customers.First_Name  = {c.First_Name}, " +
-                    $"Customers.Last_Name = {c.Last_Name}, " +
-                    $"Customers.Address = {c.Address},  " +
-                    $"Customers.Phone_No = {c.Phone_No}, " +
-                    $"Customers.Credit_Card_No = {c.Credit_Card_No},  " +
+                    $"Customers.First_Name  = '{c.First_Name}', " +
+                    $"Customers.Last_Name = '{c.Last_Name}', " +
+                    $"Customers.Address = '{c.Address}',  " +
+                    $"Customers.Phone_No = '{c.Phone_No}', " +
+                    $"Customers.Credit_Card_No = '{c.Credit_Card_No}',  " +
                     $"Customers.User_Id = {c.User_Id} " +
                     $"WHERE Customers.id = {c.Id}";
                 Console.WriteLine($"{c.First_Name} {c.Last_Name} has been updeted successfully in table 'Customers'");

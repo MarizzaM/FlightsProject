@@ -8,22 +8,31 @@ namespace FlightsProject.Login
 {
     public class LoginService : ILoginService
     {
-        private AirlineCompanyDAOPGSQL _airlineCompanyDAO;
-        private CustomerDAOPGSQL _customerDAO;
-        private AdminDAOPGSQL _adminDAO;
+        private AirlineCompanyDAOPGSQL _airlineCompanyDAO = new AirlineCompanyDAOPGSQL();
+        private CustomerDAOPGSQL _customerDAO = new CustomerDAOPGSQL();
 
-        public LoginService()
-        {
-            _airlineCompanyDAO = new AirlineCompanyDAOPGSQL();
-            _customerDAO = new CustomerDAOPGSQL();
-            _adminDAO = new AdminDAOPGSQL();
-        }
+        //public ILoginToken TryLogin(string username, string password) {
+        //    LoginToken<Admin> adminToken = new LoginToken<Admin>();
+        //    LoginToken<AirlineCompany> airlineToken = new LoginToken<AirlineCompany>();
+        //    LoginToken<Customer> customerToken = new LoginToken<Customer>();
+
+        //    if (TryAdminLogin(username, password, out adminToken))
+        //        return adminToken;
+        //    if (TryAirlineLogin(username, password, out airlineToken))
+        //        return airlineToken;
+        //    if (TryCustomerLogin(username, password, out customerToken))
+        //        return customerToken;
+        //    return null;
+        //}
+
         public bool TryAdminLogin(string username, string password, out LoginToken<Admin> token)
         {
             if (username == FlightCenterConfig.ADMIN_NAME && password == FlightCenterConfig.ADMIN_PASSWORD)
             {
                 token = new LoginToken<Admin>();
                 token.User = new Admin();
+                token.User.UserName = FlightCenterConfig.ADMIN_NAME;
+                token.User.Password = FlightCenterConfig.ADMIN_PASSWORD;
                 return true;
             }
 

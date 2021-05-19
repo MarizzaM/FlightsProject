@@ -1,6 +1,7 @@
 ﻿using FlightsProject;
 using FlightsProject.DAO_PGSQL;
 using FlightsProject.Facade;
+using FlightsProject.Login;
 using FlightsProject.POCO;
 using Npgsql;
 using System;
@@ -40,7 +41,7 @@ namespace Runner
 
                 //cmd.CommandText = $"DELETE FROM administrators; DELETE FROM airline_companies; DELETE FROM customers; " +
                 //    $"DELETE FROM flights; DELETE FROM tickets; DELETE FROM users;";
-                cmd.CommandText = $"DELETE FROM administrators; DELETE FROM flights; DELETE FROM airline_companies; DELETE FROM users; ";
+                cmd.CommandText = $"DELETE FROM administrators; DELETE FROM flights; DELETE FROM airline_companies; DELETE FROM customers; DELETE FROM users; ";
                 cmd.ExecuteNonQuery();
                 Console.WriteLine($"All data has been deleted successfully from tables'");
             }
@@ -117,53 +118,156 @@ namespace Runner
 
 
             UserDAOPGSQL user = new UserDAOPGSQL();
+            AdminDAOPGSQL admin = new AdminDAOPGSQL();
+            CustomerDAOPGSQL customerDAOPGSQL = new CustomerDAOPGSQL();
             FlightDAOPGSQL flightDAOPGSQL = new FlightDAOPGSQL();
             AirlineCompanyDAOPGSQL airlineCompanyDAOPGSQL = new AirlineCompanyDAOPGSQL();
             CountryDAOPGSQL countryDAOPGSQL = new CountryDAOPGSQL();
 
-            AnonymousUserFacade facade = FlightsCenterSystem.GetInstance().GetFacade<Admin>(null) as AnonymousUserFacade;
+            AnonymousUserFacade facade = FlightsCenterSystem.GetInstance().GetFacade<Anonymous>(null) as AnonymousUserFacade;
             DeleteAllData();
-            User airline1 = new User
-            {
-                Username = "airline1",
-                Password = "a112",
-                Email = "airline1@gmail.com",
-                User_Role = 2
-            };
-            user.Add(airline1);
 
-            var u = user.GetByUserName("airline1");
+            ILoginService loginService = new LoginService();
+
+            //LoginToken<Admin> token = new LoginToken<Admin>(
+
+                
+            //    );
+            //token.User.UserName = FlightCenterConfig.ADMIN_NAME;
+            //token.User.Password = FlightCenterConfig.ADMIN_PASSWORD;
+
+            loginService.TryAdminLogin(FlightCenterConfig.ADMIN_NAME, FlightCenterConfig.ADMIN_PASSWORD, out LoginToken<Admin> token);
+            LoggedInAdministratorFacade facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade<Admin>(token) as LoggedInAdministratorFacade;
+
+
+
+            User user1 = new User
+            {
+                Username = "Customer",
+                Password = "c112",
+                Email = "Customer@gmail.com",
+                User_Role = 1
+            };
+            user.Add(user1);
+
+            var u = user.GetByUserName("Customer");
             long id = u.Id;
 
-            AirlineCompany airline = new AirlineCompany
+            Customer customer = new Customer()
             {
-                Name = "AirlineCompany1",
-                Country_Id = 1,
-                User_Id = (int)id
+                First_Name = "name",
+                Last_Name = "lNAme",
+                Address = "Adress",
+                Phone_No = "Phone",
+                Credit_Card_No = "Card",
+                User_Id = id
             };
-            airlineCompanyDAOPGSQL.Add(airline);
 
-            var a = airlineCompanyDAOPGSQL.GetAirlineByUserame("airline1");
-            Console.WriteLine("aurline: " + a);
-            long a_id = a.Id;
+            // User manager2 = new User
+            // {
+            //     Username = "manager2",
+            //     Password = "m112",
+            //     Email = "manager2@gmail.com",
+            //     User_Role = 3
+            // };
 
-            Flight flight = new Flight
-            {
-                Airline_Company_Id = (long)a_id,
-                Origin_Country_Id = 1,
-                Destination_Country_Id = 2,
-                Departure_Time = new DateTime(2021, 05, 09, 12, 00, 00),
-                Landing_Time = new DateTime(2021, 05, 09, 18, 00, 00),
-                Tickets_Remaining = 100
-            };
-            flightDAOPGSQL.Add(flight);
 
-            var f_list = flightDAOPGSQL.GetAll();
-            var f = facade.GetFlightsByDestinationCountry(2);
+            // //User manager3 = new User
+            // //{
+            // //    Username = "manager3",
+            // //    Password = "m1122",
+            // //    Email = "manager23@gmail.com",
+            // //    User_Role = 3
+            // //};
 
-            Console.WriteLine(f[0].Id);
-            Console.WriteLine(f[0].Landing_Time);
-            Console.WriteLine(f[0].NameOfOriginCountry);
+            // user.Add(manager2);
+            // //user.Add(manager3);
+
+
+            // var u = user.GetByUserName("manager2");
+
+            //// var u3 = user.GetByUserName("manager3");
+
+            // long id = u.Id;
+            // Admin admin1 = new Admin
+            // {
+            //     First_Name = "Mary",
+            //     Last_Name = "Mill",
+            //     Level = 3,
+            //     User_id = id
+            // };
+
+
+
+            // //long id3 = u3.Id;
+            // //Admin adminLevel1 = new Admin
+            // //{
+            // //    First_Name = "Parry",
+            // //    Last_Name = "Mill",
+            // //    Level = 1,
+            // //    User_id = id3
+            // //};
+
+
+
+            //  admin.Add(admin1);
+
+
+            //var list = admin.GetAll();
+            //list.RemoveAt(0);
+            //facadeAdminLevel3.RemoveAdmin(tokenAdminLevel3, list[0]);
+            //list = admin.GetAll();
+
+            //list.Remove(admin1);
+            //list = admin.GetAll();
+            //Console.WriteLine(list.Count);
+
+            // Console.WriteLine(token.User.UserName);
+
+
+            //customerDAOPGSQL.Add(customer);
+            facadeAdmin.CreateNewCustomer(token, customer);
+            var list = facadeAdmin.GetAllCustomers(token);
+
+            Console.WriteLine(list.Count);
+
+
+
+
+
+            // var l_cust = facadeAdmin.GetAllCustomers(token);
+
+            //Console.WriteLine(l_cust[1]);
+
+            //AirlineCompany airline = new AirlineCompany
+            //{
+            //    Name = "AirlineCompany1",
+            //    Country_Id = 1,
+            //    User_Id = (int)id
+            //};
+            //airlineCompanyDAOPGSQL.Add(airline);
+
+            //var a = airlineCompanyDAOPGSQL.GetAirlineByUserame("airline1");
+            //Console.WriteLine("aurline: " + a);
+            //long a_id = a.Id;
+
+            //Flight flight = new Flight
+            //{
+            //    Airline_Company_Id = (long)a_id,
+            //    Origin_Country_Id = 1,
+            //    Destination_Country_Id = 2,
+            //    Departure_Time = new DateTime(2021, 05, 09, 12, 00, 00),
+            //    Landing_Time = new DateTime(2021, 05, 09, 18, 00, 00),
+            //    Tickets_Remaining = 100
+            //};
+            //flightDAOPGSQL.Add(flight);
+
+            //var f_list = flightDAOPGSQL.GetAll();
+            //var f = facade.GetFlightsByDestinationCountry(2);
+
+            //Console.WriteLine(f[0].Id);
+            //Console.WriteLine(f[0].Landing_Time);
+            //Console.WriteLine(f[0].NameOfOriginCountry);
 
 
         }

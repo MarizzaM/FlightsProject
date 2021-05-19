@@ -6,13 +6,13 @@ namespace FlightsProject.POCO
 {
     public class Customer : IPoco, IUser
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
         public string Address { get; set; }
         public string Phone_No { get; set; }
         public string Credit_Card_No { get; set; }
-        public int User_Id { get; set; }
+        public long User_Id { get; set; }
         public string Password { get; set; }
         public string UserName { get; set; }
 
@@ -20,7 +20,7 @@ namespace FlightsProject.POCO
         {
         }
 
-        public Customer(string first_Name, string last_Name, string address, string phone_No, string credit_Card_No, int user_Id)
+        public Customer(string first_Name, string last_Name, string address, string phone_No, string credit_Card_No, long user_Id)
         {
             First_Name = first_Name;
             Last_Name = last_Name;
@@ -30,7 +30,7 @@ namespace FlightsProject.POCO
             User_Id = user_Id;
         }
 
-        public static bool operator ==(Customer c1, Customer c2)
+        public static bool operator == (Customer c1, Customer c2)
         {
             if (c1 == null && c2 == null)
                 return true;
@@ -40,7 +40,7 @@ namespace FlightsProject.POCO
             return (c1.Id == c2.Id);
         }
 
-        public static bool operator !=(Customer c1, Customer c2)
+        public static bool operator != (Customer c1, Customer c2)
         {
             return !(c1 == c2);
         }
@@ -56,14 +56,14 @@ namespace FlightsProject.POCO
             return this.Id == c.Id;
         }
 
-        public override int GetHashCode()
-        {
-            return this.Id;
-        }
-
         public override string ToString()
         {
             return $"{Id} {First_Name} {Last_Name} {Address} {Phone_No} {Credit_Card_No} {User_Id} ";
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id);
         }
     }
 }

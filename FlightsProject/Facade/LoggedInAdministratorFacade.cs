@@ -33,7 +33,7 @@ namespace FlightsProject.Facade
         {
             if (token != null && token.User.UserName == FlightCenterConfig.ADMIN_NAME && token.User.Password == FlightCenterConfig.ADMIN_PASSWORD)
             {
-                if (_customerDAO.Get(customer.Id) == null)
+                if (_customerDAO.Get((int)customer.Id) == null)
                 {
                     _customerDAO.Add(customer);
                 }
