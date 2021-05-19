@@ -104,9 +104,10 @@ namespace FlightsProject
                 using var cmd = new NpgsqlCommand();
                 cmd.Connection = my_conn;
 
-                cmd.CommandText = $"UPDATE  administrators SET Administrators.Id = {a.Id}, " +
-                    $"Administrators.First_Name  = '{a.First_Name}', Administrators.Last_Name = '{a.Last_Name}' " +
-                    $" Administrators.Level = {a.Level},  Administrators.User_id = {a.User_id} WHERE administrators.id = {a.Id}";
+                cmd.CommandText = $"UPDATE  administrators SET First_Name  = '{a.First_Name}', Last_Name = '{a.Last_Name}', " +
+                    $" Level = {a.Level} WHERE administrators.id = {a.Id}";
+                cmd.ExecuteNonQuery();
+
                 Console.WriteLine($"{a.First_Name} {a.Last_Name} has been updeted successfully in table 'Admin'");
             }
         }

@@ -40,10 +40,10 @@ namespace FlightsProject.DAO_PGSQL
                 {
                     AirlineCompany airline = new AirlineCompany
                     {
-                        Id = (int)reader["Id"],
+                        Id = (long)reader["Id"],
                         Name = (string)reader["Name"],
-                        Country_Id = (int)reader["Country_Id"],
-                        User_Id = (int)reader["User_Id"]
+                        Country_Id = (int)reader["countryid"],
+                        User_Id = (long)reader["User_Id"]
                 };
                     return airline;
                 }
@@ -102,9 +102,7 @@ namespace FlightsProject.DAO_PGSQL
                 using var cmd = new NpgsqlCommand();
                 cmd.Connection = my_conn;
 
-                cmd.CommandText = $"UPDATE  Airline_Companies SET Airline_Companies.Id = {ac.Id}, " +
-                    $"Airline_Companies.Name  = '{ac.Name}', Airline_Companies.Country_Id = '{ac.Country_Id}' " +
-                    $" Airline_Companies.User_Id = {ac.User_Id}, WHERE Airline_Companies.id = {ac.Id}";
+                cmd.CommandText = $"UPDATE airline_companies SET Name = '{ac.Name}', countryid = {ac.Country_Id} WHERE id = {ac.Id}";
                 Console.WriteLine($"{ac.Name} has been updeted successfully in table 'Airline_Companies'");
             }
         }

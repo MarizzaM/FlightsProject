@@ -13,14 +13,7 @@ namespace TestFlightsProject
     public class LoggedInAdministratorFacadeTest
     {
 
-        public void getTokenAndGetFacade (out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin) {
-            ILoginService loginService = new LoginService();
-            loginService.TryAdminLogin(FlightCenterConfig.ADMIN_NAME, FlightCenterConfig.ADMIN_PASSWORD, out token);
-            facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade<Admin>(token) as LoggedInAdministratorFacade;
-        }
-
         static string conn_string_test = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDBTest";
-        static ILoginService loginService = new LoginService();
 
         public void DeleteAllData()
         {
@@ -40,11 +33,17 @@ namespace TestFlightsProject
             }
         }
 
-
         CustomerDAOPGSQL customerDAOPGSQL = new CustomerDAOPGSQL();
         UserDAOPGSQL userDAOPGSQL = new UserDAOPGSQL();
         AirlineCompanyDAOPGSQL airlineCompanyDAOPGSQL = new AirlineCompanyDAOPGSQL();
         AdminDAOPGSQL adminDAOPGSQL = new AdminDAOPGSQL();
+
+        public void getTokenAndGetFacade(out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin)
+        {
+            ILoginService loginService = new LoginService();
+            loginService.TryAdminLogin(FlightCenterConfig.ADMIN_NAME, FlightCenterConfig.ADMIN_PASSWORD, out token);
+            facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade<Admin>(token) as LoggedInAdministratorFacade;
+        }
 
         public User CreateAirlineUserForTest()
         {
@@ -229,15 +228,44 @@ namespace TestFlightsProject
             Assert.AreEqual(0, list.Count);
         }
 
-
         [TestMethod]
         public void UpdateAdminTest()
         {
+            DeleteAllData();
+            getTokenAndGetFacade(out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin);
 
+            facadeAdmin.CreateAdmin(token, CreateAdminForTest());
+            var list = adminDAOPGSQL.GetAll();
+            Admin a = list[0];
+            a.First_Name = TestData.AdminFacade_UpdateAdmin_FirstName;
+            a.Last_Name = TestData.AdminFacade_UpdateAdmin_LastName;
+            a.Level = TestData.AdminFacade_UpdateAdmin_Level;
+
+            facadeAdmin.UpdateAdmin(token, a);
+            var a_new = adminDAOPGSQL.Get(a.Id);
+
+            Assert.AreEqual(TestData.AdminFacade_UpdateAdmin_FirstName, a_new.First_Name);
+            Assert.AreEqual(TestData.AdminFacade_UpdateAdmin_LastName, a_new.Last_Name);
+            Assert.AreEqual(TestData.AdminFacade_UpdateAdmin_Level, a_new.Level);
         }
+
         [TestMethod]
         public void UpdateAirlineDetailsTest()
         {
+            DeleteAllData();
+            getTokenAndGetFacade(out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin);
+            AnonymousUserFacade facade = FlightsCenterSystem.GetInstance().GetFacade<Anonymous>(null) as AnonymousUserFacade;
+
+            facadeAdmin.CreateNewAirline(token, CreateAirlineCompanyForTest());
+            var list = airlineCompanyDAOPGSQL.GetAll();
+            AirlineCompany ac = list[0];
+
+            ac.Name = TestData.AnonymouseFacade_UpdateAirlineCompany_Name;
+
+            facadeAdmin.UpdateAirlineDetails(token, ac);
+            var ac_new = airlineCompanyDAOPGSQL.Get((int)ac.Id);
+            Assert.AreEqual(TestData.AnonymouseFacade_UpdateAirlineCompany_Name, ac_new.Name);
+
         }
         [TestMethod]
         public void UpdateCustomerDetailsTest()

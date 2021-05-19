@@ -25,6 +25,11 @@ namespace TestFlightsProject
         public static readonly string AnonymouseFacade_CreateAirlineCompany_Name = "AirlineCompany";
         public static readonly int AnonymouseFacade_CreateAirlineCompany_Country_Id = 1;
 
+        //UpdateAirlineCompanyForTest
+
+        public static readonly string AnonymouseFacade_UpdateAirlineCompany_Name = "AirlineCompany_new";
+
+
         //CreateFlightForTest
         public static int AnonymouseFacade_CreateFlight_Id;
         public static readonly long AnonymouseFacade_CreateFlight_AirlineCompanyId = AnonymouseFacade_CreateAirlineCompany_Id;
@@ -58,12 +63,25 @@ namespace TestFlightsProject
         public static readonly string AdminFacade_CreateAdmin_LastName = "lName";
         public static readonly int AdminFacade_CreateAdmin_Level = 2;
 
+        //UpdateAdminForTest
+
+        public static readonly string AdminFacade_UpdateAdmin_FirstName = "fName_new";
+        public static readonly string AdminFacade_UpdateAdmin_LastName = "lName_new";
+        public static readonly int AdminFacade_UpdateAdmin_Level = 1;
+
         //CreateCustomerUserForTest
         public static int AdminFacade_CreateCustomerUser_Id;
         public static readonly string AdminFacade_CreateCustomerUser_Username = "customer";
         public static readonly string AdminFacade_CreateCustomerUser_Password = "357753";
-        public static readonly string AdminFacade_CreateCustomerUser_Email = "admin@customer.com";
+        public static readonly string AdminFacade_CreateCustomerUser_Email = "customer@customer.com";
         public static readonly int AdminFacade_CreateCustomerUser_UserRole = 1;
+
+        //UpdateCustomerUserForTest
+        public static int AdminFacade_UpdateCustomerUser_Id;
+        public static readonly string AdminFacade_UpdateCustomerUser_Username = "customer_new";
+        public static readonly string AdminFacade_UpdateCustomerUser_Password = "357753_new";
+        public static readonly string AdminFacade_UpdateCustomerUser_Email = "customer_new@customer.com";
+
 
         //CreateCustomerForTest
         public static int AdminFacade_CreateCustomer_Id;
@@ -72,7 +90,14 @@ namespace TestFlightsProject
         public static readonly string AdminFacade_CreateCustomer_Address = "AddressC";
         public static readonly string AdminFacade_CreateCustomer_PhoneNo = "Phone_No";
         public static readonly string AdminFacade_CreateCustomer_CreditCardNo = "Credit_Card_No";
-      
+
+        //UpdateCustomerForTest
+        public static readonly string AdminFacade_UpdateCustomer_FirstName = "fNameC_new";
+        public static readonly string AdminFacade_UpdateCustomer_LastName = "lNameC_new";
+        public static readonly string AdminFacade_UpdateCustomer_Address = "AddressC_new";
+        public static readonly string AdminFacade_UpdateCustomer_PhoneNo = "Phone_No_new";
+        public static readonly string AdminFacade_UpdateCustomer_CreditCardNo = "Credit_Card_No_new";
+
 
     }
 }

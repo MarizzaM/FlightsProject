@@ -79,11 +79,11 @@ namespace FlightsProject.Facade
             }
         }
 
-        public void UpdateAirlineDetails(LoginToken<Admin> token, AirlineCompany customer)
+        public void UpdateAirlineDetails(LoginToken<Admin> token, AirlineCompany airline)
         {
             if (token != null)
             {
-                _airlineDAO.Update(customer);
+                _airlineDAO.Update(airline);
             }
         }
 
