@@ -270,6 +270,27 @@ namespace TestFlightsProject
         [TestMethod]
         public void UpdateCustomerDetailsTest()
         {
+            DeleteAllData();
+            getTokenAndGetFacade(out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin);
+
+            facadeAdmin.CreateNewCustomer(token, CreateCustomerForTest());
+            var list = facadeAdmin.GetAllCustomers(token);
+            Customer c = list[0];
+
+            c.First_Name = TestData.AdminFacade_UpdateCustomer_FirstName;
+            c.Last_Name = TestData.AdminFacade_UpdateCustomer_LastName;
+            c.Address = TestData.AdminFacade_UpdateCustomer_Address;
+            c.Phone_No = TestData.AdminFacade_UpdateCustomer_PhoneNo;
+            c.Credit_Card_No = TestData.AdminFacade_UpdateCustomer_CreditCardNo;
+
+            facadeAdmin.UpdateCustomerDetails(token, c);
+            var c_new = customerDAOPGSQL.Get((int)c.Id);
+
+            Assert.AreEqual(TestData.AdminFacade_UpdateCustomer_FirstName, c.First_Name);
+            Assert.AreEqual(TestData.AdminFacade_UpdateCustomer_LastName, c.Last_Name);
+            Assert.AreEqual(TestData.AdminFacade_UpdateCustomer_Address, c.Address);
+            Assert.AreEqual(TestData.AdminFacade_UpdateCustomer_PhoneNo, c.Phone_No);
+            Assert.AreEqual(TestData.AdminFacade_UpdateCustomer_CreditCardNo, c.Credit_Card_No);
         }
     }
 }

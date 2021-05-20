@@ -103,7 +103,10 @@ namespace FlightsProject.DAO_PGSQL
                 cmd.Connection = my_conn;
 
                 cmd.CommandText = $"UPDATE airline_companies SET Name = '{ac.Name}', countryid = {ac.Country_Id} WHERE id = {ac.Id}";
+                cmd.ExecuteNonQuery();
+
                 Console.WriteLine($"{ac.Name} has been updeted successfully in table 'Airline_Companies'");
+                
             }
         }
 

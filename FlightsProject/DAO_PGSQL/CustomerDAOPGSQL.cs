@@ -41,13 +41,13 @@ namespace FlightsProject.DAO_PGSQL
                 {
                     Customer customer = new Customer
                     {
-                        Id = (int)reader["Id"],
+                        Id = (long)reader["Id"],
                         First_Name = (string)reader["First_Name"],
                         Last_Name = (string)reader["Last_Name"],
                         Address = (string)reader["Address"],
                         Phone_No = (string)reader["Phone_No"],
                         Credit_Card_No = (string)reader["Credit_Card_No"],
-                        User_Id = (int)reader["User_Id"]
+                        User_Id = (long)reader["User_Id"]
                 };
                     return customer;
                 }
@@ -113,14 +113,14 @@ namespace FlightsProject.DAO_PGSQL
                 using var cmd = new NpgsqlCommand();
                 cmd.Connection = my_conn;
 
-                cmd.CommandText = $"UPDATE Customers SET Customers.Id = {c.Id}, " +
-                    $"Customers.First_Name  = '{c.First_Name}', " +
-                    $"Customers.Last_Name = '{c.Last_Name}', " +
-                    $"Customers.Address = '{c.Address}',  " +
-                    $"Customers.Phone_No = '{c.Phone_No}', " +
-                    $"Customers.Credit_Card_No = '{c.Credit_Card_No}',  " +
-                    $"Customers.User_Id = {c.User_Id} " +
+                cmd.CommandText = $"UPDATE customers SET " +
+                    $"First_Name  = '{c.First_Name}', " +
+                    $"Last_Name = '{c.Last_Name}', " +
+                    $"Address = '{c.Address}',  " +
+                    $"Phone_No = '{c.Phone_No}', " +
+                    $"Credit_Card_No = '{c.Credit_Card_No}' " +
                     $"WHERE Customers.id = {c.Id}";
+                cmd.ExecuteNonQuery();
                 Console.WriteLine($"{c.First_Name} {c.Last_Name} has been updeted successfully in table 'Customers'");
             }
         }
