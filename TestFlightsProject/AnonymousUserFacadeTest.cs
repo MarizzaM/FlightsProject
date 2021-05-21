@@ -13,23 +13,7 @@ namespace TestFlightsProject
     [TestClass]
     public class AnonymousUserFacadeTest
     {
-        //static string conn_string_test = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDBTest";
-        //public void DeleteAllData()
-        //{
-        //    using (var my_conn = new NpgsqlConnection(conn_string_test))
-        //    {
-        //        my_conn.Open();
 
-        //        using var cmd = new NpgsqlCommand();
-
-        //        cmd.Connection = my_conn;
-        //        cmd.CommandText = $"DELETE FROM flights; DELETE FROM airline_companies; DELETE FROM administrators;  DELETE FROM users;";
-        //        cmd.ExecuteNonQuery();
-        //    }
-        //}
-
-        
-       
         UserDAOPGSQL userDAOPGSQL = new UserDAOPGSQL();
         FlightDAOPGSQL flightDAOPGSQL = new FlightDAOPGSQL();
         AirlineCompanyDAOPGSQL airlineCompanyDAOPGSQL = new AirlineCompanyDAOPGSQL();
@@ -37,10 +21,10 @@ namespace TestFlightsProject
         public User CreateAirlineUserForTest() {
             User airlineUser = new User
             {
-                Username = TestData.AnonymouseFacade_CreateAirlineUser_Username,
-                Password = TestData.AnonymouseFacade_CreateAirlineUser_Password,
-                Email = TestData.AnonymouseFacade_CreateAirlineUser_Email,
-                User_Role = TestData.AnonymouseFacade_CreateAirlineUser_User_Role
+                Username = TestData.CreateAirlineUser_Username,
+                Password = TestData.CreateAirlineUser_Password,
+                Email = TestData.CreateAirlineUser_Email,
+                User_Role = TestData.CreateAirlineUser_UserRole
             };
             return airlineUser;
         }
@@ -48,14 +32,14 @@ namespace TestFlightsProject
         public AirlineCompany CreateAirlineCompanyForTest()
         {
             userDAOPGSQL.Add(CreateAirlineUserForTest());
-            var u = userDAOPGSQL.GetByUserName(TestData.AnonymouseFacade_CreateAirlineUser_Username);
-            TestData.AnonymouseFacade_CreateAirlineUser_Id = (int)u.Id;
+            var u = userDAOPGSQL.GetByUserName(TestData.CreateAirlineUser_Username);
+            TestData.CreateAirlineUser_Id = (int)u.Id;
 
             AirlineCompany airlineCompany = new AirlineCompany
             {
-                Name = TestData.AnonymouseFacade_CreateAirlineCompany_Name,
-                Country_Id = TestData.AnonymouseFacade_CreateAirlineCompany_Country_Id,
-                User_Id = TestData.AnonymouseFacade_CreateAirlineUser_Id,
+                Name = TestData.CreateAirlineCompany_Name,
+                Country_Id = TestData.CreateAirlineCompany_Country_Id,
+                User_Id = TestData.CreateAirlineUser_Id,
             };
             return airlineCompany;
         }
@@ -64,17 +48,17 @@ namespace TestFlightsProject
         {
             airlineCompanyDAOPGSQL.Add(CreateAirlineCompanyForTest());
 
-            var ac = airlineCompanyDAOPGSQL.GetAirlineByUserame(TestData.AnonymouseFacade_CreateAirlineUser_Username);
-            TestData.AnonymouseFacade_CreateAirlineCompany_Id = ac.Id;
+            var ac = airlineCompanyDAOPGSQL.GetAirlineByUserame(TestData.CreateAirlineUser_Username);
+            TestData.CreateAirlineCompany_Id = ac.Id;
 
             Flight flight = new Flight
             {
-                Airline_Company_Id = TestData.AnonymouseFacade_CreateAirlineCompany_Id,
-                Origin_Country_Id = TestData.AnonymouseFacade_CreateFlight_OriginCountryId,
-                Destination_Country_Id = TestData.AnonymouseFacade_CreateFlight_DestinationCountryId,
-                Departure_Time = TestData.AnonymouseFacade_CreateFlight_DepartureTime,
-                Landing_Time = TestData.AnonymouseFacade_CreateFlight_LandingTime,
-                Tickets_Remaining = TestData.AnonymouseFacade_CreateFlight_TicketsRemaining
+                Airline_Company_Id = TestData.CreateAirlineCompany_Id,
+                Origin_Country_Id = TestData.CreateFlight_OriginCountryId,
+                Destination_Country_Id = TestData.CreateFlight_DestinationCountryId,
+                Departure_Time = TestData.CreateFlight_DepartureTime,
+                Landing_Time = TestData.CreateFlight_LandingTime,
+                Tickets_Remaining = TestData.CreateFlight_TicketsRemaining
             };
             return flight;
         }
@@ -136,12 +120,12 @@ namespace TestFlightsProject
             Flight f = facade.GetFlightById((int)flights_list[0].Id);
 
             Assert.AreNotEqual(f, null);
-            Assert.AreEqual(TestData.AnonymouseFacade_CreateAirlineCompany_Id, f.Airline_Company_Id);
-            Assert.AreEqual(TestData.AnonymouseFacade_CreateFlight_OriginCountryId, f.Origin_Country_Id);
-            Assert.AreEqual(TestData.AnonymouseFacade_CreateFlight_DestinationCountryId, f.Destination_Country_Id);
-            Assert.AreEqual(TestData.AnonymouseFacade_CreateFlight_DepartureTime.AddHours(10), f.Departure_Time);
-            Assert.AreEqual(TestData.AnonymouseFacade_CreateFlight_LandingTime.AddHours(10), f.Landing_Time);
-            Assert.AreEqual(TestData.AnonymouseFacade_CreateFlight_TicketsRemaining, f.Tickets_Remaining);
+            Assert.AreEqual(TestData.CreateAirlineCompany_Id, f.Airline_Company_Id);
+            Assert.AreEqual(TestData.CreateFlight_OriginCountryId, f.Origin_Country_Id);
+            Assert.AreEqual(TestData.CreateFlight_DestinationCountryId, f.Destination_Country_Id);
+            Assert.AreEqual(TestData.CreateFlight_DepartureTime.AddHours(10), f.Departure_Time);
+            Assert.AreEqual(TestData.CreateFlight_LandingTime.AddHours(10), f.Landing_Time);
+            Assert.AreEqual(TestData.CreateFlight_TicketsRemaining, f.Tickets_Remaining);
         }
         [TestMethod]
         public void GetFlightsByDepatrureDateTest()
@@ -151,7 +135,7 @@ namespace TestFlightsProject
 
             flightDAOPGSQL.Add(CreateFlightForTest());
 
-            var f_list = facade.GetFlightsByDepatrureDate(TestData.AnonymouseFacade_CreateFlight_DepartureTime);
+            var f_list = facade.GetFlightsByDepatrureDate(TestData.CreateFlight_DepartureTime);
 
             Assert.AreNotEqual(f_list, null);
             Assert.AreEqual(f_list.Count, 1);
@@ -163,7 +147,7 @@ namespace TestFlightsProject
             TestData.DeleteAllData();
             flightDAOPGSQL.Add(CreateFlightForTest());
            
-            var f_list = facade.GetFlightsByDestinationCountry(TestData.AnonymouseFacade_CreateFlight_DestinationCountryId);
+            var f_list = facade.GetFlightsByDestinationCountry(TestData.CreateFlight_DestinationCountryId);
 
             Assert.AreNotEqual(f_list, null);
             Assert.AreEqual(f_list.Count, 1);
@@ -176,7 +160,7 @@ namespace TestFlightsProject
             TestData.DeleteAllData();
             flightDAOPGSQL.Add(CreateFlightForTest());
 
-            var f_list = facade.GetFlightsByLandingDate(TestData.AnonymouseFacade_CreateFlight_LandingTime);
+            var f_list = facade.GetFlightsByLandingDate(TestData.CreateFlight_LandingTime);
 
             Assert.AreNotEqual(f_list, null);
             Assert.AreEqual(f_list.Count, 1);

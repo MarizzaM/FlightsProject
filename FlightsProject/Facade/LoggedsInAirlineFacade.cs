@@ -18,14 +18,20 @@ namespace FlightsProject.Facade
 
         public void ChangeMyPassword(LoginToken<AirlineCompany> token, string oldPassword, string newPassword)
         {
-            if (token != null && token.User.Password == oldPassword ) {
+            AirlineCompany airlineCompany = _airlineDAO.GetAirlineByUserame(token.User.Username);
+            User user = _userDAO.GetByUserName(token.User.Username);
+
+            if (token.User.Password == oldPassword ) {
                 token.User.Password = newPassword;
+                //user.Password = newPassword;
+                //_airlineDAO.Update(token.User);
+                //_userDAO.Update(user);
             }
         }
 
         public void CreateFlight(LoginToken<AirlineCompany> token, Flight flight)
         {
-            if (token != null && flight.Equals(null)) {
+            if (token != null && flight.Id == 0) {
                 _flightDAO.Add(flight);
             }
         }

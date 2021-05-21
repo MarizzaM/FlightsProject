@@ -109,14 +109,13 @@ namespace FlightsProject.DAO_PGSQL
                 using var cmd = new NpgsqlCommand();
                 cmd.Connection = my_conn;
 
-                cmd.CommandText = $"UPDATE flights SET flights.Id = {f.Id}, " +
-                    $"flights.Airline_Company_Id  = {f.Airline_Company_Id}, " +
-                    $"flights.Origin_Country_Id = {f.Origin_Country_Id}, " +
-                    $"flights.Destination_Country_Id = {f.Destination_Country_Id},  " +
-                    $"flights.Departure_Time = '{f.Departure_Time}', " +
-                    $"flights.Landing_Time = '{f.Landing_Time}',  " +
-                    $"flights.Tickets_Remaining = {f.Tickets_Remaining} " +
-                    $"WHERE administrators.id = {f.Id}";
+                cmd.CommandText = $"UPDATE flights SET " +
+
+                    $"Departure_Time = '{f.Departure_Time}', " +
+                    $"Landing_Time = '{f.Landing_Time}',  " +
+                    $"Tickets_Remaining = {f.Tickets_Remaining} " +
+                    $"WHERE id = {f.Id}";
+                cmd.ExecuteNonQuery();
                 Console.WriteLine($"flight #{f.Id} has been updeted successfully in table 'Flight'");
             }
         }

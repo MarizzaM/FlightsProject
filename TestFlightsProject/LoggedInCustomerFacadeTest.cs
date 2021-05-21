@@ -20,10 +20,10 @@ namespace TestFlightsProject
         {
             User airlineUser = new User
             {
-                Username = TestData.AnonymouseFacade_CreateAirlineUser_Username,
-                Password = TestData.AnonymouseFacade_CreateAirlineUser_Password,
-                Email = TestData.AnonymouseFacade_CreateAirlineUser_Email,
-                User_Role = TestData.AnonymouseFacade_CreateAirlineUser_User_Role
+                Username = TestData.CreateAirlineUser_Username,
+                Password = TestData.CreateAirlineUser_Password,
+                Email = TestData.CreateAirlineUser_Email,
+                User_Role = TestData.CreateAirlineUser_UserRole
             };
             return airlineUser;
         }
@@ -31,14 +31,14 @@ namespace TestFlightsProject
         public AirlineCompany CreateAirlineCompanyForTest()
         {
             userDAOPGSQL.Add(CreateAirlineUserForTest());
-            var u = userDAOPGSQL.GetByUserName(TestData.AnonymouseFacade_CreateAirlineUser_Username);
-            TestData.AnonymouseFacade_CreateAirlineUser_Id = (int)u.Id;
+            var u = userDAOPGSQL.GetByUserName(TestData.CreateAirlineUser_Username);
+            TestData.CreateAirlineUser_Id = (int)u.Id;
 
             AirlineCompany airlineCompany = new AirlineCompany
             {
-                Name = TestData.AnonymouseFacade_CreateAirlineCompany_Name,
-                Country_Id = TestData.AnonymouseFacade_CreateAirlineCompany_Country_Id,
-                User_Id = TestData.AnonymouseFacade_CreateAirlineUser_Id,
+                Name = TestData.CreateAirlineCompany_Name,
+                Country_Id = TestData.CreateAirlineCompany_Country_Id,
+                User_Id = TestData.CreateAirlineUser_Id,
             };
             return airlineCompany;
         }
@@ -47,17 +47,17 @@ namespace TestFlightsProject
         {
             airlineCompanyDAOPGSQL.Add(CreateAirlineCompanyForTest());
 
-            var ac = airlineCompanyDAOPGSQL.GetAirlineByUserame(TestData.AnonymouseFacade_CreateAirlineUser_Username);
-            TestData.AnonymouseFacade_CreateAirlineCompany_Id = ac.Id;
+            var ac = airlineCompanyDAOPGSQL.GetAirlineByUserame(TestData.CreateAirlineUser_Username);
+            TestData.CreateAirlineCompany_Id = ac.Id;
 
             Flight flight = new Flight
             {
-                Airline_Company_Id = TestData.AnonymouseFacade_CreateAirlineCompany_Id,
-                Origin_Country_Id = TestData.AnonymouseFacade_CreateFlight_OriginCountryId,
-                Destination_Country_Id = TestData.AnonymouseFacade_CreateFlight_DestinationCountryId,
-                Departure_Time = TestData.AnonymouseFacade_CreateFlight_DepartureTime,
-                Landing_Time = TestData.AnonymouseFacade_CreateFlight_LandingTime,
-                Tickets_Remaining = TestData.AnonymouseFacade_CreateFlight_TicketsRemaining
+                Airline_Company_Id = TestData.CreateAirlineCompany_Id,
+                Origin_Country_Id = TestData.CreateFlight_OriginCountryId,
+                Destination_Country_Id = TestData.CreateFlight_DestinationCountryId,
+                Departure_Time = TestData.CreateFlight_DepartureTime,
+                Landing_Time = TestData.CreateFlight_LandingTime,
+                Tickets_Remaining = TestData.CreateFlight_TicketsRemaining
             };
             return flight;
         }
@@ -66,10 +66,10 @@ namespace TestFlightsProject
         {
             User airlineUser = new User
             {
-                Username = TestData.AdminFacade_CreateCustomerUser_Username,
-                Password = TestData.AdminFacade_CreateCustomerUser_Password,
-                Email = TestData.AdminFacade_CreateCustomerUser_Email,
-                User_Role = TestData.AdminFacade_CreateCustomerUser_UserRole
+                Username = TestData.CreateCustomerUser_Username,
+                Password = TestData.CreateCustomerUser_Password,
+                Email = TestData.CreateCustomerUser_Email,
+                User_Role = TestData.CreateCustomerUser_UserRole
             };
             return airlineUser;
         }
@@ -77,17 +77,17 @@ namespace TestFlightsProject
         public Customer CreateCustomerForTest()
         {
             userDAOPGSQL.Add(CreateCustomerUserForTest());
-            var u = userDAOPGSQL.GetByUserName(TestData.AdminFacade_CreateCustomerUser_Username);
-            TestData.AdminFacade_CreateCustomerUser_Id = (int)u.Id;
+            var u = userDAOPGSQL.GetByUserName(TestData.CreateCustomerUser_Username);
+            TestData.CreateCustomerUser_Id = (int)u.Id;
 
             Customer customer = new Customer()
             {
-                First_Name = TestData.AdminFacade_CreateCustomer_FirstName,
-                Last_Name = TestData.AdminFacade_CreateCustomer_LastName,
-                Address = TestData.AdminFacade_CreateCustomer_Address,
-                Phone_No = TestData.AdminFacade_CreateCustomer_PhoneNo,
-                Credit_Card_No = TestData.AdminFacade_CreateCustomer_CreditCardNo,
-                User_Id = TestData.AdminFacade_CreateCustomerUser_Id
+                First_Name = TestData.CreateCustomer_FirstName,
+                Last_Name = TestData.CreateCustomer_LastName,
+                Address = TestData.CreateCustomer_Address,
+                Phone_No = TestData.CreateCustomer_PhoneNo,
+                Credit_Card_No = TestData.CreateCustomer_CreditCardNo,
+                User_Id = TestData.CreateCustomerUser_Id
             };
             return customer;
         }
@@ -119,7 +119,7 @@ namespace TestFlightsProject
             var t = ticketDAOPGSQL.GetAll()[0];
             fasadeCustomer.CancelTicket(tokenCustomer, t, f);
 
-            Assert.AreEqual(flightDAOPGSQL.GetAll()[0].Tickets_Remaining, TestData.AnonymouseFacade_CreateFlight_TicketsRemaining);
+            Assert.AreEqual(flightDAOPGSQL.GetAll()[0].Tickets_Remaining, TestData.CreateFlight_TicketsRemaining);
             Assert.AreEqual(null, ticketDAOPGSQL.Get((int)t.Id));
         }
         [TestMethod]
@@ -148,7 +148,7 @@ namespace TestFlightsProject
 
             Assert.AreNotEqual(t, null);
             Assert.AreEqual(t.Id_Flight, f.Id);
-            Assert.AreEqual(f.Tickets_Remaining, TestData.AnonymouseFacade_CreateFlight_TicketsRemaining-1);
+            Assert.AreEqual(f.Tickets_Remaining, TestData.CreateFlight_TicketsRemaining-1);
         }
     }
 }

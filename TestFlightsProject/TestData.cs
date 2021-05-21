@@ -31,92 +31,79 @@ namespace TestFlightsProject
             }
         }
 
-        //AnonymousUserFacadeTestData
-
         //CreateAirlineUserForTest
-        public static int AnonymouseFacade_CreateAirlineUser_Id;
-        public static readonly string AnonymouseFacade_CreateAirlineUser_Username = "airline";
-        public static readonly string AnonymouseFacade_CreateAirlineUser_Password = "159951";
-        public static readonly string AnonymouseFacade_CreateAirlineUser_Email = "airline@gmail.com";
-        public static readonly int AnonymouseFacade_CreateAirlineUser_User_Role = 2;
+        public static int CreateAirlineUser_Id;
+        public static readonly string CreateAirlineUser_Username = "airline";
+        public static readonly string CreateAirlineUser_Password = "159951";
+        public static readonly string CreateAirlineUser_Email = "airline@gmail.com";
+        public static readonly int CreateAirlineUser_UserRole = 2;
+
+        public static readonly string AirlineUser_Password_new = "151151";
 
         //CreateAirlineCompanyForTest
-        public static long AnonymouseFacade_CreateAirlineCompany_Id;
-        public static readonly string AnonymouseFacade_CreateAirlineCompany_Name = "AirlineCompany";
-        public static readonly int AnonymouseFacade_CreateAirlineCompany_Country_Id = 1;
+        public static long CreateAirlineCompany_Id;
+        public static readonly string CreateAirlineCompany_Name = "AirlineCompany";
+        public static readonly int CreateAirlineCompany_Country_Id = 1;
 
         //UpdateAirlineCompanyForTest
-
-        public static readonly string AnonymouseFacade_UpdateAirlineCompany_Name = "AirlineCompany_new";
-
+        public static readonly string UpdateAirlineCompany_Name = "AirlineCompany_new";
 
         //CreateFlightForTest
-        public static int AnonymouseFacade_CreateFlight_Id;
-        public static readonly long AnonymouseFacade_CreateFlight_AirlineCompanyId = AnonymouseFacade_CreateAirlineCompany_Id;
-        public static readonly int AnonymouseFacade_CreateFlight_OriginCountryId = 1;
-        public static readonly int AnonymouseFacade_CreateFlight_DestinationCountryId = 2;
-        public static readonly DateTime AnonymouseFacade_CreateFlight_DepartureTime = new DateTime(2021, 05, 09, 12, 00, 00);
-        public static readonly DateTime AnonymouseFacade_CreateFlight_LandingTime = new DateTime(2021, 05, 09, 18, 00, 00);
-        public static readonly int AnonymouseFacade_CreateFlight_TicketsRemaining = 303;
+        public static readonly long CreateFlight_AirlineCompanyId = CreateAirlineCompany_Id;
+        public static readonly int CreateFlight_OriginCountryId = 1;
+        public static readonly int CreateFlight_DestinationCountryId = 2;
+        public static readonly DateTime CreateFlight_DepartureTime = new DateTime(2021, 05, 09, 12, 00, 00);
+        public static readonly DateTime CreateFlight_LandingTime = new DateTime(2021, 05, 09, 18, 00, 00);
+        public static readonly int CreateFlight_TicketsRemaining = 303;
+
+        //UpdateFlightForTest
+        public static readonly DateTime UpdateFlight_DepartureTime = new DateTime(2022, 05, 09, 12, 00, 00);
+        public static readonly DateTime UpdateFlight_LandingTime = new DateTime(2022, 05, 09, 18, 00, 00);
+        public static readonly int UpdateFlight_TicketsRemaining = 404;
 
 
-        //LoggedInCustomerFacadeTestData
-
-        public static readonly int LoggedInCustomerFacade_CreateCustomerUser_Id;
-        public static readonly string LoggedInCustomerFacade_CreateCustomerUser_Username = "customer";
-        public static readonly string LoggedInCustomerFacade_CreateCustomerUser_Password = "357753";
-        public static readonly string LoggedInCustomerFacade_CreateCustomerUser_Email = "customer@gmail.com";
-        public static readonly int LoggedInCustomerFacade_CreateCustomerUser_User_Role = 1;
-
-        //AdminrFacadeTestData
+        //CustomerFacadeTestData
+        public static int CreateCustomerUser_Id;
+        public static readonly string CreateCustomerUser_Username = "customer";
+        public static readonly string CreateCustomerUser_Password = "357753";
+        public static readonly string CreateCustomerUser_Email = "customer@gmail.com";
+        public static readonly int CreateCustomerUser_UserRole = 1;
 
         //CreateAdminUserForTest
-        public static int AdminFacade_CreateAdminUser_Id;
-        public static readonly string AdminFacade_CreateAdminUser_Username = FlightCenterConfig.ADMIN_NAME;
-        public static readonly string AdminFacade_CreateAdminUser_Password = FlightCenterConfig.ADMIN_PASSWORD;
-        public static readonly string AdminFacade_CreateAdminUser_Email = "admin@gmail.com";
-        public static readonly int AdminFacade_CreateAdminUser_UserRole = 3;
+        public static int CreateAdminUser_Id;
+        public static readonly string CreateAdminUser_Username = FlightCenterConfig.ADMIN_NAME;
+        public static readonly string CreateAdminUser_Password = FlightCenterConfig.ADMIN_PASSWORD;
+        public static readonly string CreateAdminUser_Email = "admin@gmail.com";
+        public static readonly int CreateAdminUser_UserRole = 3;
 
         //CreateAdminForTest
-        public static int AdminFacade_CreateAdmin_Id;
-        public static readonly string AdminFacade_CreateAdmin_FirstName = "fName";
-        public static readonly string AdminFacade_CreateAdmin_LastName = "lName";
-        public static readonly int AdminFacade_CreateAdmin_Level = 2;
+        public static readonly string CreateAdmin_FirstName = "fName";
+        public static readonly string CreateAdmin_LastName = "lName";
+        public static readonly int CreateAdmin_Level = 2;
 
         //UpdateAdminForTest
-
-        public static readonly string AdminFacade_UpdateAdmin_FirstName = "fName_new";
-        public static readonly string AdminFacade_UpdateAdmin_LastName = "lName_new";
-        public static readonly int AdminFacade_UpdateAdmin_Level = 1;
-
-        //CreateCustomerUserForTest
-        public static int AdminFacade_CreateCustomerUser_Id;
-        public static readonly string AdminFacade_CreateCustomerUser_Username = "customer";
-        public static readonly string AdminFacade_CreateCustomerUser_Password = "357753";
-        public static readonly string AdminFacade_CreateCustomerUser_Email = "customer@customer.com";
-        public static readonly int AdminFacade_CreateCustomerUser_UserRole = 1;
+        public static readonly string UpdateAdmin_FirstName = "fName_new";
+        public static readonly string UpdateAdmin_LastName = "lName_new";
+        public static readonly int UpdateAdmin_Level = 1;
 
         //UpdateCustomerUserForTest
-        public static int AdminFacade_UpdateCustomerUser_Id;
-        public static readonly string AdminFacade_UpdateCustomerUser_Username = "customer_new";
-        public static readonly string AdminFacade_UpdateCustomerUser_Password = "357753_new";
-        public static readonly string AdminFacade_UpdateCustomerUser_Email = "customer_new@customer.com";
-
+        public static readonly string UpdateCustomerUser_Username = "customer_new";
+        public static readonly string UpdateCustomerUser_Password = "357753_new";
+        public static readonly string UpdateCustomerUser_Email = "customer_new@customer.com";
 
         //CreateCustomerForTest
-        public static int AdminFacade_CreateCustomer_Id;
-        public static readonly string AdminFacade_CreateCustomer_FirstName = "fNameC";
-        public static readonly string AdminFacade_CreateCustomer_LastName = "lNameC";
-        public static readonly string AdminFacade_CreateCustomer_Address = "AddressC";
-        public static readonly string AdminFacade_CreateCustomer_PhoneNo = "Phone_No";
-        public static readonly string AdminFacade_CreateCustomer_CreditCardNo = "Credit_Card_No";
+        public static readonly string CreateCustomer_FirstName = "fNameC";
+        public static readonly string CreateCustomer_LastName = "lNameC";
+        public static readonly string CreateCustomer_Address = "AddressC";
+        public static readonly string CreateCustomer_PhoneNo = "Phone_No";
+        public static readonly string CreateCustomer_CreditCardNo = "Credit_Card_No";
 
         //UpdateCustomerForTest
-        public static readonly string AdminFacade_UpdateCustomer_FirstName = "fNameC_new";
-        public static readonly string AdminFacade_UpdateCustomer_LastName = "lNameC_new";
-        public static readonly string AdminFacade_UpdateCustomer_Address = "AddressC_new";
-        public static readonly string AdminFacade_UpdateCustomer_PhoneNo = "Phone_No_new";
-        public static readonly string AdminFacade_UpdateCustomer_CreditCardNo = "Credit_Card_No_new";
+        public static readonly string UpdateCustomer_FirstName = "fNameC_new";
+        public static readonly string UpdateCustomer_LastName = "lNameC_new";
+        public static readonly string UpdateCustomer_Address = "AddressC_new";
+        public static readonly string UpdateCustomer_PhoneNo = "Phone_No_new";
+        public static readonly string UpdateCustomer_CreditCardNo = "Credit_Card_No_new";
 
 
     }

@@ -115,7 +115,7 @@ namespace FlightsProject.DAO_PGSQL
             using (var my_conn = new NpgsqlConnection(conn_string))
             {
                 my_conn.Open();
-                string query = $"SELECT Airline_Companies.id, Airline_Companies.name, Airline_Companies.countryid, Airline_Companies.user_id, Users.username " +
+                string query = $"SELECT Airline_Companies.id, Airline_Companies.name, Airline_Companies.countryid, Airline_Companies.user_id, Users.username, Users.password " +
                     $"FROM Airline_Companies JOIN Users ON Airline_Companies.User_id = Users.id WHERE Users.username = '{name}' ";
 
                 NpgsqlCommand command = new NpgsqlCommand(query, my_conn);
@@ -130,7 +130,8 @@ namespace FlightsProject.DAO_PGSQL
                         NameOfAirline = (string)reader["name"],
                         Country_Id = (int)reader["CountryId"],
                         User_Id = (long)reader["User_Id"],
-                        Username = (string)reader["Username"]
+                        Username = (string)reader["Username"],
+                        Password = (string)reader["Password"]
                     };
                     return airline;
                 }

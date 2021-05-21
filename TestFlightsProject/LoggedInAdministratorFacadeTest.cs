@@ -27,10 +27,10 @@ namespace TestFlightsProject
         {
             User airlineUser = new User
             {
-                Username = TestData.AnonymouseFacade_CreateAirlineUser_Username,
-                Password = TestData.AnonymouseFacade_CreateAirlineUser_Password,
-                Email = TestData.AnonymouseFacade_CreateAirlineUser_Email,
-                User_Role = TestData.AnonymouseFacade_CreateAirlineUser_User_Role
+                Username = TestData.CreateAirlineUser_Username,
+                Password = TestData.CreateAirlineUser_Password,
+                Email = TestData.CreateAirlineUser_Email,
+                User_Role = TestData.CreateAirlineUser_UserRole
             };
             return airlineUser;
         }
@@ -38,14 +38,14 @@ namespace TestFlightsProject
         public AirlineCompany CreateAirlineCompanyForTest()
         {
             userDAOPGSQL.Add(CreateAirlineUserForTest());
-            var u = userDAOPGSQL.GetByUserName(TestData.AnonymouseFacade_CreateAirlineUser_Username);
-            TestData.AnonymouseFacade_CreateAirlineUser_Id = (int)u.Id;
+            var u = userDAOPGSQL.GetByUserName(TestData.CreateAirlineUser_Username);
+            TestData.CreateAirlineUser_Id = (int)u.Id;
 
             AirlineCompany airlineCompany = new AirlineCompany
             {
-                Name = TestData.AnonymouseFacade_CreateAirlineCompany_Name,
-                Country_Id = TestData.AnonymouseFacade_CreateAirlineCompany_Country_Id,
-                User_Id = TestData.AnonymouseFacade_CreateAirlineUser_Id,
+                Name = TestData.CreateAirlineCompany_Name,
+                Country_Id = TestData.CreateAirlineCompany_Country_Id,
+                User_Id = TestData.CreateAirlineUser_Id,
             };
             return airlineCompany;
         }
@@ -54,10 +54,10 @@ namespace TestFlightsProject
         {
             User airlineUser = new User
             {
-                Username = TestData.AdminFacade_CreateAdminUser_Username,
-                Password = TestData.AdminFacade_CreateAdminUser_Password,
-                Email = TestData.AdminFacade_CreateAdminUser_Email,
-                User_Role = TestData.AdminFacade_CreateAdminUser_UserRole
+                Username = TestData.CreateAdminUser_Username,
+                Password = TestData.CreateAdminUser_Password,
+                Email = TestData.CreateAdminUser_Email,
+                User_Role = TestData.CreateAdminUser_UserRole
             };
             return airlineUser;
         }
@@ -65,15 +65,15 @@ namespace TestFlightsProject
         public Admin CreateAdminForTest()
         {
             userDAOPGSQL.Add(CreateAdminUserForTest());
-            var u = userDAOPGSQL.GetByUserName(TestData.AdminFacade_CreateAdminUser_Username);
-            TestData.AdminFacade_CreateAdminUser_Id = (int)u.Id;
+            var u = userDAOPGSQL.GetByUserName(TestData.CreateAdminUser_Username);
+            TestData.CreateAdminUser_Id = (int)u.Id;
 
             Admin admin = new Admin
             {
-                First_Name = TestData.AdminFacade_CreateAdmin_FirstName,
-                Last_Name = TestData.AdminFacade_CreateAdmin_LastName,
-                Level = TestData.AdminFacade_CreateAdmin_Level,
-                User_id = TestData.AdminFacade_CreateAdminUser_Id
+                First_Name = TestData.CreateAdmin_FirstName,
+                Last_Name = TestData.CreateAdmin_LastName,
+                Level = TestData.CreateAdmin_Level,
+                User_id = TestData.CreateAdminUser_Id
             };
             return admin;
         }
@@ -81,27 +81,27 @@ namespace TestFlightsProject
         {
             User airlineUser = new User
             {
-                Username = TestData.AdminFacade_CreateCustomerUser_Username,
-                Password = TestData.AdminFacade_CreateCustomerUser_Password,
-                Email = TestData.AdminFacade_CreateCustomerUser_Email,
-                User_Role = TestData.AdminFacade_CreateCustomerUser_UserRole
+                Username = TestData.CreateCustomerUser_Username,
+                Password = TestData.CreateCustomerUser_Password,
+                Email = TestData.CreateCustomerUser_Email,
+                User_Role = TestData.CreateCustomerUser_UserRole
             };
             return airlineUser;
         }
 
         public Customer CreateCustomerForTest() {
             userDAOPGSQL.Add(CreateCustomerUserForTest());
-            var u = userDAOPGSQL.GetByUserName(TestData.AdminFacade_CreateCustomerUser_Username);
-            TestData.AdminFacade_CreateCustomerUser_Id = (int)u.Id;
+            var u = userDAOPGSQL.GetByUserName(TestData.CreateCustomerUser_Username);
+            TestData.CreateCustomerUser_Id = (int)u.Id;
 
             Customer customer = new Customer()
             {
-                First_Name = TestData.AdminFacade_CreateCustomer_FirstName,
-                Last_Name = TestData.AdminFacade_CreateCustomer_LastName,
-                Address = TestData.AdminFacade_CreateCustomer_Address,
-                Phone_No = TestData.AdminFacade_CreateCustomer_PhoneNo,
-                Credit_Card_No = TestData.AdminFacade_CreateCustomer_CreditCardNo,
-                User_Id = TestData.AdminFacade_CreateCustomerUser_Id
+                First_Name = TestData.CreateCustomer_FirstName,
+                Last_Name = TestData.CreateCustomer_LastName,
+                Address = TestData.CreateCustomer_Address,
+                Phone_No = TestData.CreateCustomer_PhoneNo,
+                Credit_Card_No = TestData.CreateCustomer_CreditCardNo,
+                User_Id = TestData.CreateCustomerUser_Id
             };
             return customer;
         }
@@ -153,11 +153,11 @@ namespace TestFlightsProject
             var list = facadeAdmin.GetAllCustomers(token);
 
             Assert.AreEqual(1, list.Count);
-            Assert.AreEqual(TestData.AdminFacade_CreateCustomer_FirstName, list[0].First_Name);
-            Assert.AreEqual(TestData.AdminFacade_CreateCustomer_LastName, list[0].Last_Name);
-            Assert.AreEqual(TestData.AdminFacade_CreateCustomer_Address, list[0].Address);
-            Assert.AreEqual(TestData.AdminFacade_CreateCustomer_PhoneNo, list[0].Phone_No);
-            Assert.AreEqual(TestData.AdminFacade_CreateCustomer_CreditCardNo, list[0].Credit_Card_No);
+            Assert.AreEqual(TestData.CreateCustomer_FirstName, list[0].First_Name);
+            Assert.AreEqual(TestData.CreateCustomer_LastName, list[0].Last_Name);
+            Assert.AreEqual(TestData.CreateCustomer_Address, list[0].Address);
+            Assert.AreEqual(TestData.CreateCustomer_PhoneNo, list[0].Phone_No);
+            Assert.AreEqual(TestData.CreateCustomer_CreditCardNo, list[0].Credit_Card_No);
         }
 
         [TestMethod]
@@ -215,16 +215,16 @@ namespace TestFlightsProject
             facadeAdmin.CreateAdmin(token, CreateAdminForTest());
             var list = adminDAOPGSQL.GetAll();
             Admin a = list[0];
-            a.First_Name = TestData.AdminFacade_UpdateAdmin_FirstName;
-            a.Last_Name = TestData.AdminFacade_UpdateAdmin_LastName;
-            a.Level = TestData.AdminFacade_UpdateAdmin_Level;
+            a.First_Name = TestData.UpdateAdmin_FirstName;
+            a.Last_Name = TestData.UpdateAdmin_LastName;
+            a.Level = TestData.UpdateAdmin_Level;
 
             facadeAdmin.UpdateAdmin(token, a);
             var a_new = adminDAOPGSQL.Get(a.Id);
 
-            Assert.AreEqual(TestData.AdminFacade_UpdateAdmin_FirstName, a_new.First_Name);
-            Assert.AreEqual(TestData.AdminFacade_UpdateAdmin_LastName, a_new.Last_Name);
-            Assert.AreEqual(TestData.AdminFacade_UpdateAdmin_Level, a_new.Level);
+            Assert.AreEqual(TestData.UpdateAdmin_FirstName, a_new.First_Name);
+            Assert.AreEqual(TestData.UpdateAdmin_LastName, a_new.Last_Name);
+            Assert.AreEqual(TestData.UpdateAdmin_Level, a_new.Level);
         }
 
         [TestMethod]
@@ -238,11 +238,11 @@ namespace TestFlightsProject
             var list = airlineCompanyDAOPGSQL.GetAll();
             AirlineCompany ac = list[0];
 
-            ac.Name = TestData.AnonymouseFacade_UpdateAirlineCompany_Name;
+            ac.Name = TestData.UpdateAirlineCompany_Name;
 
             facadeAdmin.UpdateAirlineDetails(token, ac);
             var ac_new = airlineCompanyDAOPGSQL.Get((int)ac.Id);
-            Assert.AreEqual(TestData.AnonymouseFacade_UpdateAirlineCompany_Name, ac_new.Name);
+            Assert.AreEqual(TestData.UpdateAirlineCompany_Name, ac_new.Name);
 
         }
         [TestMethod]
@@ -255,20 +255,20 @@ namespace TestFlightsProject
             var list = facadeAdmin.GetAllCustomers(token);
             Customer c = list[0];
 
-            c.First_Name = TestData.AdminFacade_UpdateCustomer_FirstName;
-            c.Last_Name = TestData.AdminFacade_UpdateCustomer_LastName;
-            c.Address = TestData.AdminFacade_UpdateCustomer_Address;
-            c.Phone_No = TestData.AdminFacade_UpdateCustomer_PhoneNo;
-            c.Credit_Card_No = TestData.AdminFacade_UpdateCustomer_CreditCardNo;
+            c.First_Name = TestData.UpdateCustomer_FirstName;
+            c.Last_Name = TestData.UpdateCustomer_LastName;
+            c.Address = TestData.UpdateCustomer_Address;
+            c.Phone_No = TestData.UpdateCustomer_PhoneNo;
+            c.Credit_Card_No = TestData.UpdateCustomer_CreditCardNo;
 
             facadeAdmin.UpdateCustomerDetails(token, c);
             var c_new = customerDAOPGSQL.Get((int)c.Id);
 
-            Assert.AreEqual(TestData.AdminFacade_UpdateCustomer_FirstName, c.First_Name);
-            Assert.AreEqual(TestData.AdminFacade_UpdateCustomer_LastName, c.Last_Name);
-            Assert.AreEqual(TestData.AdminFacade_UpdateCustomer_Address, c.Address);
-            Assert.AreEqual(TestData.AdminFacade_UpdateCustomer_PhoneNo, c.Phone_No);
-            Assert.AreEqual(TestData.AdminFacade_UpdateCustomer_CreditCardNo, c.Credit_Card_No);
+            Assert.AreEqual(TestData.UpdateCustomer_FirstName, c.First_Name);
+            Assert.AreEqual(TestData.UpdateCustomer_LastName, c.Last_Name);
+            Assert.AreEqual(TestData.UpdateCustomer_Address, c.Address);
+            Assert.AreEqual(TestData.UpdateCustomer_PhoneNo, c.Phone_No);
+            Assert.AreEqual(TestData.UpdateCustomer_CreditCardNo, c.Credit_Card_No);
         }
     }
 }
