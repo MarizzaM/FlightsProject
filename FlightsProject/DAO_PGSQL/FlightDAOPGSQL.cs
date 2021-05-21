@@ -287,7 +287,7 @@ namespace FlightsProject.DAO_PGSQL
             {
                 if (ticket.Id_Customer == customer.Id)
                 {
-                    flights.Add(Get(ticket.Id_Flight));
+                    flights.Add(Get((int)ticket.Id_Flight));
                 }
             });
             return flights;

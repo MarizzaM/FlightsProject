@@ -9,15 +9,11 @@ namespace FlightsProject.Facade
 {
     public class LoggedInCustomerFacade : AnonymousUserFacade, ILoggedInCustomerFacade
     {
-        public void CancelTicket(LoginToken<Customer> token, Ticket ticket)
+        public void CancelTicket(LoginToken<Customer> token, Ticket ticket, Flight flight)
         {
-            Flight flight = new Flight();
             if (token != null && ticket.Id_Customer == token.User.Id) {
-                _customerDAO.Remove(token.User);
-                
-                if (ticket.Id_Flight == flight.Id) {
-                    flight.Tickets_Remaining++;
-                }
+                _ticketDAO.Remove(ticket);
+                flight.Tickets_Remaining++;
             }
         }
 
@@ -32,9 +28,11 @@ namespace FlightsProject.Facade
         public Ticket PurchaseTicket(LoginToken<Customer> token, Flight flight)
         {
             if (token != null) {
-                Ticket ticket = new Ticket((int)flight.Id, (int)token.User.Id);
+                Ticket ticket = new Ticket(flight.Id, token.User.Id);
                 _ticketDAO.Add(ticket);
+                flight.Tickets_Remaining--;
                 return ticket;
+                
             }
             return null;
         }

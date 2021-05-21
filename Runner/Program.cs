@@ -38,10 +38,12 @@ namespace Runner
 
                 using var cmd = new NpgsqlCommand();
                 cmd.Connection = my_conn;
-
-                //cmd.CommandText = $"DELETE FROM administrators; DELETE FROM airline_companies; DELETE FROM customers; " +
-                //    $"DELETE FROM flights; DELETE FROM tickets; DELETE FROM users;";
-                cmd.CommandText = $"DELETE FROM administrators; DELETE FROM flights; DELETE FROM airline_companies; DELETE FROM customers; DELETE FROM users; ";
+                cmd.CommandText = $"DELETE FROM administrators; " +
+                    $"DELETE FROM tickets; " +
+                    $"DELETE FROM flights; " +
+                    $"DELETE FROM airline_companies; " +
+                    $"DELETE FROM customers; " +
+                    $"DELETE FROM users; ";
                 cmd.ExecuteNonQuery();
                 Console.WriteLine($"All data has been deleted successfully from tables'");
             }
@@ -131,15 +133,46 @@ namespace Runner
 
             //LoginToken<Admin> token = new LoginToken<Admin>(
 
-                
+
             //    );
             //token.User.UserName = FlightCenterConfig.ADMIN_NAME;
             //token.User.Password = FlightCenterConfig.ADMIN_PASSWORD;
 
-            loginService.TryAdminLogin(FlightCenterConfig.ADMIN_NAME, FlightCenterConfig.ADMIN_PASSWORD, out LoginToken<Admin> token);
-            LoggedInAdministratorFacade facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade<Admin>(token) as LoggedInAdministratorFacade;
+            User user0 = new User
+            {
+                Username = "Airline",
+                Password = "Airline111",
+                Email = "Airline@gmail.com",
+                User_Role = 1
+            };
+            user.Add(user0);
+
+            var uA = user.GetByUserName("Airline");
+            long idA = uA.Id;
 
 
+            AirlineCompany airline = new AirlineCompany
+            {
+                Name = "AirlineCompany1",
+                Country_Id = 1,
+                User_Id = (int)idA
+            };
+            airlineCompanyDAOPGSQL.Add(airline);
+
+            var a = airlineCompanyDAOPGSQL.GetAirlineByUserame("Airline");
+            Console.WriteLine("aurline: " + a);
+            long a_id = a.Id;
+
+            Flight flight = new Flight
+            {
+                Airline_Company_Id = (long)a_id,
+                Origin_Country_Id = 1,
+                Destination_Country_Id = 2,
+                Departure_Time = new DateTime(2021, 05, 09, 12, 00, 00),
+                Landing_Time = new DateTime(2021, 05, 09, 18, 00, 00),
+                Tickets_Remaining = 100
+            };
+            flightDAOPGSQL.Add(flight);
 
             User user1 = new User
             {
@@ -162,6 +195,31 @@ namespace Runner
                 Credit_Card_No = "Card",
                 User_Id = id
             };
+
+            loginService.TryAdminLogin(FlightCenterConfig.ADMIN_NAME, FlightCenterConfig.ADMIN_PASSWORD, out LoginToken<Admin> tokenAdmin);
+            LoggedInAdministratorFacade facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade<Admin>(tokenAdmin) as LoggedInAdministratorFacade;
+
+            facadeAdmin.CreateNewCustomer(tokenAdmin, customer);
+            Customer c = facadeAdmin.GetAllCustomers(tokenAdmin)[0];
+            // facadeAdmin.CreateNewCustomer(tokenAdmin, customer);
+
+            
+            LoginToken<Customer> tokenCustomer = new LoginToken<Customer>()
+            {
+                User = c
+            };
+            //loginService.TryCustomerLogin("Customer", "c112", out tokenCustomer);
+            //Customer customer1 = customerDAOPGSQL.GetCustomerByUserName("Customer");
+            // loginService.TryCustomerLogin ("Customer", "c112", out tokenCustomer);
+
+
+            LoggedInCustomerFacade fasadeCustomer = FlightsCenterSystem.GetInstance().GetFacade(tokenCustomer) as LoggedInCustomerFacade;
+            var myFlight = flightDAOPGSQL.GetAll()[0];
+            Ticket t = fasadeCustomer.PurchaseTicket(tokenCustomer, myFlight);
+           // Console.WriteLine(tokenCustomer);
+           // Console.WriteLine(customer1.Password);
+           // Console.WriteLine(c.U);
+
 
             // User manager2 = new User
             // {
@@ -226,10 +284,10 @@ namespace Runner
 
 
             //customerDAOPGSQL.Add(customer);
-            facadeAdmin.CreateNewCustomer(token, customer);
-            var list = facadeAdmin.GetAllCustomers(token);
+            //facadeAdmin.CreateNewCustomer(token, customer);
+            //var list = facadeAdmin.GetAllCustomers(token);
 
-            Console.WriteLine(list.Count);
+            //Console.WriteLine(list.Count);
 
 
 
@@ -268,6 +326,9 @@ namespace Runner
             //Console.WriteLine(f[0].Id);
             //Console.WriteLine(f[0].Landing_Time);
             //Console.WriteLine(f[0].NameOfOriginCountry);
+ 
+
+
 
 
         }

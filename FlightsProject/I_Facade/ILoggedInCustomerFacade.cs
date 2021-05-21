@@ -10,7 +10,7 @@ namespace FlightsProject.I_Facade
     {
         IList<Flight> GetAllMyFlights(LoginToken<Customer> token);
         Ticket PurchaseTicket(LoginToken<Customer> token, Flight flight);
-        void CancelTicket(LoginToken<Customer> token, Ticket ticket);
+        void CancelTicket(LoginToken<Customer> token, Ticket ticket, Flight flight);
 
     }
 }

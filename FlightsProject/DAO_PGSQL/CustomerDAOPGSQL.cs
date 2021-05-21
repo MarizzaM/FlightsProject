@@ -84,9 +84,35 @@ namespace FlightsProject.DAO_PGSQL
             return customers;
         }
 
-        public Customer GetGetCustomerByUserName(string username)
+        public Customer GetCustomerByUserName(string username)
         {
-            throw new NotImplementedException();
+            using (var my_conn = new NpgsqlConnection(conn_string))
+            {
+                my_conn.Open();
+                string query = $"SELECT Customers.Id,  Customers.First_Name, Customers.Last_Name, Customers.Address, Customers.Phone_No, Customers.Credit_Card_No, " +
+                    $" Users.username, Users.password FROM Customers JOIN Users ON Customers.User_id = Users.id WHERE Users.username = '{username}'";
+
+                NpgsqlCommand command = new NpgsqlCommand(query, my_conn);
+                command.CommandType = System.Data.CommandType.Text;
+
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Customer customer = new Customer
+                    {
+                        Id = (long)reader["Id"],
+                        First_Name = (string)reader["First_Name"],
+                        Last_Name = (string)reader["Last_Name"],
+                        Address = (string)reader["Address"],
+                        Phone_No = (string)reader["Phone_No"],
+                        Credit_Card_No = (string)reader["Credit_Card_No"],
+                        UserName = (string)reader["Username"],
+                        Password = (string)reader["Password"]
+                    };
+                    return customer;
+                }
+            }
+            return null;
         }
 
         public void Remove(Customer c)

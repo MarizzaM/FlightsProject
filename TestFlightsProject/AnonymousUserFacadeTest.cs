@@ -13,20 +13,22 @@ namespace TestFlightsProject
     [TestClass]
     public class AnonymousUserFacadeTest
     {
-        static string conn_string_test = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDBTest";
-        public void DeleteAllData()
-        {
-            using (var my_conn = new NpgsqlConnection(conn_string_test))
-            {
-                my_conn.Open();
+        //static string conn_string_test = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDBTest";
+        //public void DeleteAllData()
+        //{
+        //    using (var my_conn = new NpgsqlConnection(conn_string_test))
+        //    {
+        //        my_conn.Open();
 
-                using var cmd = new NpgsqlCommand();
+        //        using var cmd = new NpgsqlCommand();
 
-                cmd.Connection = my_conn;
-                cmd.CommandText = $"DELETE FROM flights; DELETE FROM airline_companies; DELETE FROM administrators;  DELETE FROM users;";
-                cmd.ExecuteNonQuery();
-            }
-        }
+        //        cmd.Connection = my_conn;
+        //        cmd.CommandText = $"DELETE FROM flights; DELETE FROM airline_companies; DELETE FROM administrators;  DELETE FROM users;";
+        //        cmd.ExecuteNonQuery();
+        //    }
+        //}
+
+        
        
         UserDAOPGSQL userDAOPGSQL = new UserDAOPGSQL();
         FlightDAOPGSQL flightDAOPGSQL = new FlightDAOPGSQL();
@@ -82,7 +84,7 @@ namespace TestFlightsProject
         public void GetAllAirlineCompaniesTest()
         {
             AnonymousUserFacade facade = FlightsCenterSystem.GetInstance().GetFacade<Anonymous>(null) as AnonymousUserFacade;
-            DeleteAllData();
+            TestData.DeleteAllData();
 
             airlineCompanyDAOPGSQL.Add(CreateAirlineCompanyForTest());
 
@@ -96,7 +98,7 @@ namespace TestFlightsProject
         public void GetAllFlightsTest()
         {
             AnonymousUserFacade facade = FlightsCenterSystem.GetInstance().GetFacade<Anonymous>(null) as AnonymousUserFacade;
-            DeleteAllData();
+            TestData.DeleteAllData();
 
             flightDAOPGSQL.Add(CreateFlightForTest());
 
@@ -110,7 +112,7 @@ namespace TestFlightsProject
         public void GetAllFlightsVacancyTest()
         {
             AnonymousUserFacade facade = FlightsCenterSystem.GetInstance().GetFacade<Anonymous>(null) as AnonymousUserFacade;
-            DeleteAllData();
+            TestData.DeleteAllData();
 
             flightDAOPGSQL.Add(CreateFlightForTest());
 
@@ -125,7 +127,7 @@ namespace TestFlightsProject
         public void GetFlightByIdTest()
         {
             AnonymousUserFacade facade = FlightsCenterSystem.GetInstance().GetFacade<Anonymous>(null) as AnonymousUserFacade;
-            DeleteAllData();
+            TestData.DeleteAllData();
 
             flightDAOPGSQL.Add(CreateFlightForTest());
 
@@ -145,7 +147,7 @@ namespace TestFlightsProject
         public void GetFlightsByDepatrureDateTest()
         {
             AnonymousUserFacade facade = FlightsCenterSystem.GetInstance().GetFacade<Anonymous>(null) as AnonymousUserFacade;
-            DeleteAllData();
+            TestData.DeleteAllData();
 
             flightDAOPGSQL.Add(CreateFlightForTest());
 
@@ -158,7 +160,7 @@ namespace TestFlightsProject
         public void GetFlightsByDestinationCountryTest()
         {
             AnonymousUserFacade facade = FlightsCenterSystem.GetInstance().GetFacade<Anonymous>(null) as AnonymousUserFacade;
-            DeleteAllData();
+            TestData.DeleteAllData();
             flightDAOPGSQL.Add(CreateFlightForTest());
            
             var f_list = facade.GetFlightsByDestinationCountry(TestData.AnonymouseFacade_CreateFlight_DestinationCountryId);
@@ -171,7 +173,7 @@ namespace TestFlightsProject
         public void GetFlightsByLandingDateTest()
         {
             AnonymousUserFacade facade = FlightsCenterSystem.GetInstance().GetFacade<Anonymous>(null) as AnonymousUserFacade;
-            DeleteAllData();
+            TestData.DeleteAllData();
             flightDAOPGSQL.Add(CreateFlightForTest());
 
             var f_list = facade.GetFlightsByLandingDate(TestData.AnonymouseFacade_CreateFlight_LandingTime);
@@ -184,7 +186,7 @@ namespace TestFlightsProject
         public void GetFlightsByOriginCountryTest()
         {
             AnonymousUserFacade facade = FlightsCenterSystem.GetInstance().GetFacade<Anonymous>(null) as AnonymousUserFacade;
-            DeleteAllData();
+            TestData.DeleteAllData();
             flightDAOPGSQL.Add(CreateFlightForTest());
 
             var flights_list = flightDAOPGSQL.GetAll();

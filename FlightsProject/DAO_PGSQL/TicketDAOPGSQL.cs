@@ -9,7 +9,7 @@ namespace FlightsProject.DAO_PGSQL
 {
     public class TicketDAOPGSQL : ITicketDAO
     {
-        static string conn_string = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDB";
+        static string conn_string = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDBTest";
         public void Add(Ticket t)
         {
             using (var my_conn = new NpgsqlConnection(conn_string))
@@ -19,9 +19,9 @@ namespace FlightsProject.DAO_PGSQL
                 using var cmd = new NpgsqlCommand();
                 cmd.Connection = my_conn;
 
-                cmd.CommandText = $"INSERT INTO tickets (flight_id, customer_id) VALUES ({t.Id_Flight}, {t.Id_Customer})";
+                cmd.CommandText = $"INSERT INTO tickets (id_flight, id_customer) VALUES ({t.Id_Flight}, {t.Id_Customer})";
                 cmd.ExecuteNonQuery();
-                Console.WriteLine($"{t.Id_Flight} {t.Id_Customer} inserted successfully to table 'Admin'");
+                Console.WriteLine($"{t.Id_Flight} {t.Id_Customer} inserted successfully to table 'Ticket'");
             }
         }
 
@@ -40,9 +40,9 @@ namespace FlightsProject.DAO_PGSQL
                 {
                     Ticket ticket = new Ticket
                     {
-                        Id = (int)reader["Id"],
-                        Id_Flight = (int)reader["Id_Flight"],
-                        Id_Customer = (int)reader["Id_Customer"]
+                        Id = (long)reader["Id"],
+                        Id_Flight = (long)reader["Id_Flight"],
+                        Id_Customer = (long)reader["Id_Customer"]
                     };
                     return ticket;
                 }
@@ -65,9 +65,9 @@ namespace FlightsProject.DAO_PGSQL
                 {
                     Ticket ticket = new Ticket
                     {
-                        Id = (int)reader["Id"],
-                        Id_Flight = (int)reader["Id_Flight"],
-                        Id_Customer = (int)reader["Id_Customer"]
+                        Id = (long)reader["Id"],
+                        Id_Flight = (long)reader["Id_Flight"],
+                        Id_Customer = (long)reader["Id_Customer"]
                     };
                     tickets.Add(ticket);
                 }
@@ -102,6 +102,7 @@ namespace FlightsProject.DAO_PGSQL
                 cmd.CommandText = $"UPDATE tickets SET tickets.Id = {t.Id}, " +
                     $"tickets.Id_Flight  = {t.Id_Flight}, " +
                     $"tickets.Id_Customer = {t.Id_Customer}";
+                cmd.ExecuteNonQuery();
                 Console.WriteLine($"ticket #{t.Id} has been updeted successfully in table 'Tickets'");
             }
         }

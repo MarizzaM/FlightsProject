@@ -6,14 +6,14 @@ namespace FlightsProject.POCO
 {
     public class Ticket : IPoco
     {
-        public int Id { get; set; }
-        public int Id_Flight { get; set; }
-        public int Id_Customer { get; set; }
+        public long Id { get; set; }
+        public long Id_Flight { get; set; }
+        public long Id_Customer { get; set; }
 
         public Ticket()
         {
         }
-        public Ticket(int id_Flight, int id_Customer)
+        public Ticket(long id_Flight, long id_Customer)
         {
             Id_Flight = id_Flight;
             Id_Customer = id_Customer;
@@ -44,15 +44,16 @@ namespace FlightsProject.POCO
             return this.Id == t.Id;
         }
 
-        public override int GetHashCode()
-        {
-            return this.Id;
-        }
+
 
         public override string ToString()
         {
             return $"{Id} {Id_Flight} {Id_Customer} ";
         }
 
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id);
+        }
     }
 }

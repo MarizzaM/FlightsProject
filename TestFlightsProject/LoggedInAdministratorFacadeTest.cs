@@ -8,31 +8,9 @@ using Npgsql;
 
 namespace TestFlightsProject
 {
-
     [TestClass]
     public class LoggedInAdministratorFacadeTest
     {
-
-        static string conn_string_test = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDBTest";
-
-        public void DeleteAllData()
-        {
-            using (var my_conn = new NpgsqlConnection(conn_string_test))
-            {
-                my_conn.Open();
-
-                using var cmd = new NpgsqlCommand();
-
-                cmd.Connection = my_conn;
-                cmd.CommandText = $"DELETE FROM flights; " +
-                    $"DELETE FROM customers; " +
-                    $"DELETE FROM airline_companies; " +
-                    $"DELETE FROM administrators; " +
-                    $"DELETE FROM users; ";
-                cmd.ExecuteNonQuery();
-            }
-        }
-
         CustomerDAOPGSQL customerDAOPGSQL = new CustomerDAOPGSQL();
         UserDAOPGSQL userDAOPGSQL = new UserDAOPGSQL();
         AirlineCompanyDAOPGSQL airlineCompanyDAOPGSQL = new AirlineCompanyDAOPGSQL();
@@ -131,7 +109,7 @@ namespace TestFlightsProject
         [TestMethod]
         public void CreateAdminTest()
         {
-            DeleteAllData();
+            TestData.DeleteAllData();
             getTokenAndGetFacade(out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin);
 
             facadeAdmin.CreateAdmin(token, CreateAdminForTest());
@@ -144,7 +122,7 @@ namespace TestFlightsProject
         [TestMethod]
         public void CreateNewAirlineTest()
         {
-            DeleteAllData();
+            TestData.DeleteAllData();
             getTokenAndGetFacade(out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin);
 
             facadeAdmin.CreateNewAirline(token, CreateAirlineCompanyForTest());
@@ -156,7 +134,7 @@ namespace TestFlightsProject
         [TestMethod]
         public void CreateNewCustomerTest()
         {
-            DeleteAllData();
+            TestData.DeleteAllData();
             getTokenAndGetFacade(out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin);
 
             facadeAdmin.CreateNewCustomer(token, CreateCustomerForTest());
@@ -167,7 +145,7 @@ namespace TestFlightsProject
         [TestMethod]
         public void GetAllCustomersTest()
         {
-            DeleteAllData();
+            TestData.DeleteAllData();
             getTokenAndGetFacade(out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin);
 
             facadeAdmin.CreateNewCustomer(token, CreateCustomerForTest());
@@ -185,7 +163,7 @@ namespace TestFlightsProject
         [TestMethod]
         public void RemoveAdminTest()
         {
-            DeleteAllData();
+            TestData.DeleteAllData();
             getTokenAndGetFacade(out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin);
 
             adminDAOPGSQL.Add(CreateAdminForTest());
@@ -199,7 +177,7 @@ namespace TestFlightsProject
         [TestMethod]
         public void RemoveAirlineTest()
         {
-            DeleteAllData();
+            TestData.DeleteAllData();
             getTokenAndGetFacade(out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin); 
             AnonymousUserFacade facade = FlightsCenterSystem.GetInstance().GetFacade<Anonymous>(null) as AnonymousUserFacade;
 
@@ -215,7 +193,7 @@ namespace TestFlightsProject
         [TestMethod]
         public void RemoveCustomerTest()
         {
-            DeleteAllData();
+            TestData.DeleteAllData();
             getTokenAndGetFacade(out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin);
 
             customerDAOPGSQL.Add(CreateCustomerForTest());
@@ -231,7 +209,7 @@ namespace TestFlightsProject
         [TestMethod]
         public void UpdateAdminTest()
         {
-            DeleteAllData();
+            TestData.DeleteAllData();
             getTokenAndGetFacade(out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin);
 
             facadeAdmin.CreateAdmin(token, CreateAdminForTest());
@@ -252,7 +230,7 @@ namespace TestFlightsProject
         [TestMethod]
         public void UpdateAirlineDetailsTest()
         {
-            DeleteAllData();
+            TestData.DeleteAllData();
             getTokenAndGetFacade(out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin);
             AnonymousUserFacade facade = FlightsCenterSystem.GetInstance().GetFacade<Anonymous>(null) as AnonymousUserFacade;
 
@@ -270,7 +248,7 @@ namespace TestFlightsProject
         [TestMethod]
         public void UpdateCustomerDetailsTest()
         {
-            DeleteAllData();
+            TestData.DeleteAllData();
             getTokenAndGetFacade(out LoginToken<Admin> token, out LoggedInAdministratorFacade facadeAdmin);
 
             facadeAdmin.CreateNewCustomer(token, CreateCustomerForTest());

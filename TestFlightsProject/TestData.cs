@@ -1,6 +1,7 @@
 ﻿using FlightsProject;
 using FlightsProject.Login;
 using FlightsProject.POCO;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +11,26 @@ namespace TestFlightsProject
 
     class TestData
     {
-      
+        static string conn_string_test = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDBTest";
+        public static void DeleteAllData()
+        {
+            using (var my_conn = new NpgsqlConnection(conn_string_test))
+            {
+                my_conn.Open();
+
+                using var cmd = new NpgsqlCommand();
+                cmd.Connection = my_conn;
+                cmd.CommandText = $"DELETE FROM administrators; " +
+                    $"DELETE FROM tickets; " +
+                    $"DELETE FROM flights; " +
+                    $"DELETE FROM airline_companies; " +
+                    $"DELETE FROM customers; " +
+                    $"DELETE FROM users; ";
+                cmd.ExecuteNonQuery();
+                Console.WriteLine($"All data has been deleted successfully from tables'");
+            }
+        }
+
         //AnonymousUserFacadeTestData
 
         //CreateAirlineUserForTest

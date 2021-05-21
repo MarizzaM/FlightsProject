@@ -7,7 +7,7 @@ namespace FlightsProject.I_DAO
 {
     public interface ICustomerDAO : IBasicDb<Customer>
     {
-        public Customer GetGetCustomerByUserName(string username);
+        public Customer GetCustomerByUserName(string username);
 
     }
 }

@@ -73,7 +73,7 @@ namespace FlightsProject.Login
 
         public bool TryCustomerLogin(string username, string password, out LoginToken<Customer> token)
         {
-            Customer customer = _customerDAO.GetGetCustomerByUserName(username);
+            Customer customer = _customerDAO.GetCustomerByUserName(username);
             if (customer != null)
             {
                 if (customer.Password == password)
