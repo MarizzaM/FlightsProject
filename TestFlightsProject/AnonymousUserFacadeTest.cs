@@ -13,7 +13,6 @@ namespace TestFlightsProject
     [TestClass]
     public class AnonymousUserFacadeTest
     {
-
         UserDAOPGSQL userDAOPGSQL = new UserDAOPGSQL();
         FlightDAOPGSQL flightDAOPGSQL = new FlightDAOPGSQL();
         AirlineCompanyDAOPGSQL airlineCompanyDAOPGSQL = new AirlineCompanyDAOPGSQL();

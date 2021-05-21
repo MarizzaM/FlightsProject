@@ -144,10 +144,7 @@ namespace TestFlightsProject
             System.Console.WriteLine(tokenAirline.User.Password);
 
             Assert.AreEqual(tokenAirline.User.Password, TestData.AirlineUser_Password_new);
-
-
         }
-
 
         [TestMethod]
         public void CreateFlightTest()
