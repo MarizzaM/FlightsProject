@@ -9,7 +9,7 @@ namespace FlightsProject.DAO_PGSQL
 {
     public class UserDAOPGSQL : IUserDAO
     {
-        static string conn_string = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDBTest";
+        static string conn_string = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDB";
         public void Add(User u)
         {
             using (var my_conn = new NpgsqlConnection(conn_string))

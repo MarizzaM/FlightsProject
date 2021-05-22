@@ -79,24 +79,24 @@ namespace FlightsProject
             AnonymousUserFacade anonymFacade = new AnonymousUserFacade();
             return anonymFacade;
         }
-        public ILoginService Login(string userName, string Password)
+        public void Login(string userName, string Password,  out ILoginToken token)
         {
             LoginService loginService = new LoginService();
 
             if (loginService.TryAdminLogin(userName, Password, out LoginToken<Admin> AdminToken))
             {
-                return (ILoginService)AdminToken;
+                token = AdminToken;
             }
             else if (loginService.TryAirlineLogin(userName, Password, out LoginToken<AirlineCompany> AirlineCompanyToken))
             {
-                return (ILoginService)AirlineCompanyToken;
+                token = AirlineCompanyToken;
             }
             else if (loginService.TryCustomerLogin(userName, Password, out LoginToken<Customer> CustomerToken))
             {
-                return (ILoginService)CustomerToken;
+                token = CustomerToken;
             }
             else
-                return null;
+                token = null;
         }
     }
 }

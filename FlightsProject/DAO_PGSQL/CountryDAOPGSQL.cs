@@ -7,7 +7,7 @@ namespace FlightsProject
 {
     public class CountryDAOPGSQL : ICountryDAO
     {
-        static string conn_string = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDBTest";
+        static string conn_string = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDB";
 
         public void Add(Country c)
         {

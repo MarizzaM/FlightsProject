@@ -25,9 +25,9 @@ namespace FlightsProject.POCO
         }
         public static bool operator ==(User u1, User u2)
         {
-            if (u1 == null && u2 == null)
+            if (ReferenceEquals(u1, null) && ReferenceEquals(u2, null))
                 return true;
-            if (u1 == null || u2 == null)
+            if (ReferenceEquals(u1, null) || ReferenceEquals(u2, null))
                 return false;
 
             return (u1.Id == u2.Id);
@@ -54,12 +54,9 @@ namespace FlightsProject.POCO
             return HashCode.Combine(Id);
         }
 
-
         public override string ToString()
         {
             return $"{Id} {Username} {Password} {Email} {User_Role}";
         }
-
-
     }
 }

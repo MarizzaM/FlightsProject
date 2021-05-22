@@ -28,9 +28,9 @@ namespace FlightsProject
 
         public static bool operator ==(Admin a1, Admin a2)
         {
-            if (a1 == null && a2 == null)
+            if (ReferenceEquals(a1, null) && ReferenceEquals(a2, null))
                 return true;
-            if (a1 == null || a2 == null)
+            if (ReferenceEquals(a1, null) || ReferenceEquals(a2, null))
                 return false;
 
             return (a1.Id == a2.Id);

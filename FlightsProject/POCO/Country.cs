@@ -20,9 +20,9 @@ namespace FlightsProject
 
         public static bool operator ==(Country c1, Country c2)
         {
-            if (c1 == null && c2 == null)
+            if (ReferenceEquals(c1, null) && ReferenceEquals(c2, null))
                 return true;
-            if (c1 == null || c2 == null)
+            if (ReferenceEquals(c1, null) || ReferenceEquals(c2, null))
                 return false;
 
             return (c1.Id == c2.Id);

@@ -10,6 +10,7 @@ namespace FlightsProject.Login
     {
         private AirlineCompanyDAOPGSQL _airlineCompanyDAO = new AirlineCompanyDAOPGSQL();
         private CustomerDAOPGSQL _customerDAO = new CustomerDAOPGSQL();
+        private AdminDAOPGSQL _adminDAOPGSQL = new AdminDAOPGSQL();
 
         //public ILoginToken TryLogin(string username, string password) {
         //    LoginToken<Admin> adminToken = new LoginToken<Admin>();
@@ -36,18 +37,18 @@ namespace FlightsProject.Login
                 return true;
             }
 
-            Admin admin = new Admin();
-            if (admin != null)
-            {
-                if (admin.Password == password)
-                {
-                    token = new LoginToken<Admin>() { User = admin };
-                    return true;
-                }
-                throw new WrongCredentialsException();
-                // wrong passowrd exception
-                // catch
-            }
+            //Admin admin = new Admin();
+            //if (admin != null)
+            //{
+            //    if (admin.Password == password)
+            //    {
+            //        token = new LoginToken<Admin>() { User = admin };
+            //        return true;
+            //    }
+            //    throw new WrongCredentialsException();
+            //    // wrong passowrd exception
+            //    // catch
+            //}
 
             token = null;
             return false;

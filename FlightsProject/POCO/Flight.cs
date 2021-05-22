@@ -32,9 +32,9 @@ namespace FlightsProject.POCO
 
         public static bool operator ==(Flight f1, Flight f2)
         {
-            if (f1 == null && f2 == null)
+            if (ReferenceEquals(f1, null) && ReferenceEquals(f2, null))
                 return true;
-            if (f1 == null || f2 == null)
+            if (ReferenceEquals(f1, null) || ReferenceEquals(f2, null))
                 return false;
 
             return (f1.Id == f2.Id);

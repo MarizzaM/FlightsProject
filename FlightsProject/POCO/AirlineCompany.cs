@@ -29,9 +29,9 @@ namespace FlightsProject.POCO
 
         public static bool operator ==(AirlineCompany ac1, AirlineCompany ac2)
         {
-            if (ac1 == null && ac2 == null)
+            if (ReferenceEquals(ac1, null) && ReferenceEquals(ac2, null))
                 return true;
-            if (ac1 == null || ac2 == null)
+            if (ReferenceEquals(ac1, null) || ReferenceEquals(ac2, null))
                 return false;
 
             return (ac1.Id == ac2.Id);
