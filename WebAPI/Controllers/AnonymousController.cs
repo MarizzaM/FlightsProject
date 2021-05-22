@@ -39,16 +39,16 @@ namespace WebAPI.Controllers
             return result;
         }
 
-        // GET api/<AnonymousFacadeApiController>/5
-        [HttpGet("getflight/{flight_id}")]
-        public async Task<ActionResult<Flight>> GetFlightById(int flight_id)
+        // yes
+        [HttpGet("getflight/{id}")]
+        public async Task<ActionResult<Flight>> GetFlightById(int id)
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);
 
             Flight result = null;
             try
             {
-                result = await Task.Run(() => facade.GetFlightById(flight_id));
+                result = await Task.Run(() => facade.GetFlightById(id));
             }
             catch (IllegalFlightParameter ex)
             {
