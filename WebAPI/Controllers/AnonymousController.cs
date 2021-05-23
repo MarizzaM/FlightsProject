@@ -39,6 +39,22 @@ namespace WebAPI.Controllers
             return result;
         }
 
+        [HttpGet("getallairlinecompanies")]
+        public IList<AirlineCompany> GetAllAirlineCompanies()
+        {
+            AuthenticateAndGetFacade(out AnonymousUserFacade facade);
+            IList<AirlineCompany> result = facade.GetAllAirlineCompanies();
+            return result;
+        }
+
+        [HttpGet("getallflightsvacancy")]
+        public Dictionary<Flight, int> GetAllFlightsVacancy()
+        {
+            AuthenticateAndGetFacade(out AnonymousUserFacade facade);
+            Dictionary<Flight, int> result = facade.GetAllFlightsVacancy();
+            return result;
+        }
+
         // yes
         [HttpGet("getflight/{id}")]
         public async Task<ActionResult<Flight>> GetFlightById(int id)
@@ -52,10 +68,8 @@ namespace WebAPI.Controllers
             }
             catch (IllegalFlightParameter ex)
             {
-                return StatusCode(400, $"{{ error: \"{ex.Message}\" }}"); // 400 + body = ex.Message
-                //return BadRequest($"{{ error: {ex.Message} }}"); // 400 + body = ex.Message
+                return StatusCode(400, $"{{ error: \"{ex.Message}\" }}"); 
             }
-            //return StatusCode(200, result);
             if (result == null)
             {
                 return StatusCode(204, "{ }");
@@ -63,22 +77,88 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        // POST api/<AnonymousFacadeApiController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpGet("getflightsbydepatruredate/{departureDate}")]
+        public async Task<ActionResult<Flight>> GetFlightsByDepatrureDate(DateTime departureDate)
         {
+            AuthenticateAndGetFacade(out AnonymousUserFacade facade);
+
+            IList<Flight> result = null;
+            try
+            {
+                result = await Task.Run(() => facade.GetFlightsByDepatrureDate(departureDate));
+            }
+            catch (IllegalFlightParameter ex)
+            {
+                return StatusCode(400, $"{{ error: \"{ex.Message}\" }}");
+            }
+            if (result == null)
+            {
+                return StatusCode(204, "{ }");
+            }
+            return null;
         }
 
-        // PUT api/<AnonymousFacadeApiController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpGet("getflightsbylandingdate/{landingDate}")]
+        public async Task<ActionResult<Flight>> GetFlightsByLandingDate(DateTime landingDate)
         {
+            AuthenticateAndGetFacade(out AnonymousUserFacade facade);
+
+            IList<Flight> result = null;
+            try
+            {
+                result = await Task.Run(() => facade.GetFlightsByLandingDate(landingDate));
+            }
+            catch (IllegalFlightParameter ex)
+            {
+                return StatusCode(400, $"{{ error: \"{ex.Message}\" }}"); 
+            }
+            if (result == null)
+            {
+                return StatusCode(204, "{ }");
+            }
+            return null;
         }
 
-        // DELETE api/<AnonymousFacadeApiController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpGet("cetflightsbydestinationcountry/{countryCode}")]
+        public async Task<ActionResult<Flight>> GetFlightsByDestinationCountry(int countryCode)
         {
+            AuthenticateAndGetFacade(out AnonymousUserFacade facade);
+
+            IList<Flight> result = null;
+            try
+            {
+                result = await Task.Run(() => facade.GetFlightsByDestinationCountry(countryCode));
+            }
+            catch (IllegalFlightParameter ex)
+            {
+                return StatusCode(400, $"{{ error: \"{ex.Message}\" }}");
+            }
+            if (result == null)
+            {
+                return StatusCode(204, "{ }");
+            }
+            return null;
+        }
+
+        [HttpGet("getflightsbyorigincountry/{countryCode}")]
+        public async Task<ActionResult<Flight>> GetFlightsByOriginCountry(int countryCode)
+        {
+            AuthenticateAndGetFacade(out AnonymousUserFacade facade);
+
+            IList<Flight> result = null;
+            try
+            {
+                result = await Task.Run(() => facade.GetFlightsByOriginCountry(countryCode));
+            }
+            catch (IllegalFlightParameter ex)
+            {
+                return StatusCode(400, $"{{ error: \"{ex.Message}\" }}");
+            }
+            if (result == null)
+            {
+                return StatusCode(204, "{ }");
+            }
+            return null;
         }
     }
 }

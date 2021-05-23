@@ -69,7 +69,7 @@ namespace WebAPI.Controllers
 
         // PUT api/<CompanyFacadeController>/5
         [HttpPut("mofidyairlinedetails/{airline_id}")]
-        public async Task<ActionResult> MofidyAirlineDetails(int airline_id, [FromBody] AirlineCompany airline)
+        public async Task<ActionResult> MofidyAirlineDetails([FromBody] AirlineCompany airline)
         {
             AuthenticateAndGetTokenAndGetFacade(out LoginToken<AirlineCompany> tokenAirline,
                                                                       out LoggedsInAirlineFacade facadeAirline);

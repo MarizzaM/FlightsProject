@@ -8,6 +8,7 @@ namespace FlightsProject.Facade
 {
     public class AnonymousUserFacade : FacadeBase, IAnonymousUserFacade
     {
+
         public IList<AirlineCompany> GetAllAirlineCompanies()
         {
             return _airlineDAO.GetAll();

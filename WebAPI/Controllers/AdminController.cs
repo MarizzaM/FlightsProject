@@ -34,29 +34,108 @@ namespace WebAPI.Controllers
         }
 
             // GET: api/<AdministratorFacadeApiController>
-            [HttpGet]
-        public IEnumerable<string> Get()
+            [HttpGet("getallcustomers")]
+        public async Task<IList<Customer>> GetAllCustomers()
         {
-            return new string[] { "value1", "value2" };
+            var facade = new LoggedInAdministratorFacade();
+            IList<Customer> result = await Task.Run(() => facade.GetAllCustomers(new LoginToken<Admin>()));
+            return result;
         }
 
-        // GET api/<AdministratorFacadeApiController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpPost("createadmin")]
+        public async Task<ActionResult> CreateAdmin([FromBody] Admin admin)
         {
-            return "value";
+            AuthenticateAndGetTokenAndGetFacade(out LoginToken<Admin> tokenAdmin,
+                                                                      out LoggedInAdministratorFacade fasadeAdmin);
+            try
+            {
+                await Task.Run(() => fasadeAdmin.CreateAdmin(tokenAdmin, admin));
+            }
+            catch (IllegalFlightParameter ex)
+            {
+                return StatusCode(400, $"{{ error: \"{ex.Message}\" }}"); 
+            }
+            return null;
         }
 
-        // POST api/<AdministratorFacadeApiController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("createairline")]
+        public async Task<ActionResult> CreateNewAirline([FromBody] AirlineCompany airline)
         {
+            AuthenticateAndGetTokenAndGetFacade(out LoginToken<Admin> tokenAdmin,
+                                                                      out LoggedInAdministratorFacade fasadeAdmin);
+            try
+            {
+                await Task.Run(() => fasadeAdmin.CreateNewAirline(tokenAdmin, airline));
+            }
+            catch (IllegalFlightParameter ex)
+            {
+                return StatusCode(400, $"{{ error: \"{ex.Message}\" }}"); 
+            }
+            return null;
         }
 
-        // PUT api/<AdministratorFacadeApiController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost("createcustomer")]
+        public async Task<ActionResult> CreateNewCustomer([FromBody] Customer customer)
         {
+            AuthenticateAndGetTokenAndGetFacade(out LoginToken<Admin> tokenAdmin,
+                                                                      out LoggedInAdministratorFacade fasadeAdmin);
+            try
+            {
+                await Task.Run(() => fasadeAdmin.CreateNewCustomer(tokenAdmin, customer));
+            }
+            catch (IllegalFlightParameter ex)
+            {
+                return StatusCode(400, $"{{ error: \"{ex.Message}\" }}");
+            }
+            return null;
+        }
+
+        [HttpPut("updateadmin/{id}")]
+        public async Task<ActionResult> UpdateAdmin(int id, [FromBody] Admin admin)
+        {
+            AuthenticateAndGetTokenAndGetFacade(out LoginToken<Admin> tokenAdmin,
+                                                          out LoggedInAdministratorFacade fasadeAdmin);
+            try
+            {
+                await Task.Run(() => fasadeAdmin.UpdateAdmin(tokenAdmin, admin));
+            }
+            catch (IllegalFlightParameter ex)
+            {
+                return StatusCode(400, $"{{ error: \"{ex.Message}\" }}"); 
+            }
+            return null;
+        }
+
+        [HttpPut("updateairline/{id}")]
+        public async Task<ActionResult> UpdateAirlineDetails(int id, [FromBody] AirlineCompany airline)
+        {
+            AuthenticateAndGetTokenAndGetFacade(out LoginToken<Admin> tokenAdmin,
+                                                          out LoggedInAdministratorFacade fasadeAdmin);
+            try
+            {
+                await Task.Run(() => fasadeAdmin.UpdateAirlineDetails(tokenAdmin, airline));
+            }
+            catch (IllegalFlightParameter ex)
+            {
+                return StatusCode(400, $"{{ error: \"{ex.Message}\" }}");
+            }
+            return null;
+        }
+
+        [HttpPut("updatecustomer/{id}")]
+        public async Task<ActionResult> UpdateCustomerDetails(int id, [FromBody] Customer customer)
+        {
+            AuthenticateAndGetTokenAndGetFacade(out LoginToken<Admin> tokenAdmin,
+                                                          out LoggedInAdministratorFacade fasadeAdmin);
+            try
+            {
+                await Task.Run(() => fasadeAdmin.UpdateCustomerDetails(tokenAdmin, customer));
+            }
+            catch (IllegalFlightParameter ex)
+            {
+                return StatusCode(400, $"{{ error: \"{ex.Message}\" }}");
+            }
+            return null;
         }
 
         [HttpDelete("removecustomer/{customer}")]
@@ -65,6 +144,22 @@ namespace WebAPI.Controllers
             AuthenticateAndGetTokenAndGetFacade(out LoginToken<Admin> tokenAdmin,
                                                                       out LoggedInAdministratorFacade fasadeAdmin);
             fasadeAdmin.RemoveCustomer(tokenAdmin, customer);
+        }
+
+        [HttpDelete("removeadmin/{admin}")]
+        public void RemoveAdmin(Admin admin)
+        {
+            AuthenticateAndGetTokenAndGetFacade(out LoginToken<Admin> tokenAdmin,
+                                                                      out LoggedInAdministratorFacade fasadeAdmin);
+            fasadeAdmin.RemoveAdmin(tokenAdmin, admin);
+        }
+
+        [HttpDelete("removeairline/{airline}")]
+        public void RemoveAirline(AirlineCompany airline)
+        {
+            AuthenticateAndGetTokenAndGetFacade(out LoginToken<Admin> tokenAdmin,
+                                                                      out LoggedInAdministratorFacade fasadeAdmin);
+            fasadeAdmin.RemoveAirline(tokenAdmin, airline);
         }
     }
 }
