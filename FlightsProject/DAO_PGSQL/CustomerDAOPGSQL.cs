@@ -106,7 +106,7 @@ namespace FlightsProject.DAO_PGSQL
                         Address = (string)reader["Address"],
                         Phone_No = (string)reader["Phone_No"],
                         Credit_Card_No = (string)reader["Credit_Card_No"],
-                        UserName = (string)reader["Username"],
+                        Username = (string)reader["Username"],
                         Password = (string)reader["Password"]
                     };
                     return customer;

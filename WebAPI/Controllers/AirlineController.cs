@@ -34,7 +34,7 @@ namespace WebAPI.Controllers
         }
 
         // GET: api/<CompanyFacadeController>
-        [HttpGet("getalltickets")]
+        [HttpGet("get_all_tickets")]
         public IList<Ticket> GetAllTickets()
         {
             AuthenticateAndGetTokenAndGetFacade(out LoginToken<AirlineCompany> tokenAirline,
@@ -43,14 +43,8 @@ namespace WebAPI.Controllers
             return result;
         }
 
-        // GET api/<CompanyFacadeController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
-        [HttpPost("createflight")]
+        [HttpPost("create_flight")]
         public async Task<ActionResult> CreateFlight([FromBody] Flight flight)
         {
             AuthenticateAndGetTokenAndGetFacade(out LoginToken<AirlineCompany> tokenAirline,
@@ -68,7 +62,7 @@ namespace WebAPI.Controllers
         }
 
         // PUT api/<CompanyFacadeController>/5
-        [HttpPut("mofidyairlinedetails/{airline_id}")]
+        [HttpPut("mofidy_airline_details/{airline_id}")]
         public async Task<ActionResult> MofidyAirlineDetails([FromBody] AirlineCompany airline)
         {
             AuthenticateAndGetTokenAndGetFacade(out LoginToken<AirlineCompany> tokenAirline,
@@ -85,10 +79,5 @@ namespace WebAPI.Controllers
             return null;
         }
 
-        // DELETE api/<CompanyFacadeController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

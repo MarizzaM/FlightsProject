@@ -32,7 +32,7 @@ namespace FlightsProject.Login
             {
                 token = new LoginToken<Admin>();
                 token.User = new Admin();
-                token.User.UserName = FlightCenterConfig.ADMIN_NAME;
+                token.User.Username = FlightCenterConfig.ADMIN_NAME;
                 token.User.Password = FlightCenterConfig.ADMIN_PASSWORD;
                 return true;
             }

@@ -31,7 +31,7 @@ namespace WebAPI.Controllers
         }
 
             // yes
-            [HttpGet("getallflights")]
+            [HttpGet("get_all_flights")]
         public IList<Flight> GetAllFlights()
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);
@@ -39,7 +39,7 @@ namespace WebAPI.Controllers
             return result;
         }
 
-        [HttpGet("getallairlinecompanies")]
+        [HttpGet("get_all_airline_companies")]
         public IList<AirlineCompany> GetAllAirlineCompanies()
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);
@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
             return result;
         }
 
-        [HttpGet("getallflightsvacancy")]
+        [HttpGet("get_all_flights_vacancy")]
         public Dictionary<Flight, int> GetAllFlightsVacancy()
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);
@@ -56,7 +56,7 @@ namespace WebAPI.Controllers
         }
 
         // yes
-        [HttpGet("getflight/{id}")]
+        [HttpGet("get_flight/{id}")]
         public async Task<ActionResult<Flight>> GetFlightById(int id)
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);
@@ -77,7 +77,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getflightsbydepatruredate/{departureDate}")]
+        [HttpGet("get_flights_by_depatrure_date/{departureDate}")]
         public async Task<ActionResult<Flight>> GetFlightsByDepatrureDate(DateTime departureDate)
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);
@@ -98,7 +98,7 @@ namespace WebAPI.Controllers
             return null;
         }
 
-        [HttpGet("getflightsbylandingdate/{landingDate}")]
+        [HttpGet("get_flights_by_landing_date/{landingDate}")]
         public async Task<ActionResult<Flight>> GetFlightsByLandingDate(DateTime landingDate)
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);
@@ -119,7 +119,7 @@ namespace WebAPI.Controllers
             return null;
         }
 
-        [HttpGet("cetflightsbydestinationcountry/{countryCode}")]
+        [HttpGet("get_flights_by_destination_country/{countryCode}")]
         public async Task<ActionResult<Flight>> GetFlightsByDestinationCountry(int countryCode)
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);
@@ -140,7 +140,7 @@ namespace WebAPI.Controllers
             return null;
         }
 
-        [HttpGet("getflightsbyorigincountry/{countryCode}")]
+        [HttpGet("get_flights_by_origin_country/{countryCode}")]
         public async Task<ActionResult<Flight>> GetFlightsByOriginCountry(int countryCode)
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);

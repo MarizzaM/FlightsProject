@@ -16,6 +16,12 @@ namespace FlightsProject.POCO
         {
         }
 
+        public User(string username, string password)
+        {
+            Username = username;
+            Password = password;
+        }
+
         public User(string username, string password, string email, int user_Role)
         {
             Username = username;

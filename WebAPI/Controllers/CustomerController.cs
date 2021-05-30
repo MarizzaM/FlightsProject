@@ -49,7 +49,7 @@ namespace WebAPI.Controllers
         }
 
         // POST api/<CustomerFacadeController>
-        [HttpPost("purchaseticket/{flight}")]
+        [HttpPost("purchase_ticket/{flight}")]
         public void PurchaseTickets([FromBody] Flight flight)
         {
             AuthenticateAndGetTokenAndGetFacade(out LoginToken<Customer> tokenCustomer,

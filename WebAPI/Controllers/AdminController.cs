@@ -2,6 +2,7 @@
 using FlightsProject.Facade;
 using FlightsProject.Login;
 using FlightsProject.POCO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = "Administrator")]
     [ApiController]
     public class AdminController : ControllerBase
     {
@@ -32,9 +34,13 @@ namespace WebAPI.Controllers
             loginService.TryAdminLogin("manager87", "lF9A7v", out tokenAdmin);
             facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade(tokenAdmin) as LoggedInAdministratorFacade;
         }
+        [HttpGet("val")]
+        public IEnumerable<string> Get()
+        {
+            return new string[] { "value1", "value2" };
+        }
 
-            // GET: api/<AdministratorFacadeApiController>
-            [HttpGet("getallcustomers")]
+        [HttpGet("get_all_customers")]
         public async Task<IList<Customer>> GetAllCustomers()
         {
             var facade = new LoggedInAdministratorFacade();
@@ -42,7 +48,7 @@ namespace WebAPI.Controllers
             return result;
         }
 
-        [HttpPost("createadmin")]
+        [HttpPost("create_admin")]
         public async Task<ActionResult> CreateAdmin([FromBody] Admin admin)
         {
             AuthenticateAndGetTokenAndGetFacade(out LoginToken<Admin> tokenAdmin,
@@ -58,7 +64,7 @@ namespace WebAPI.Controllers
             return null;
         }
 
-        [HttpPost("createairline")]
+        [HttpPost("create_airline")]
         public async Task<ActionResult> CreateNewAirline([FromBody] AirlineCompany airline)
         {
             AuthenticateAndGetTokenAndGetFacade(out LoginToken<Admin> tokenAdmin,
@@ -74,7 +80,7 @@ namespace WebAPI.Controllers
             return null;
         }
 
-        [HttpPost("createcustomer")]
+        [HttpPost("create_customer")]
         public async Task<ActionResult> CreateNewCustomer([FromBody] Customer customer)
         {
             AuthenticateAndGetTokenAndGetFacade(out LoginToken<Admin> tokenAdmin,
@@ -90,7 +96,7 @@ namespace WebAPI.Controllers
             return null;
         }
 
-        [HttpPut("updateadmin/{id}")]
+        [HttpPut("update_admin/{id}")]
         public async Task<ActionResult> UpdateAdmin(int id, [FromBody] Admin admin)
         {
             AuthenticateAndGetTokenAndGetFacade(out LoginToken<Admin> tokenAdmin,
@@ -106,7 +112,7 @@ namespace WebAPI.Controllers
             return null;
         }
 
-        [HttpPut("updateairline/{id}")]
+        [HttpPut("update_airline/{id}")]
         public async Task<ActionResult> UpdateAirlineDetails(int id, [FromBody] AirlineCompany airline)
         {
             AuthenticateAndGetTokenAndGetFacade(out LoginToken<Admin> tokenAdmin,
@@ -122,7 +128,7 @@ namespace WebAPI.Controllers
             return null;
         }
 
-        [HttpPut("updatecustomer/{id}")]
+        [HttpPut("update_customer/{id}")]
         public async Task<ActionResult> UpdateCustomerDetails(int id, [FromBody] Customer customer)
         {
             AuthenticateAndGetTokenAndGetFacade(out LoginToken<Admin> tokenAdmin,
@@ -138,7 +144,7 @@ namespace WebAPI.Controllers
             return null;
         }
 
-        [HttpDelete("removecustomer/{customer}")]
+        [HttpDelete("remove_customer/{customer}")]
         public void RemoveCustomer(Customer customer)
         {
             AuthenticateAndGetTokenAndGetFacade(out LoginToken<Admin> tokenAdmin,
@@ -146,7 +152,7 @@ namespace WebAPI.Controllers
             fasadeAdmin.RemoveCustomer(tokenAdmin, customer);
         }
 
-        [HttpDelete("removeadmin/{admin}")]
+        [HttpDelete("remove_admin/{admin}")]
         public void RemoveAdmin(Admin admin)
         {
             AuthenticateAndGetTokenAndGetFacade(out LoginToken<Admin> tokenAdmin,
@@ -154,7 +160,7 @@ namespace WebAPI.Controllers
             fasadeAdmin.RemoveAdmin(tokenAdmin, admin);
         }
 
-        [HttpDelete("removeairline/{airline}")]
+        [HttpDelete("remove_airline/{airline}")]
         public void RemoveAirline(AirlineCompany airline)
         {
             AuthenticateAndGetTokenAndGetFacade(out LoginToken<Admin> tokenAdmin,
