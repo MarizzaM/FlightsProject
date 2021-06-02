@@ -74,14 +74,10 @@ namespace FlightsProject
             return new AnonymousUserFacade();
         }
 
-        public AnonymousUserFacade GetAnonymousFacade()
-        {
-            AnonymousUserFacade anonymFacade = new AnonymousUserFacade();
-            return anonymFacade;
-        }
-        public void Login(string userName, string Password,  out ILoginToken token)
+        public ILoginToken Login(string userName, string Password)
         {
             LoginService loginService = new LoginService();
+            ILoginToken token;
 
             if (loginService.TryAdminLogin(userName, Password, out LoginToken<Admin> AdminToken))
             {
@@ -97,6 +93,8 @@ namespace FlightsProject
             }
             else
                 token = null;
+
+            return token;
         }
     }
 }

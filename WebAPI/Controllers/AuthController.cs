@@ -19,12 +19,25 @@ namespace WebAPI.Controllers
     public class AuthController : Controller
     {
         [HttpPost("token")]
-        public ActionResult GetToken([FromBody] UserDetailsDTO userDetails)
+        public async Task<ActionResult> GetToken([FromBody] UserDetailsDTO userDetails)
              
         {
             // 1) try login, with userDetails
-            ILoginService loginService = new LoginService();
-            loginService.TryAdminLogin(userDetails.Name, userDetails.Password, out LoginToken<Admin> tokenAdmin);
+            //ILoginService loginService = new LoginService();
+          //  loginService.TryAdminLogin(userDetails.Name, userDetails.Password, out LoginToken<Admin> tokenAdmin);
+            //facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade(tokenAdmin) as LoggedInAdministratorFacade;
+
+
+            try
+            {
+                await Task.Run(() => FlightsCenterSystem.GetInstance().Login(userDetails.Name, userDetails.Password));
+            }
+            catch (IllegalFlightParameter ex)
+            {
+                return Unauthorized("login failed");
+            }
+
+
 
             // 2) create key
             // security key
@@ -45,7 +58,8 @@ namespace WebAPI.Controllers
             var claims = new List<Claim>();
             // create claim according to login -- Airline or Admin or ...
             claims.Add(new Claim(ClaimTypes.Role, "Administrator"));
-            claims.Add(new Claim("username", "manager87"));
+            claims.Add(new Claim(ClaimTypes.Role, "AirlineCompany"));
+            claims.Add(new Claim("username", "userDetails.Name"));
          //   claims.Add(new Claim("Id", "110"));
 
             // 4) create token

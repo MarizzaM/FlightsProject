@@ -12,19 +12,20 @@ namespace FlightsProject.Login
         private CustomerDAOPGSQL _customerDAO = new CustomerDAOPGSQL();
         private AdminDAOPGSQL _adminDAOPGSQL = new AdminDAOPGSQL();
 
-        //public ILoginToken TryLogin(string username, string password) {
-        //    LoginToken<Admin> adminToken = new LoginToken<Admin>();
-        //    LoginToken<AirlineCompany> airlineToken = new LoginToken<AirlineCompany>();
-        //    LoginToken<Customer> customerToken = new LoginToken<Customer>();
+        public ILoginToken TryLogin(string username, string password)
+        {
+            LoginToken<Admin> adminToken = new LoginToken<Admin>();
+            LoginToken<AirlineCompany> airlineToken = new LoginToken<AirlineCompany>();
+            LoginToken<Customer> customerToken = new LoginToken<Customer>();
 
-        //    if (TryAdminLogin(username, password, out adminToken))
-        //        return adminToken;
-        //    if (TryAirlineLogin(username, password, out airlineToken))
-        //        return airlineToken;
-        //    if (TryCustomerLogin(username, password, out customerToken))
-        //        return customerToken;
-        //    return null;
-        //}
+            if (TryAdminLogin(username, password, out adminToken))
+                return adminToken;
+            if (TryAirlineLogin(username, password, out airlineToken))
+                return airlineToken;
+            if (TryCustomerLogin(username, password, out customerToken))
+                return customerToken;
+            return null;
+        }
 
         public bool TryAdminLogin(string username, string password, out LoginToken<Admin> token)
         {

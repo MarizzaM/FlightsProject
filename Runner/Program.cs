@@ -329,9 +329,6 @@ namespace Runner
 
 
 
-            FlightsCenterSystem.GetInstance().Login("airline99", "LiGpmH", out ILoginToken token);
-            LoginToken<AirlineCompany>  token_airline = token as LoginToken<AirlineCompany>;
-            LoggedsInAirlineFacade fasadeAirline = token as LoggedsInAirlineFacade;
 
 
 

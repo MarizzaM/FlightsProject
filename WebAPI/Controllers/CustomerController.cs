@@ -2,6 +2,7 @@
 using FlightsProject.Facade;
 using FlightsProject.Login;
 using FlightsProject.POCO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,10 @@ using System.Threading.Tasks;
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = "Customer")]
     [ApiController]
 
-    public class CustomerController : ControllerBase
+    public class CustomerController : FlightControllerBase<Customer>
     {
         private void AuthenticateAndGetTokenAndGetFacade(out LoginToken<Customer> tokenCustomer,
         out LoggedInCustomerFacade facadeCustomer)
@@ -34,20 +36,6 @@ namespace WebAPI.Controllers
             facadeCustomer = FlightsCenterSystem.GetInstance().GetFacade(tokenCustomer) as LoggedInCustomerFacade;
         }
 
-        // GET: api/<CustomerFacadeController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<CustomerFacadeController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST api/<CustomerFacadeController>
         [HttpPost("purchase_ticket/{flight}")]
         public void PurchaseTickets([FromBody] Flight flight)
@@ -57,16 +45,5 @@ namespace WebAPI.Controllers
             facadeCustomer.PurchaseTicket(tokenCustomer, flight);
         }
 
-        // PUT api/<CustomerFacadeController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<CustomerFacadeController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

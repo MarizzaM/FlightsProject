@@ -37,10 +37,8 @@ namespace WebAPI
 
             services.AddAuthentication(options =>
             {
-                options.DefaultAuthenticateScheme =
-                     JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme =
-                     JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new
@@ -62,8 +60,7 @@ namespace WebAPI
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title =
-               "FlightsManagmentSystemWebAPI",
+                    Title = "FlightsManagmentSystemWebAPI",
                     Version = "v1"
                 });
                 var securityScheme = new OpenApiSecurityScheme
@@ -76,14 +73,12 @@ namespace WebAPI
                     BearerFormat = "JWT",
                     Reference = new OpenApiReference
                     {
-                        Id =
-                        JwtBearerDefaults.AuthenticationScheme,
+                        Id =  JwtBearerDefaults.AuthenticationScheme,
                         Type = ReferenceType.SecurityScheme
                     }
                 };
 
-                c.AddSecurityDefinition(securityScheme.Reference.Id,
-                 securityScheme);
+                c.AddSecurityDefinition(securityScheme.Reference.Id,  securityScheme);
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                   {
                     {securityScheme, new string[] { }}
@@ -113,8 +108,7 @@ namespace WebAPI
 
             app.UseSwagger();
             app.UseSwaggerUI(c => {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json",
-                       "FlightsManagmentSystemWebAPI v1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "FlightsManagmentSystemWebAPI v1");
                 c.DocumentTitle = "Flights Managment System API";
             });
 

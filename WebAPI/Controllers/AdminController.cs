@@ -16,7 +16,7 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     [Authorize(Roles = "Administrator")]
     [ApiController]
-    public class AdminController : ControllerBase
+    public class AdminController : FlightControllerBase<Admin>
     {
         private void AuthenticateAndGetTokenAndGetFacade(out LoginToken<Admin> tokenAdmin,
                                                                                    out LoggedInAdministratorFacade facadeAdmin)
@@ -26,12 +26,14 @@ namespace WebAPI.Controllers
             // 2. retrieve LoginToken<Customer>
             // 3. get Customer facade
 
+            tokenAdmin = GetLoginToken();
+
             // before we learn authentication
             // 1. perform login  -- use real user-name + pwd
             // 2. get the token + facade
 
-            ILoginService loginService = new LoginService();
-            loginService.TryAdminLogin("manager87", "lF9A7v", out tokenAdmin);
+           //ILoginService loginService = new LoginService();
+            //loginService.TryAdminLogin("manager87", "lF9A7v", out tokenAdmin);
             facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade(tokenAdmin) as LoggedInAdministratorFacade;
         }
         [HttpGet("val")]
@@ -43,8 +45,9 @@ namespace WebAPI.Controllers
         [HttpGet("get_all_customers")]
         public async Task<IList<Customer>> GetAllCustomers()
         {
-            var facade = new LoggedInAdministratorFacade();
-            IList<Customer> result = await Task.Run(() => facade.GetAllCustomers(new LoginToken<Admin>()));
+            AuthenticateAndGetTokenAndGetFacade(out LoginToken<Admin> tokenAdmin,
+                                                                      out LoggedInAdministratorFacade fasadeAdmin);
+            IList<Customer> result = await Task.Run(() => fasadeAdmin.GetAllCustomers(new LoginToken<Admin>()));
             return result;
         }
 

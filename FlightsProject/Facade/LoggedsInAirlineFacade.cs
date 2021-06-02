@@ -11,7 +11,7 @@ namespace FlightsProject.Facade
     {
         public void CancelFlight(LoginToken<AirlineCompany> token, Flight flight)
         {
-            if (token != null && token.User.Id == flight.Airline_Company_Id) {
+            if (token != null ) {
                 _flightDAO.Remove(flight);
             }
         }
@@ -31,6 +31,7 @@ namespace FlightsProject.Facade
 
         public void CreateFlight(LoginToken<AirlineCompany> token, Flight flight)
         {
+
             if (token != null && flight.Id == 0) {
                 _flightDAO.Add(flight);
             }
