@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -79,13 +80,28 @@ namespace WebAPI.Controllers
         /// <response code="500">The server encountered an unexpected condition which prevented it from fulfilling the request</response> 
         /// <response code="501">The server does not support the facility required</response> 
 
-        //no
+        //yes
         [HttpGet("get_all_flights_vacancy")]
-        public Dictionary<Flight, int> GetAllFlightsVacancy()
+        public async Task<ActionResult<Dictionary<Flight, int>>> GetAllFlightsVacancy()
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);
-            Dictionary<Flight, int> result = facade.GetAllFlightsVacancy();
-            return result;
+
+            Dictionary<Flight, int> result = null;
+
+            try
+            {
+                result = await Task.Run(() => facade.GetAllFlightsVacancy());
+            }
+            catch (IllegalFlightParameter ex)
+            {
+                return StatusCode(400, $"{{ error: \"{ex.Message}\" }}");
+            }
+            if (result == null)
+            {
+                return StatusCode(204, "{ }");
+            }
+
+            return Ok(JsonSerializer.Serialize(Newtonsoft.Json.JsonConvert.SerializeObject(result)));
         }
 
         /// <summary>

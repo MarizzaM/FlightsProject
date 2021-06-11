@@ -120,13 +120,13 @@ namespace FlightsProject.DAO_PGSQL
             }
         }
 
-        Dictionary<Flight, int> IFlightDAO.GetAllFlightsVacancy()
+        public Dictionary<Flight, int> GetAllFlightsVacancy()
         {
             Dictionary<Flight, int> flights_vacancy = new Dictionary<Flight, int>();
             using (var my_conn = new NpgsqlConnection(conn_string))
             {
                 my_conn.Open();
-                string query = "SELECT * FROM flights where Tickets_Remaining > 0";
+                string query = "SELECT * FROM flights";
 
                 NpgsqlCommand command = new NpgsqlCommand(query, my_conn);
                 command.CommandType = System.Data.CommandType.Text;
@@ -145,7 +145,7 @@ namespace FlightsProject.DAO_PGSQL
                         Tickets_Remaining = (int)reader["Tickets_Remaining"]
                     };
 
-                    flights_vacancy.Add(flight, (int)reader["Tickets_Remaining"]);
+                    flights_vacancy.Add(flight, flight.Tickets_Remaining);
                 }
             }
             return flights_vacancy;

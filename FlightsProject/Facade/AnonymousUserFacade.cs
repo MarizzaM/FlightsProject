@@ -21,7 +21,8 @@ namespace FlightsProject.Facade
 
         public Dictionary<Flight, int> GetAllFlightsVacancy()
         {
-            return _flightDAO.GetAllFlightsVacancy();
+            return (Dictionary<Flight, int>)_flightDAO.GetAllFlightsVacancy();
+
         }
 
         public Flight GetFlightById(int id)
