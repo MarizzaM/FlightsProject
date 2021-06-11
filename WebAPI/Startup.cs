@@ -13,6 +13,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+using Microsoft.AspNetCore.Mvc;
+
+using Microsoft.Extensions.Logging;
+
+using System.IO;
+
+using System.Reflection;
+
+
+
 namespace WebAPI
 {
     public class Startup
@@ -58,11 +69,17 @@ namespace WebAPI
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddSwaggerGen(c => {
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "FlightsManagmentSystemWebAPI",
                     Version = "v1"
                 });
+
                 var securityScheme = new OpenApiSecurityScheme
                 {
                     Name = "JWT Authentication",
@@ -85,6 +102,7 @@ namespace WebAPI
                   });
 
             });
+
 
         }
 
@@ -111,6 +129,7 @@ namespace WebAPI
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "FlightsManagmentSystemWebAPI v1");
                 c.DocumentTitle = "Flights Managment System API";
             });
+
 
             app.UseAuthentication();
 

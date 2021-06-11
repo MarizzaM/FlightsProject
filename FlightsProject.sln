@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestFlightsProject", "TestF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{D2DA0948-C462-44F5-861B-DAA2B1C4F221}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBGenerator", "DBGenerator\DBGenerator.csproj", "{AEB77E43-A958-4239-9BAB-A46CD9982A13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBGenerator", "DBGenerator\DBGenerator.csproj", "{AEB77E43-A958-4239-9BAB-A46CD9982A13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWebApiFlightsProject", "TestWebApiFlightsProject\TestWebApiFlightsProject.csproj", "{239918F3-F312-4476-9FEA-156B40BC5BC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{AEB77E43-A958-4239-9BAB-A46CD9982A13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEB77E43-A958-4239-9BAB-A46CD9982A13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEB77E43-A958-4239-9BAB-A46CD9982A13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{239918F3-F312-4476-9FEA-156B40BC5BC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{239918F3-F312-4476-9FEA-156B40BC5BC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{239918F3-F312-4476-9FEA-156B40BC5BC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{239918F3-F312-4476-9FEA-156B40BC5BC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

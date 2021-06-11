@@ -29,9 +29,20 @@ namespace WebAPI.Controllers
 
             facade = FlightsCenterSystem.GetInstance().GetFacade<Anonymous>(null) as AnonymousUserFacade;
         }
+        //The status code below will be displayed on swagger, this example taken from the flights project
 
-            // yes
-            [HttpGet("get_all_flights")]
+        /// <summary>
+        /// Get all flights
+        /// </summary>
+        /// <response code="200">The request was fulfilled</response>
+        /// <response code="204">Server has received the request but there is no information to send back</response>
+        /// <response code="400">The request had bad syntax or was inherently impossible to be satisfied</response> 
+        /// <response code="404">The server has not found anything matching the URI given</response> 
+        /// <response code="500">The server encountered an unexpected condition which prevented it from fulfilling the request</response> 
+        /// <response code="501">The server does not support the facility required</response> 
+
+        // yes
+        [HttpGet("get_all_flights")]
         public IList<Flight> GetAllFlights()
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);
@@ -39,6 +50,17 @@ namespace WebAPI.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Get all airline companies
+        /// </summary>
+        /// <response code="200">The request was fulfilled</response>
+        /// <response code="204">Server has received the request but there is no information to send back</response>
+        /// <response code="400">The request had bad syntax or was inherently impossible to be satisfied</response> 
+        /// <response code="404">The server has not found anything matching the URI given</response> 
+        /// <response code="500">The server encountered an unexpected condition which prevented it from fulfilling the request</response> 
+        /// <response code="501">The server does not support the facility required</response> 
+
+        // yes
         [HttpGet("get_all_airline_companies")]
         public IList<AirlineCompany> GetAllAirlineCompanies()
         {
@@ -47,6 +69,17 @@ namespace WebAPI.Controllers
             return result;
         }
 
+        /// <summary>
+        ///Get all flights vacancy
+        /// </summary>
+        /// <response code="200">The request was fulfilled</response>
+        /// <response code="204">Server has received the request but there is no information to send back</response>
+        /// <response code="400">The request had bad syntax or was inherently impossible to be satisfied</response> 
+        /// <response code="404">The server has not found anything matching the URI given</response> 
+        /// <response code="500">The server encountered an unexpected condition which prevented it from fulfilling the request</response> 
+        /// <response code="501">The server does not support the facility required</response> 
+
+        //no
         [HttpGet("get_all_flights_vacancy")]
         public Dictionary<Flight, int> GetAllFlightsVacancy()
         {
@@ -54,6 +87,16 @@ namespace WebAPI.Controllers
             Dictionary<Flight, int> result = facade.GetAllFlightsVacancy();
             return result;
         }
+
+        /// <summary>
+        ///Get flight by id
+        /// </summary>
+        /// <response code="200">The request was fulfilled</response>
+        /// <response code="204">Server has received the request but there is no information to send back</response>
+        /// <response code="400">The request had bad syntax or was inherently impossible to be satisfied</response> 
+        /// <response code="404">The flight id doesn't point to existing flight</response> 
+        /// <response code="500">The server encountered an unexpected condition which prevented it from fulfilling the request</response> 
+        /// <response code="501">The server does not support the facility required</response> 
 
         // yes
         [HttpGet("get_flight/{id}")]
@@ -77,6 +120,17 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        ///Get flight by depatrure date
+        /// </summary>
+        /// <response code="200">The request was fulfilled</response>
+        /// <response code="204">Server has received the request but there is no information to send back</response>
+        /// <response code="400">The request had bad syntax or was inherently impossible to be satisfied</response> 
+        /// <response code="404">The depatrure date of the flight doesn't point to existing flight</response> 
+        /// <response code="500">The server encountered an unexpected condition which prevented it from fulfilling the request</response> 
+        /// <response code="501">The server does not support the facility required</response> 
+
+        //no
         [HttpGet("get_flights_by_depatrure_date/{departureDate}")]
         public async Task<ActionResult<Flight>> GetFlightsByDepatrureDate(DateTime departureDate)
         {
@@ -98,6 +152,17 @@ namespace WebAPI.Controllers
             return null;
         }
 
+        /// <summary>
+        ///Get flight by landing date
+        /// </summary>
+        /// <response code="200">The request was fulfilled</response>
+        /// <response code="204">Server has received the request but there is no information to send back</response>
+        /// <response code="400">The request had bad syntax or was inherently impossible to be satisfied</response> 
+        /// <response code="404">The landing date of the flight doesn't point to existing flight</response> 
+        /// <response code="500">The server encountered an unexpected condition which prevented it from fulfilling the request</response> 
+        /// <response code="501">The server does not support the facility required</response> 
+
+        //no
         [HttpGet("get_flights_by_landing_date/{landingDate}")]
         public async Task<ActionResult<Flight>> GetFlightsByLandingDate(DateTime landingDate)
         {
@@ -119,6 +184,17 @@ namespace WebAPI.Controllers
             return null;
         }
 
+        /// <summary>
+        ///Get flight by destination country
+        /// </summary>
+        /// <response code="200">The request was fulfilled</response>
+        /// <response code="204">Server has received the request but there is no information to send back</response>
+        /// <response code="400">The request had bad syntax or was inherently impossible to be satisfied</response> 
+        /// <response code="404">The destination country of the flight doesn't point to existing flight</response> 
+        /// <response code="500">The server encountered an unexpected condition which prevented it from fulfilling the request</response> 
+        /// <response code="501">The server does not support the facility required</response> 
+
+        //no
         [HttpGet("get_flights_by_destination_country/{countryCode}")]
         public async Task<ActionResult<Flight>> GetFlightsByDestinationCountry(int countryCode)
         {
@@ -140,6 +216,17 @@ namespace WebAPI.Controllers
             return null;
         }
 
+        /// <summary>
+        ///Get flight by origin country
+        /// </summary>
+        /// <response code="200">The request was fulfilled</response>
+        /// <response code="204">Server has received the request but there is no information to send back</response>
+        /// <response code="400">The request had bad syntax or was inherently impossible to be satisfied</response> 
+        /// <response code="404">The origin country of the flight doesn't point to existing flight</response> 
+        /// <response code="500">The server encountered an unexpected condition which prevented it from fulfilling the request</response> 
+        /// <response code="501">The server does not support the facility required</response> 
+
+        //no
         [HttpGet("get_flights_by_origin_country/{countryCode}")]
         public async Task<ActionResult<Flight>> GetFlightsByOriginCountry(int countryCode)
         {

@@ -36,11 +36,6 @@ namespace WebAPI.Controllers
             //loginService.TryAdminLogin("manager87", "lF9A7v", out tokenAdmin);
             facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade(tokenAdmin) as LoggedInAdministratorFacade;
         }
-        [HttpGet("val")]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
         [HttpGet("get_all_customers")]
         public async Task<IList<Customer>> GetAllCustomers()
