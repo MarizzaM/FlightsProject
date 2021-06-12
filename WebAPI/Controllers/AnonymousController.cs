@@ -165,7 +165,7 @@ namespace WebAPI.Controllers
             {
                 return StatusCode(204, "{ }");
             }
-            return null;
+            return Ok(result);
         }
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace WebAPI.Controllers
             {
                 return StatusCode(204, "{ }");
             }
-            return null;
+            return Ok(result);
         }
 
         /// <summary>
@@ -210,16 +210,16 @@ namespace WebAPI.Controllers
         /// <response code="500">The server encountered an unexpected condition which prevented it from fulfilling the request</response> 
         /// <response code="501">The server does not support the facility required</response> 
 
-        //no
-        [HttpGet("get_flights_by_destination_country/{countryCode}")]
-        public async Task<ActionResult<Flight>> GetFlightsByDestinationCountry(int countryCode)
+        //yes
+        [HttpGet("get_flights_by_destination_country/{destination_Country_Id}")]
+        public async Task<ActionResult<Flight>> GetFlightsByDestinationCountry(int destination_Country_Id)
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);
 
             IList<Flight> result = null;
             try
             {
-                result = await Task.Run(() => facade.GetFlightsByDestinationCountry(countryCode));
+                result = await Task.Run(() => facade.GetFlightsByDestinationCountry(destination_Country_Id));
             }
             catch (IllegalFlightParameter ex)
             {
@@ -229,7 +229,7 @@ namespace WebAPI.Controllers
             {
                 return StatusCode(204, "{ }");
             }
-            return null;
+            return Ok(result);
         }
 
         /// <summary>
@@ -242,16 +242,16 @@ namespace WebAPI.Controllers
         /// <response code="500">The server encountered an unexpected condition which prevented it from fulfilling the request</response> 
         /// <response code="501">The server does not support the facility required</response> 
 
-        //no
-        [HttpGet("get_flights_by_origin_country/{countryCode}")]
-        public async Task<ActionResult<Flight>> GetFlightsByOriginCountry(int countryCode)
+        //yes
+        [HttpGet("get_flights_by_origin_country/{origin_Country_Id}")]
+        public async Task<ActionResult<Flight>> GetFlightsByOriginCountry(int origin_Country_Id)
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);
 
             IList<Flight> result = null;
             try
             {
-                result = await Task.Run(() => facade.GetFlightsByOriginCountry(countryCode));
+                result = await Task.Run(() => facade.GetFlightsByOriginCountry(origin_Country_Id));
             }
             catch (IllegalFlightParameter ex)
             {
@@ -261,7 +261,7 @@ namespace WebAPI.Controllers
             {
                 return StatusCode(204, "{ }");
             }
-            return null;
+            return Ok(result);
         }
     }
 }

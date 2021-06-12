@@ -223,7 +223,8 @@ namespace FlightsProject.DAO_PGSQL
             using (var my_conn = new NpgsqlConnection(conn_string))
             {
                 my_conn.Open();
-                string query = $"SELECT * FROM flights WHERE flights.Departure_Time = '{departureDate}'";
+                string query = $"SELECT * FROM flights WHERE flights.Departure_Time BETWEEN '{departureDate.ToString("yyyy-MM-dd")} 00:00:00' AND " +
+                    $"'{departureDate.ToString("yyyy-MM-dd")} 23:59:59'";
 
                 NpgsqlCommand command = new NpgsqlCommand(query, my_conn);
                 command.CommandType = System.Data.CommandType.Text;
@@ -253,7 +254,8 @@ namespace FlightsProject.DAO_PGSQL
             using (var my_conn = new NpgsqlConnection(conn_string))
             {
                 my_conn.Open();
-                string query = $"SELECT * FROM flights WHERE flights.Landing_Time = '{landingDate}'";
+                string query = $"SELECT * FROM flights WHERE flights.Landing_Time BETWEEN '{landingDate.ToString("yyyy-MM-dd")} 00:00:00' AND " +
+                    $"'{landingDate.ToString("yyyy-MM-dd")} 23:59:59'";
 
                 NpgsqlCommand command = new NpgsqlCommand(query, my_conn);
                 command.CommandType = System.Data.CommandType.Text;

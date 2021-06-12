@@ -36,14 +36,34 @@ namespace WebAPI.Controllers
             //loginService.TryAdminLogin("manager87", "lF9A7v", out tokenAdmin);
             facadeAdmin = FlightsCenterSystem.GetInstance().GetFacade(tokenAdmin) as LoggedInAdministratorFacade;
         }
+        /// <summary>
+        ///Get get all customers
+        /// </summary>
+        /// <response code="200">The request was fulfilled</response>
+        /// <response code="204">Server has received the request but there is no information to send back</response>
+        /// <response code="400">The request had bad syntax or was inherently impossible to be satisfied</response> 
+        /// <response code="401">Should retry the request with a suitable Authorization header</response> 
+        /// <response code="403">The request is for something forbidden. Authorization will not help</response> 
+        /// <response code="404">The server has not found anything matching the URI given</response> 
+        /// <response code="500">The server encountered an unexpected condition which prevented it from fulfilling the request</response> 
+        /// <response code="501">The server does not support the facility required</response> 
 
+        //yes
         [HttpGet("get_all_customers")]
-        public async Task<IList<Customer>> GetAllCustomers()
+        public async Task<ActionResult<Customer>> GetAllCustomers()
         {
             AuthenticateAndGetTokenAndGetFacade(out LoginToken<Admin> tokenAdmin,
                                                                       out LoggedInAdministratorFacade fasadeAdmin);
-            IList<Customer> result = await Task.Run(() => fasadeAdmin.GetAllCustomers(new LoginToken<Admin>()));
-            return result;
+            IList<Customer> result = null;
+            try
+            {
+                result = await Task.Run(() => fasadeAdmin.GetAllCustomers(new LoginToken<Admin>()));
+            }
+            catch (IllegalFlightParameter ex)
+            {
+                return StatusCode(404, $"{{ error: \"{ex.Message}\" }}");
+            }
+            return Ok(result);
         }
 
         [HttpPost("create_admin")]

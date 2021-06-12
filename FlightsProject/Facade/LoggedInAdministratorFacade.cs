@@ -35,7 +35,7 @@ namespace FlightsProject.Facade
 
             }
         }
-        //yes
+
         public IList<Customer> GetAllCustomers(LoginToken<Admin> token)
         {
             if (token != null) {
