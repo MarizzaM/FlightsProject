@@ -20,7 +20,8 @@ namespace FlightsProject.DAO_PGSQL
                 cmd.Connection = my_conn;
 
                 cmd.CommandText = $"INSERT INTO flights (airline_company_id, origin_country_id, destination_country_id, departure_time, landing_time, tickets_remaining) " +
-                    $"VALUES ({f.Airline_Company_Id}, {f.Origin_Country_Id}, {f.Destination_Country_Id}, '{f.Departure_Time}', '{f.Landing_Time}', {f.Tickets_Remaining})";
+                    $"VALUES ({f.Airline_Company_Id}, {f.Origin_Country_Id}, {f.Destination_Country_Id}, '{f.Departure_Time.ToString("yyyy-MM-dd HH:mm:ss")}', " +
+                    $"'{f.Landing_Time.ToString("yyyy-MM-dd HH:mm:ss")}', {f.Tickets_Remaining})";
                 cmd.ExecuteNonQuery();
                 Console.WriteLine($"Flight inserted successfully to table 'Flights'");
             }

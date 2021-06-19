@@ -1,13 +1,18 @@
-﻿using FlightsProject;
+﻿using AutoMapper;
+using FlightsProject;
 using FlightsProject.Facade;
 using FlightsProject.Login;
+using FlightsProject.Mappers;
 using FlightsProject.POCO;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using WebAPI.DTO;
+using WebAPI.Mappers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,6 +22,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class AnonymousController : ControllerBase
     {
+        private readonly IMapper m_mapper;
         private void AuthenticateAndGetFacade(out AnonymousUserFacade facade)
         {
             // after we learned authentication
@@ -29,6 +35,7 @@ namespace WebAPI.Controllers
             // 2. get the token + facade
 
             facade = FlightsCenterSystem.GetInstance().GetFacade<Anonymous>(null) as AnonymousUserFacade;
+
         }
         //The status code below will be displayed on swagger, this example taken from the flights project
 
@@ -44,11 +51,33 @@ namespace WebAPI.Controllers
 
         // yes
         [HttpGet("get_all_flights")]
-        public IList<Flight> GetAllFlights()
+        public async Task<ActionResult<IList<FlightDTO>>> GetAllFlights()
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);
-            IList<Flight> result = facade.GetAllFlights();
-            return result;
+
+            IList <Flight> flights = null;
+
+            try
+            {
+                flights = await Task.Run(() => facade.GetAllFlights());
+            }
+            catch (IllegalFlightParameter ex)
+            {
+                return StatusCode(400, $"{{ error: \"{ex.Message}\" }}");
+            }
+            if (flights == null)
+            {
+                return StatusCode(204, "{ }");
+            }
+            FlightProfile flightProfile = new FlightProfile(out MapperConfiguration config);
+            var m_mapper = new Mapper(config);
+            List<FlightDTO> flightDTOs = new List<FlightDTO>();
+
+            foreach (Flight flight in flights) {
+                FlightDTO flightDTO = m_mapper.Map<FlightDTO>(flight);
+                flightDTOs.Add(flightDTO);
+            }
+            return Ok(JsonConvert.SerializeObject(flightDTOs, Formatting.Indented));
         }
 
         /// <summary>
@@ -63,11 +92,34 @@ namespace WebAPI.Controllers
 
         // yes
         [HttpGet("get_all_airline_companies")]
-        public IList<AirlineCompany> GetAllAirlineCompanies()
+        public async Task<ActionResult<IList<AirlineCompanyDTO>>> GetAllAirlineCompanies()
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);
-            IList<AirlineCompany> result = facade.GetAllAirlineCompanies();
-            return result;
+
+            IList<AirlineCompany> airlines = null;
+
+            try
+            {
+                airlines = await Task.Run(() => facade.GetAllAirlineCompanies());
+            }
+            catch (IllegalFlightParameter ex)
+            {
+                return StatusCode(400, $"{{ error: \"{ex.Message}\" }}");
+            }
+            if (airlines == null)
+            {
+                return StatusCode(204, "{ }");
+            }
+            AirlineProfile airlineProfile = new AirlineProfile(out MapperConfiguration config);
+            var m_mapper = new Mapper(config);
+            List<AirlineCompanyDTO> airlineCompanyDTOs = new List<AirlineCompanyDTO>();
+
+            foreach (AirlineCompany airline in airlines)
+            {
+                AirlineCompanyDTO airlineCompanyDTO = m_mapper.Map<AirlineCompanyDTO>(airline);
+                airlineCompanyDTOs.Add(airlineCompanyDTO);
+            }
+            return Ok(JsonConvert.SerializeObject(airlineCompanyDTOs, Formatting.Indented));
         }
 
         /// <summary>
@@ -101,7 +153,7 @@ namespace WebAPI.Controllers
                 return StatusCode(204, "{ }");
             }
 
-            return Ok(JsonSerializer.Serialize(Newtonsoft.Json.JsonConvert.SerializeObject(result)));
+            return Ok(JsonConvert.SerializeObject(result, Formatting.Indented));
         }
 
         /// <summary>
@@ -116,24 +168,28 @@ namespace WebAPI.Controllers
 
         // yes
         [HttpGet("get_flight/{id}")]
-        public async Task<ActionResult<Flight>> GetFlightById(int id)
+        public async Task<ActionResult<FlightDTO>> GetFlightById(int id)
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);
 
-            Flight result = null;
+            Flight flight = null;
             try
             {
-                result = await Task.Run(() => facade.GetFlightById(id));
+                flight = await Task.Run(() => facade.GetFlightById(id));
             }
             catch (IllegalFlightParameter ex)
             {
                 return StatusCode(400, $"{{ error: \"{ex.Message}\" }}"); 
             }
-            if (result == null)
+            if (flight == null)
             {
                 return StatusCode(204, "{ }");
             }
-            return Ok(result);
+            FlightProfile flightProfile = new FlightProfile(out MapperConfiguration config);
+            var mapper = new Mapper(config);
+            FlightDTO flightDTO = mapper.Map<FlightDTO>(flight);
+
+            return Ok(JsonConvert.SerializeObject(flightDTO, Formatting.Indented));
         }
 
         /// <summary>
@@ -165,6 +221,8 @@ namespace WebAPI.Controllers
             {
                 return StatusCode(204, "{ }");
             }
+            FlightProfile flightProfile = new FlightProfile(out MapperConfiguration config);
+            var mapper = new Mapper(config);
             return Ok(result);
         }
 
@@ -197,6 +255,8 @@ namespace WebAPI.Controllers
             {
                 return StatusCode(204, "{ }");
             }
+            FlightProfile flightProfile = new FlightProfile(out MapperConfiguration config);
+            var mapper = new Mapper(config);
             return Ok(result);
         }
 
@@ -212,24 +272,33 @@ namespace WebAPI.Controllers
 
         //yes
         [HttpGet("get_flights_by_destination_country/{destination_Country_Id}")]
-        public async Task<ActionResult<Flight>> GetFlightsByDestinationCountry(int destination_Country_Id)
+        public async Task<ActionResult<IList<FlightDTO>>> GetFlightsByDestinationCountry(int destination_Country_Id)
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);
 
-            IList<Flight> result = null;
+            IList<Flight> flights = null;
             try
             {
-                result = await Task.Run(() => facade.GetFlightsByDestinationCountry(destination_Country_Id));
+                flights = await Task.Run(() => facade.GetFlightsByDestinationCountry(destination_Country_Id));
             }
             catch (IllegalFlightParameter ex)
             {
                 return StatusCode(400, $"{{ error: \"{ex.Message}\" }}");
             }
-            if (result == null)
+            if (flights == null)
             {
                 return StatusCode(204, "{ }");
             }
-            return Ok(result);
+            FlightProfile flightProfile = new FlightProfile(out MapperConfiguration config);
+            var m_mapper = new Mapper(config);
+            List<FlightDTO> flightDTOs = new List<FlightDTO>();
+
+            foreach (Flight flight in flights)
+            {
+                FlightDTO flightDTO = m_mapper.Map<FlightDTO>(flight);
+                flightDTOs.Add(flightDTO);
+            }
+            return Ok(JsonConvert.SerializeObject(flightDTOs, Formatting.Indented));
         }
 
         /// <summary>
@@ -261,6 +330,8 @@ namespace WebAPI.Controllers
             {
                 return StatusCode(204, "{ }");
             }
+            FlightProfile flightProfile = new FlightProfile(out MapperConfiguration config);
+            var mapper = new Mapper(config);
             return Ok(result);
         }
     }

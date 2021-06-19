@@ -8,7 +8,15 @@ namespace FlightsProject.Facade
 {
     public class AnonymousUserFacade : FacadeBase, IAnonymousUserFacade
     {
+        public Country GetCountry(int id)
+        {
+            return _countryDAO.Get(id);
+        }
 
+        public AirlineCompany GetAirlineCompany(int id)
+        {
+            return _airlineDAO.Get(id);
+        }
         public IList<AirlineCompany> GetAllAirlineCompanies()
         {
             return _airlineDAO.GetAll();

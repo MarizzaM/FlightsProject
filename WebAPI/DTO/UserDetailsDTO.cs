@@ -13,7 +13,7 @@ namespace WebAPI.DTO
         public string Name { get; set; }
 
         [Required]
-        [StringLength(maximumLength: 20, MinimumLength = 6)]
+        [StringLength(maximumLength: 20, MinimumLength = 4)]
         public string Password { get; set; }
     }
 }

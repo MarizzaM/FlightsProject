@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAPI.DTO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -66,6 +67,8 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+
+
         [HttpPost("create_admin")]
         public async Task<ActionResult> CreateAdmin([FromBody] Admin admin)
         {
@@ -81,6 +84,8 @@ namespace WebAPI.Controllers
             }
             return null;
         }
+
+
 
         [HttpPost("create_airline")]
         public async Task<ActionResult> CreateNewAirline([FromBody] AirlineCompany airline)
@@ -98,6 +103,8 @@ namespace WebAPI.Controllers
             return null;
         }
 
+
+
         [HttpPost("create_customer")]
         public async Task<ActionResult> CreateNewCustomer([FromBody] Customer customer)
         {
@@ -114,6 +121,8 @@ namespace WebAPI.Controllers
             return null;
         }
 
+
+
         [HttpPut("update_admin/{id}")]
         public async Task<ActionResult> UpdateAdmin(int id, [FromBody] Admin admin)
         {
@@ -127,9 +136,9 @@ namespace WebAPI.Controllers
             {
                 return StatusCode(400, $"{{ error: \"{ex.Message}\" }}"); 
             }
-            return null;
+            return Ok();
         }
-
+        //yes
         [HttpPut("update_airline/{id}")]
         public async Task<ActionResult> UpdateAirlineDetails(int id, [FromBody] AirlineCompany airline)
         {
@@ -143,9 +152,11 @@ namespace WebAPI.Controllers
             {
                 return StatusCode(400, $"{{ error: \"{ex.Message}\" }}");
             }
-            return null;
+            return Ok();
         }
 
+
+        // yes
         [HttpPut("update_customer/{id}")]
         public async Task<ActionResult> UpdateCustomerDetails(int id, [FromBody] Customer customer)
         {
@@ -159,8 +170,10 @@ namespace WebAPI.Controllers
             {
                 return StatusCode(400, $"{{ error: \"{ex.Message}\" }}");
             }
-            return null;
+            return Ok();
         }
+
+
 
         [HttpDelete("remove_customer/{customer}")]
         public void RemoveCustomer(Customer customer)
@@ -170,6 +183,8 @@ namespace WebAPI.Controllers
             fasadeAdmin.RemoveCustomer(tokenAdmin, customer);
         }
 
+
+
         [HttpDelete("remove_admin/{admin}")]
         public void RemoveAdmin(Admin admin)
         {
@@ -177,6 +192,8 @@ namespace WebAPI.Controllers
                                                                       out LoggedInAdministratorFacade fasadeAdmin);
             fasadeAdmin.RemoveAdmin(tokenAdmin, admin);
         }
+
+
 
         [HttpDelete("remove_airline/{airline}")]
         public void RemoveAirline(AirlineCompany airline)
