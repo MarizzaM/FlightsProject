@@ -39,7 +39,5 @@ namespace FlightsProject.Mappers
                                 .ForMember(dest => dest.Tickets_Remaining,
                             opt => opt.MapFrom(src => src.Tickets_Remaining)));
         }
-
-
     }
 }

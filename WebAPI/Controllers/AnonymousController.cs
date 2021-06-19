@@ -134,26 +134,35 @@ namespace WebAPI.Controllers
 
         //yes
         [HttpGet("get_all_flights_vacancy")]
-        public async Task<ActionResult<Dictionary<Flight, int>>> GetAllFlightsVacancy()
+        public async Task<ActionResult<Dictionary<FlightDTO, int>>> GetAllFlightsVacancy()
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);
 
-            Dictionary<Flight, int> result = null;
+            Dictionary<Flight, int> flights = null;
 
             try
             {
-                result = await Task.Run(() => facade.GetAllFlightsVacancy());
+                flights = await Task.Run(() => facade.GetAllFlightsVacancy());
             }
             catch (IllegalFlightParameter ex)
             {
                 return StatusCode(400, $"{{ error: \"{ex.Message}\" }}");
             }
-            if (result == null)
+            if (flights == null)
             {
                 return StatusCode(204, "{ }");
             }
 
-            return Ok(JsonConvert.SerializeObject(result, Formatting.Indented));
+            FlightProfile flightProfile = new FlightProfile(out MapperConfiguration config);
+            var m_mapper = new Mapper(config);
+            List<FlightDTO> flightDTOs = new List<FlightDTO>();
+
+            foreach (var flight in flights)
+            {
+                FlightDTO flightDTO = m_mapper.Map<FlightDTO>(flight.Key);
+                flightDTOs.Add(flightDTO);
+            }
+            return Ok(JsonConvert.SerializeObject(flightDTOs, Formatting.Indented));
         }
 
         /// <summary>
@@ -204,26 +213,33 @@ namespace WebAPI.Controllers
 
         //no
         [HttpGet("get_flights_by_depatrure_date/{departureDate}")]
-        public async Task<ActionResult<Flight>> GetFlightsByDepatrureDate(DateTime departureDate)
+        public async Task<ActionResult<IList<FlightDTO>>> GetFlightsByDepatrureDate(DateTime departureDate)
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);
 
-            IList<Flight> result = null;
+            IList<Flight> flights = null;
             try
             {
-                result = await Task.Run(() => facade.GetFlightsByDepatrureDate(departureDate));
+                flights = await Task.Run(() => facade.GetFlightsByDepatrureDate(departureDate));
             }
             catch (IllegalFlightParameter ex)
             {
                 return StatusCode(400, $"{{ error: \"{ex.Message}\" }}");
             }
-            if (result == null)
+            if (flights == null)
             {
                 return StatusCode(204, "{ }");
             }
             FlightProfile flightProfile = new FlightProfile(out MapperConfiguration config);
-            var mapper = new Mapper(config);
-            return Ok(result);
+            var m_mapper = new Mapper(config);
+            List<FlightDTO> flightDTOs = new List<FlightDTO>();
+
+            foreach (Flight flight in flights)
+            {
+                FlightDTO flightDTO = m_mapper.Map<FlightDTO>(flight);
+                flightDTOs.Add(flightDTO);
+            }
+            return Ok(JsonConvert.SerializeObject(flightDTOs, Formatting.Indented));
         }
 
         /// <summary>
@@ -238,26 +254,33 @@ namespace WebAPI.Controllers
 
         //no
         [HttpGet("get_flights_by_landing_date/{landingDate}")]
-        public async Task<ActionResult<Flight>> GetFlightsByLandingDate(DateTime landingDate)
+        public async Task<ActionResult<IList<FlightDTO>>> GetFlightsByLandingDate(DateTime landingDate)
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);
 
-            IList<Flight> result = null;
+            IList<Flight> flights = null;
             try
             {
-                result = await Task.Run(() => facade.GetFlightsByLandingDate(landingDate));
+                flights = await Task.Run(() => facade.GetFlightsByLandingDate(landingDate));
             }
             catch (IllegalFlightParameter ex)
             {
                 return StatusCode(400, $"{{ error: \"{ex.Message}\" }}"); 
             }
-            if (result == null)
+            if (flights == null)
             {
                 return StatusCode(204, "{ }");
             }
             FlightProfile flightProfile = new FlightProfile(out MapperConfiguration config);
-            var mapper = new Mapper(config);
-            return Ok(result);
+            var m_mapper = new Mapper(config);
+            List<FlightDTO> flightDTOs = new List<FlightDTO>();
+
+            foreach (Flight flight in flights)
+            {
+                FlightDTO flightDTO = m_mapper.Map<FlightDTO>(flight);
+                flightDTOs.Add(flightDTO);
+            }
+            return Ok(JsonConvert.SerializeObject(flightDTOs, Formatting.Indented));
         }
 
         /// <summary>
@@ -313,26 +336,33 @@ namespace WebAPI.Controllers
 
         //yes
         [HttpGet("get_flights_by_origin_country/{origin_Country_Id}")]
-        public async Task<ActionResult<Flight>> GetFlightsByOriginCountry(int origin_Country_Id)
+        public async Task<ActionResult<IList<FlightDTO>>> GetFlightsByOriginCountry(int origin_Country_Id)
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);
 
-            IList<Flight> result = null;
+            IList<Flight> flights = null;
             try
             {
-                result = await Task.Run(() => facade.GetFlightsByOriginCountry(origin_Country_Id));
+                flights = await Task.Run(() => facade.GetFlightsByOriginCountry(origin_Country_Id));
             }
             catch (IllegalFlightParameter ex)
             {
                 return StatusCode(400, $"{{ error: \"{ex.Message}\" }}");
             }
-            if (result == null)
+            if (flights == null)
             {
                 return StatusCode(204, "{ }");
             }
             FlightProfile flightProfile = new FlightProfile(out MapperConfiguration config);
-            var mapper = new Mapper(config);
-            return Ok(result);
+            var m_mapper = new Mapper(config);
+            List<FlightDTO> flightDTOs = new List<FlightDTO>();
+
+            foreach (Flight flight in flights)
+            {
+                FlightDTO flightDTO = m_mapper.Map<FlightDTO>(flight);
+                flightDTOs.Add(flightDTO);
+            }
+            return Ok(JsonConvert.SerializeObject(flightDTOs, Formatting.Indented));
         }
     }
 }
