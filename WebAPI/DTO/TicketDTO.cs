@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 
 namespace WebAPI.DTO
 {
-    public class CustomerUpdatingDTO
+    public class TicketDTO
     {
+        public long Id_Ticket { get; set; }
+        public long Id_Flight { get; set; }
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
-        public string Address { get; set; }
-        public string Phone_No { get; set; }
-        public string Credit_Card_No { get; set; }
     }
 }

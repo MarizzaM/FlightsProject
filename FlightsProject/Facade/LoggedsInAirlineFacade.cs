@@ -9,6 +9,7 @@ namespace FlightsProject.Facade
 {
     public class LoggedsInAirlineFacade : AnonymousUserFacade, ILoggedInAirlineFacade
     {
+
         public void CancelFlight(LoginToken<AirlineCompany> token, Flight flight)
         {
             if (token != null ) {
@@ -68,5 +69,7 @@ namespace FlightsProject.Facade
                 _flightDAO.Update(flight);
             }
         }
+
+
     }
 }

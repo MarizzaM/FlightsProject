@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
             facade = FlightsCenterSystem.GetInstance().GetFacade<Anonymous>(null) as AnonymousUserFacade;
 
         }
-        //The status code below will be displayed on swagger, this example taken from the flights project
+
 
         /// <summary>
         /// Get all flights

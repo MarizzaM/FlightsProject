@@ -94,5 +94,11 @@ namespace FlightsProject.Facade
                  _customerDAO.Update(customer);
             }
         }
+
+        // for mapper
+        public Customer GetCustomer( int id)
+        {
+            return _customerDAO.Get(id);
+        }
     }
 }

@@ -37,8 +37,6 @@ namespace WebAPI.Controllers
                 return Unauthorized("login failed");
             }
 
-
-
             // 2) create key
             // security key
             string securityKey =
