@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <script src="js/htmlpage.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Flights</title>
+</head>
+<body>
+
+</body>
+
+<script>
+    fetch('https://localhost:44323/api/Anonymous/get_all_flights')
+        .then(response => response.json())
+        .then(data => console.log(data))
+</script>
+
+</html>

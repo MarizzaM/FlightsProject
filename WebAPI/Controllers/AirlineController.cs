@@ -73,6 +73,7 @@ namespace WebAPI.Controllers
             {
                 return StatusCode(204, "{ }");
             }
+
             TicketProfile ticketProfile = new TicketProfile(out MapperConfiguration config);
             var m_mapper = new Mapper(config);
             List<TicketDTO> ticketDTOs = new List<TicketDTO>();
@@ -117,6 +118,7 @@ namespace WebAPI.Controllers
             {
                 return StatusCode(204, "{ }");
             }
+
             FlightProfile flightProfile = new FlightProfile(out MapperConfiguration config);
             var m_mapper = new Mapper(config);
             List<FlightDTO> flightDTOs = new List<FlightDTO>();
@@ -135,6 +137,8 @@ namespace WebAPI.Controllers
         {
             AuthenticateAndGetTokenAndGetFacade(out LoginToken<AirlineCompany> tokenAirline,
                                                                       out LoggedsInAirlineFacade facadeAirline);
+
+
             try
             {
                 await Task.Run(() => facadeAirline.CreateFlight(tokenAirline, flight));
@@ -147,7 +151,7 @@ namespace WebAPI.Controllers
             return null;
         }
 
-        //******************** PUT: api/create_flight ********************
+        //******************** PUT: api/mofidy_airline_details/{airline_id} ********************
         [HttpPut("mofidy_airline_details/{airline_id}")]
         public async Task<ActionResult> MofidyAirlineDetails([FromBody] AirlineCompany airline)
         {
