@@ -139,6 +139,32 @@ namespace FlightsProject.DAO_PGSQL
             return null;
         }
 
+        public AirlineCompany GetAirlineByName(string name)
+        {
+            using (var my_conn = new NpgsqlConnection(conn_string))
+            {
+                my_conn.Open();
+                string query = $"SELECT * FROM Airline_Companies WHERE Airline_Companies.Name = '{name}'";
+
+                NpgsqlCommand command = new NpgsqlCommand(query, my_conn);
+                command.CommandType = System.Data.CommandType.Text;
+
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    AirlineCompany airline = new AirlineCompany
+                    {
+                        Id = (long)reader["Id"],
+                        Name = (string)reader["Name"],
+                        Country_Id = (int)reader["countryid"],
+                        User_Id = (long)reader["User_Id"]
+                    };
+                    return airline;
+                }
+            }
+            return null;
+        }
+
         public IList<AirlineCompany> GetAllAirlinesByCountry(int countryId)
         {
             using (var my_conn = new NpgsqlConnection(conn_string))

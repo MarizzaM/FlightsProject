@@ -17,6 +17,17 @@ namespace FlightsProject.Facade
         {
             return _airlineDAO.Get(id);
         }
+
+        public AirlineCompany GetAirlineCompanyByName(string name)
+        {
+            return _airlineDAO.GetAirlineByName(name);
+        }
+
+        public Country GetCountryByName(string name)
+        {
+            return _countryDAO.GetByName(name);
+        }
+
         public IList<AirlineCompany> GetAllAirlineCompanies()
         {
             return _airlineDAO.GetAll();

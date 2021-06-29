@@ -57,8 +57,10 @@ namespace FlightsProject.Facade
 
         public void MofidyAirlineDetails(LoginToken<AirlineCompany> token, AirlineCompany airline)
         {
-            if (token != null && token.User.Id == airline.Id) {
-                _airlineDAO.Update(airline);
+           // if (token != null && ) {
+                if (token.User.Id == airline.User_Id)
+                {
+                    _airlineDAO.Update(airline);
             }
         }
 

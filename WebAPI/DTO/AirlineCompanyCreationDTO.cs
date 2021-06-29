@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 
 namespace WebAPI.DTO
 {
-    public class AirlineCompanyCreationDTO
+    public class AirlineCompanyCreationModifyDTO
     {
+        public string Name { get; set; }
+        public string Country_Name { get; set; }
     }
 }

@@ -130,14 +130,29 @@ namespace WebAPI.Controllers
             }
             return Ok(JsonConvert.SerializeObject(flightDTOs, Formatting.Indented));
         }
-
+        //************************************************************
         //******************** POST: api/create_flight ********************
+        //************************************************************
+        /// <summary>
+        /// Create flight
+        /// </summary>
+        /// <response code="201">Success</response>
+        /// <response code="204">Server has received the request but there is no information to send back</response>
+        /// <response code="400">The request had bad syntax or was inherently impossible to be satisfied</response> 
+        /// <response code="401">The request has not been applied because it lacks valid authentication credentials for the target resource</response> 
+        /// <response code="404">The server has not found anything matching the URI given</response> 
+        /// <response code="500">The server encountered an unexpected condition which prevented it from fulfilling the request</response> 
+        /// <response code="501">The server does not support the facility required</response> 
+        ///
         [HttpPost("create_flight")]
-        public async Task<ActionResult> CreateFlight([FromBody] Flight flight)
+        public async Task<ActionResult> CreateFlight([FromBody] FlightCreationDTO flightCreationDTO)
         {
+
             AuthenticateAndGetTokenAndGetFacade(out LoginToken<AirlineCompany> tokenAirline,
                                                                       out LoggedsInAirlineFacade facadeAirline);
-
+            FlightCreationProfile flightCreation = new FlightCreationProfile(out MapperConfiguration configCreation);
+            var mapper = new Mapper(configCreation);
+            Flight flight = mapper.Map<Flight>(flightCreationDTO);
 
             try
             {
@@ -148,7 +163,13 @@ namespace WebAPI.Controllers
                 return StatusCode(400, $"{{ error: \"{ex.Message}\" }}"); // 400 + body = ex.Message
                 //return BadRequest($"{{ error: {ex.Message} }}"); // 400 + body = ex.Message
             }
-            return null;
+
+
+            FlightProfile flightProfile = new FlightProfile(out MapperConfiguration config);
+            var m_mapper = new Mapper(config);
+            FlightDTO flightDTO = m_mapper.Map<FlightDTO>(flight);
+
+            return new CreatedResult("/api/anonymous/get_flight/" + flightDTO.Id, flightCreationDTO);
         }
 
         //******************** PUT: api/mofidy_airline_details/{airline_id} ********************
@@ -157,34 +178,37 @@ namespace WebAPI.Controllers
         {
             AuthenticateAndGetTokenAndGetFacade(out LoginToken<AirlineCompany> tokenAirline,
                                                                       out LoggedsInAirlineFacade facadeAirline);
+
             try
             {
                 await Task.Run(() => facadeAirline.MofidyAirlineDetails(tokenAirline, airline));
             }
             catch (IllegalFlightParameter ex)
             {
-                return StatusCode(400, $"{{ error: \"{ex.Message}\" }}"); // 400 + body = ex.Message
-                                                                          // return BadRequest($"{{ error: {ex.Message} }}"); // 400 + body = ex.Message
+                return StatusCode(400, $"{{ error: \"{ex.Message}\" }}"); 
+                                                                         
             }
-            return null;
+            return new CreatedResult("/api/anonymous/get_airline/" + airline.Id, airline);
         }
 
-        //******************** PUT: api/update_flight/{airline_id} ********************
-        [HttpPut("update_flight/{airline_id}")]
-        public async Task<ActionResult> UpdateFlight([FromBody] AirlineCompany airline)
+        //******************** PUT: api/update_flight/{flight_id} ********************
+        [HttpPut("update_flight/{flight_id}")]
+        public async Task<ActionResult> UpdateFlight([FromBody] Flight flight)
         {
             AuthenticateAndGetTokenAndGetFacade(out LoginToken<AirlineCompany> tokenAirline,
                                                                       out LoggedsInAirlineFacade facadeAirline);
             try
             {
-                await Task.Run(() => facadeAirline.MofidyAirlineDetails(tokenAirline, airline));
+                await Task.Run(() => facadeAirline.UpdateFlight(tokenAirline, flight));
             }
             catch (IllegalFlightParameter ex)
             {
                 return StatusCode(400, $"{{ error: \"{ex.Message}\" }}"); // 400 + body = ex.Message
                                                                           // return BadRequest($"{{ error: {ex.Message} }}"); // 400 + body = ex.Message
             }
-            return null;
+
+            Console.WriteLine(tokenAirline.User.Id);
+            return new CreatedResult("/api/anonymous/get_flight/" + flight.Id, flight); 
         }
 
 
@@ -206,19 +230,37 @@ namespace WebAPI.Controllers
             return null;
         }
 
+        //******************************************************************
         //******************** DELETE: api/cancel_flight/{id} ********************
+        //******************************************************************
+        /// <summary>
+        /// Create flight
+        /// </summary>
+        /// <response code="201">Success</response>
+        /// <response code="204">Server has received the request but there is no information to send back</response>
+        /// <response code="400">The request had bad syntax or was inherently impossible to be satisfied</response> 
+        /// <response code="401">The request has not been applied because it lacks valid authentication credentials for the target resource</response> 
+        /// <response code="404">The server has not found anything matching the URI given</response> 
+        /// <response code="500">The server encountered an unexpected condition which prevented it from fulfilling the request</response> 
+        /// <response code="501">The server does not support the facility required</response> 
+        ///
         [HttpDelete("cancel_flight/{id}")]
-        public void CancelFlight(int id)
+        public async Task<ActionResult> CancelFlight(int id)
         {
             AuthenticateAndGetTokenAndGetFacade(out LoginToken<AirlineCompany> tokenAirline,
                                                                       out LoggedsInAirlineFacade facadeAirline);
-            Flight flight =  facadeAirline.GetFlightById(id);
-            facadeAirline.CancelFlight(tokenAirline, flight);
+
+            Flight flight = facadeAirline.GetFlightById(id);
+
+            try
+            {
+                await Task.Run(() => facadeAirline.CancelFlight(tokenAirline, flight));
+            }
+            catch (IllegalFlightParameter ex)
+            {
+                return StatusCode(400, $"{{ error: \"{ex.Message}\" }}"); 
+            }
+            return Ok();
         }
-
-
-
-
-
     }
 }

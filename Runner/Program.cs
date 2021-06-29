@@ -9,6 +9,7 @@ using System.Collections.Generic;
 
 namespace Runner
 {
+
     class Program
     {
         //static string conn_string = "Host=localhost;Username=postgres;Password=336527981;Database=FlightsProjectDB";

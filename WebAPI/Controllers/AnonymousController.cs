@@ -364,5 +364,35 @@ namespace WebAPI.Controllers
             }
             return Ok(JsonConvert.SerializeObject(flightDTOs, Formatting.Indented));
         }
+
+
+        [HttpGet("get_airline/{id}")]
+        public async Task<ActionResult<AirlineCompanyDTO>> GetAllAirlineCompany(int id)
+        {
+            AuthenticateAndGetFacade(out AnonymousUserFacade facade);
+
+            AirlineCompany airline = null;
+
+            try
+            {
+                airline = await Task.Run(() => facade.GetAirlineCompany(id));
+            }
+            catch (IllegalFlightParameter ex)
+            {
+                return StatusCode(400, $"{{ error: \"{ex.Message}\" }}");
+            }
+            if (airline == null)
+            {
+                return StatusCode(204, "{ }");
+            }
+            AirlineProfile airlineProfile = new AirlineProfile(out MapperConfiguration config);
+            var m_mapper = new Mapper(config);
+            List<AirlineCompanyDTO> airlineCompanyDTOs = new List<AirlineCompanyDTO>();
+
+                AirlineCompanyDTO airlineCompanyDTO = m_mapper.Map<AirlineCompanyDTO>(airline);
+                airlineCompanyDTOs.Add(airlineCompanyDTO);
+  
+            return Ok(JsonConvert.SerializeObject(airlineCompanyDTOs, Formatting.Indented));
+        }
     }
 }

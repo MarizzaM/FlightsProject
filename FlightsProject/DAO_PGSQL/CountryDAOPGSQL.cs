@@ -49,6 +49,31 @@ namespace FlightsProject
             return null;
         }
 
+        public Country GetByName(string name)
+        {
+            using (var my_conn = new NpgsqlConnection(conn_string))
+            {
+                my_conn.Open();
+                string query = $"SELECT * FROM countries WHERE countries.Name = '{name}'";
+
+                NpgsqlCommand command = new NpgsqlCommand(query, my_conn);
+                command.CommandType = System.Data.CommandType.Text; // this is default
+
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Country country = new Country
+                    {
+                        Id = (int)reader["Id"],
+                        Name = (string)reader["Name"]
+                    };
+
+                    return country;
+                }
+            }
+            return null;
+        }
+
         IList<Country> countries = new List<Country>();
         public IList<Country> GetAll()
         {

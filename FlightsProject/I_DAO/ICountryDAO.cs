@@ -6,5 +6,6 @@ namespace FlightsProject
 {
     public interface ICountryDAO : IBasicDb<Country>
     {
+        public Country GetByName(string name);
     }
 }
