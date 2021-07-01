@@ -10,23 +10,23 @@ using WebAPI.DTO;
 
 namespace WebAPI.Mappers
 {
-    public class AirlineProfile : Profile
+    public class AirlineModifyProfile : Profile
     {
         private void AuthenticateAndGetFacade(out AnonymousUserFacade facade)
         {
             facade = FlightsCenterSystem.GetInstance().GetFacade<Anonymous>(null) as AnonymousUserFacade;
         }
-        public AirlineProfile(out MapperConfiguration config)
+        public AirlineModifyProfile(out MapperConfiguration configModify)
         {
             AuthenticateAndGetFacade(out AnonymousUserFacade facade);
 
-            config = new MapperConfiguration(cfg => cfg.CreateMap<AirlineCompany, AirlineCompanyDTO>()
-                   .ForMember(dest => dest.Id,
+            configModify = new MapperConfiguration(cfg => cfg.CreateMap<AirlineModifyDTO, AirlineCompany>()
+                    .ForMember(dest => dest.Id,
                opt => opt.MapFrom(src => src.Id))
                    .ForMember(dest => dest.Name,
                opt => opt.MapFrom(src => src.Name))
-                   .ForMember(dest => dest.Country_Name,
-               opt => opt.MapFrom(src =>facade.GetCountry(src.Country_Id).Name)));
+                   .ForMember(dest => dest.Country_Id,
+               opt => opt.MapFrom(src => facade.GetCountryByName(src.Country_Name).Id)));
         }
     }
 }

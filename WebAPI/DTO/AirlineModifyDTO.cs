@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 namespace WebAPI.DTO
 {
-    public class AirlineCompanyModifyDTO
+    public class AirlineModifyDTO
     {
+        public string Id { get; set; }
         public string Name { get; set; }
+        public string Country_Name { get; set; }
     }
 }

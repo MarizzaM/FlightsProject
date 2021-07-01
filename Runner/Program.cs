@@ -50,11 +50,15 @@ namespace Runner
         //    }
         //}
 
+
+
         public const int AnonymouseFacade_GetFlightById_FlightFound_FLIGHT_ID = 1;
         public const string AnonymouseFacade_GetFlightById_NAME = "EL AL";
         public const int AnonymouseFacade_GetFlightById_VACANCY = 1;
         static void Main(string[] args)
         {
+
+
             TestDbConnection();
             //CountryDAOPGSQL countryDAOPGSQL = new CountryDAOPGSQL();
 
